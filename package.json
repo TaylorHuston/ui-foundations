@@ -1,0 +1,20 @@
+{
+  "name": "ui-foundations",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A dependency-free, copyable CSS starting point for authored application interfaces.",
+  "type": "module",
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.css",
+    "./accessibility.css": "./src/accessibility.css",
+    "./base.css": "./src/base.css",
+    "./reset.css": "./src/reset.css",
+    "./tokens.css": "./src/tokens.css"
+  },
+  "scripts": {
+    "check": "node scripts/check.mjs"
+  }
+}
