@@ -30,6 +30,10 @@ Direct package imports may be useful during experiments, but applications should
 - A mechanism for synchronizing every application's design.
 - A substitute for application-owned CSS Modules and component styles.
 
+## Future Component Layer
+
+This repository does not currently ship React components. If repeated application use justifies a shared component layer, Base UI is the preferred behavioral foundation. Shared components should expose semantic APIs, use CSS Modules and these tokens for presentation, and avoid turning this CSS starter into a utility framework.
+
 ## Structure
 
 ```text
