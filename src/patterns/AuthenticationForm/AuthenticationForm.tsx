@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { Button } from '../../components/Button/Button'
 import { TextField } from '../../components/TextField/TextField'
 import styles from './AuthenticationForm.module.css'
@@ -22,6 +22,10 @@ export function AuthenticationForm({ error, mode, onSubmit, pending = false }: A
   const [passwordMismatch, setPasswordMismatch] = useState(false)
   const isSignUp = mode === 'sign-up'
 
+  useEffect(() => {
+    setPasswordMismatch(false)
+  }, [mode])
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
@@ -43,7 +47,7 @@ export function AuthenticationForm({ error, mode, onSubmit, pending = false }: A
   }
 
   return (
-    <form className={styles.form} noValidate onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <header className={styles.header}>
         <h1>{isSignUp ? 'Create account' : 'Sign in'}</h1>
         <p>{isSignUp ? 'Create your credentials to continue.' : 'Use your account credentials to continue.'}</p>

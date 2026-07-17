@@ -8,6 +8,7 @@
 }
 
 .reference section { display: grid; gap: var(--space-3); }
+.reference h1 { margin: 0; font-size: var(--font-size-title); }
 .reference h2 { margin: 0; font-size: var(--font-size-section); }
 .row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
 .fields { inline-size: min(100%, 480px); }

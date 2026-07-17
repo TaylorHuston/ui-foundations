@@ -31,7 +31,11 @@
 
 .secondary { background: var(--surface-raised); color: var(--text); }
 .secondary:hover:not(:disabled),
-.ghost:hover:not(:disabled) { background: color-mix(in srgb, var(--surface-raised) 72%, var(--text) 8%); }
+.ghost:hover:not(:disabled) { background: color-mix(in srgb, var(--surface-raised) 88%, var(--text) 12%); }
+.secondary:active:not(:disabled),
+.ghost:active:not(:disabled) { background: color-mix(in srgb, var(--surface-raised) 94%, var(--text) 6%); }
 
 .ghost { background: transparent; color: var(--text-secondary); }
-.danger { background: var(--danger); color: var(--canvas); }
+.danger { background: var(--danger); color: var(--danger-foreground); }
+.danger:hover:not(:disabled) { background: var(--danger-hover); }
+.danger:active:not(:disabled) { background: var(--danger-active); }

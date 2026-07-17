@@ -9,7 +9,7 @@ const colors = [
   ['Action / information', 'var(--action)', '#356FA3'],
   ['Success', 'var(--success)', '#4ADE80'],
   ['Warning', 'var(--warning)', '#FBBF24'],
-  ['Danger', 'var(--danger)', '#DC5060'],
+  ['Danger', 'var(--danger)', '#CE4053'],
 ] as const
 
 function FoundationsReference() {

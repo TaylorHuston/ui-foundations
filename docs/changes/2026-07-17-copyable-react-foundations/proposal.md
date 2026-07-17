@@ -6,7 +6,7 @@ The active applications repeat the same CSS tokens, control states, and React co
 
 ## What Changes
 
-- Reconcile the CSS starter around the agreed concise semantic token contract and three-file responsibility model.
+- Reconcile the CSS starter around the agreed concise semantic token contract and four-file responsibility model: fonts, tokens, global behavior, and optional plain-CSS primitives.
 - Establish copy-owned TypeScript React references for Button, IconButton, TextField, and Textarea.
 - Compose those primitives into a minimal AuthenticationForm reference.
 - Document and demonstrate component APIs, visual states, accessibility behavior, and intended copying through Storybook and focused tests.

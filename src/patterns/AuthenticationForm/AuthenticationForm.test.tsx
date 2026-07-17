@@ -36,4 +36,29 @@ describe('AuthenticationForm', () => {
       confirmPassword: 'same-password',
     })
   })
+
+  it('does not delegate invalid native field values', () => {
+    const onSubmit = vi.fn()
+    render(<AuthenticationForm mode="sign-in" onSubmit={onSubmit} />)
+
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'not-an-email' } })
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'password' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Sign in' }))
+
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  it('clears password mismatch when the mode changes', () => {
+    const { rerender } = render(<AuthenticationForm mode="sign-up" onSubmit={() => undefined} />)
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'taylor@example.com' } })
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'one' } })
+    fireEvent.change(screen.getByLabelText('Confirm password'), { target: { value: 'two' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Create account' }))
+    expect(screen.getByText('Passwords do not match.')).toBeVisible()
+
+    rerender(<AuthenticationForm mode="sign-in" onSubmit={() => undefined} />)
+    rerender(<AuthenticationForm mode="sign-up" onSubmit={() => undefined} />)
+
+    expect(screen.queryByText('Passwords do not match.')).not.toBeInTheDocument()
+  })
 })

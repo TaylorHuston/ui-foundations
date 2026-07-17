@@ -1,8 +1,9 @@
----
-status: accepted
-date: 2026-07-17
----
-# Copy-Owned Reference Components
+# ADR: Use Copy-Owned Reference Components
+
+- Status: Accepted
+- Date: 2026-07-17
+- Related change: `docs/changes/2026-07-17-copyable-react-foundations/`
+- Related Epics / Stories: `UIF-001/S1`, `UIF-001/S2`
 
 ## Context
 
@@ -14,13 +15,31 @@ UI Foundations owns canonical executable CSS and React references. Applications 
 
 Reference components use TypeScript, semantic props, CSS Modules, native HTML when sufficient, and Base UI when behavior-heavy accessibility mechanics warrant a headless primitive. Stable references include Storybook states and focused behavioral tests.
 
+## Options Considered
+
+### Option 1: Copy-Owned References
+
+- Summary: applications copy selected canonical source and assume ownership.
+- Pros: independent releases, product-specific adaptation, low compatibility burden, and easy reversal.
+- Cons: adopted copies can drift and fixes must be applied deliberately in each application.
+
+### Option 2: Shared Runtime Package
+
+- Summary: applications import versioned UI components from one package.
+- Pros: centralized fixes, stronger synchronized consistency, and one implementation per component.
+- Cons: coordinated upgrades, peer-dependency and compatibility work, release coupling, and pressure toward one product identity.
+
 ## Consequences
 
-- Applications remain independently releasable and free to diverge for product needs.
-- New work starts from tested semantics instead of rebuilding common controls.
-- Copied code can drift; Storybook comparison and explicit adoption reviews expose meaningful divergence.
-- Fixes must be applied deliberately to each affected application.
-- UI Foundations may become a versioned runtime package only after several consumers prove that coordinated upgrades are more valuable than independent ownership.
+- Positive: new work starts from tested semantics while applications remain independently releasable.
+- Negative: copied code can drift and requires application-owned maintenance.
+- Follow-up: use Storybook comparison and explicit adoption reviews to expose meaningful divergence.
+
+## Validation
+
+- `UIF-001/S1` verifies the copyable CSS contract through `scripts/check.mjs` and Storybook compilation.
+- `UIF-001/S2` verifies semantic component behavior through focused tests, Storybook states, axe inspection, and user visual confirmation.
+- Adoption in a real application remains the proof required before promoting additional patterns as stable references.
 
 ## Reconsider When
 

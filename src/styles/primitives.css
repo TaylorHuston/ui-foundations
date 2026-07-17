@@ -1,5 +1,6 @@
 /* Plain-CSS equivalents for consumers that do not copy the React references. */
 .primaryAction,
+.dangerAction,
 .secondaryAction,
 .textControl,
 .iconControl {
@@ -26,10 +27,32 @@
   background: var(--action-active);
 }
 
+.dangerAction {
+  padding-inline: var(--space-3);
+  background: var(--danger);
+  color: var(--danger-foreground);
+}
+
+.dangerAction:hover:not(:disabled) {
+  background: var(--danger-hover);
+}
+
+.dangerAction:active:not(:disabled) {
+  background: var(--danger-active);
+}
+
 .secondaryAction,
 .iconControl {
   background: var(--surface-raised);
   color: var(--text);
+}
+
+:where(.secondaryAction, .iconControl):hover:not(:disabled) {
+  background: color-mix(in srgb, var(--surface-raised) 88%, var(--text) 12%);
+}
+
+:where(.secondaryAction, .iconControl):active:not(:disabled) {
+  background: color-mix(in srgb, var(--surface-raised) 94%, var(--text) 6%);
 }
 
 .textControl {
@@ -47,7 +70,7 @@
   padding: 0;
 }
 
-:where(.primaryAction, .secondaryAction, .textControl, .iconControl):disabled {
+:where(.primaryAction, .dangerAction, .secondaryAction, .textControl, .iconControl):disabled {
   cursor: not-allowed;
   opacity: 0.55;
 }

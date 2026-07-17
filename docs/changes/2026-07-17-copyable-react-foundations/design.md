@@ -136,6 +136,17 @@ Use copy-owned reference source. Reorganize the CSS baseline under clear respons
 - User confirmation: confirmed throughout the 2026-07-17 planning conversation.
 - Reference artifacts: `spaces/shared/visual-style-guide.md`, `spaces/shared/DESIGN.md`, and the existing Foundations Storybook.
 
+### User Flow And Information Architecture
+
+- Developers enter through Storybook, inspect foundations and supported component states, then copy only the source and tests relevant to their application.
+- AuthenticationForm demonstrates sign-in and sign-up field composition, native field validation, password confirmation, pending submission, and provider failure presentation without owning routing or identity-provider behavior.
+
+### Responsive Composition
+
+- Primitive controls wrap without horizontal overflow and preserve readable labels and touch targets at narrow widths.
+- AuthenticationForm remains a single narrow column centered within the available canvas, with padding that prevents viewport-edge collisions.
+- Application-specific shells and responsive navigation remain outside this reference slice.
+
 ### Component And State Contract
 
 - Components expose semantic variants, sizes, pending, disabled, invalid, label, supporting text, and error state as appropriate.
@@ -154,6 +165,7 @@ Use copy-owned reference source. Reorganize the CSS baseline under clear respons
 
 - Use shared tokens, spacing, controls, and radii.
 - Filled action-blue controls use white foreground by default.
+- Filled Action and Danger controls darken on hover and again on press. Neutral and ghost controls gain a lighter raised surface on hover and settle slightly darker when pressed.
 - Borders appear only where controls need an explicit boundary.
 
 ### Open Design Questions

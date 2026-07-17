@@ -98,12 +98,17 @@ The system SHALL provide inspectable global defaults for reset, typography, sele
 
 | Requirement / Scenario | Evidence | Proves | Status |
 |---|---|---|---|
-| S1/R1-S1, S1/R1-S2 | `npm run check` | Required semantic roles exist and vague project aliases are absent. | Passing 2026-07-17 |
+| S1/R1-S1 | `npm run check` | Required semantic roles exist and vague project aliases are absent. | Passing 2026-07-17 |
+| S1/R1-S2 | `src/components/` and `src/styles/primitives.css` source inspection | Reference recipes consume semantic variables rather than embedded palette values. | Passing 2026-07-17 |
 | S1/R2-S1 | `npm run build:storybook` and `src/styles/global.css` inspection | Baseline compiles and focus/reduced-motion rules are present. | Passing 2026-07-17 |
 
 #### Verification Gaps
 
-- Product-specific override behavior remains the consuming application's responsibility.
+- Runtime proof of a product-specific override remains the consuming application's responsibility.
+
+#### Story Notes
+
+- Compatibility aliases in `tokens.css` are temporary migration aids, not additions to the canonical vocabulary.
 
 ### Story S2: Copy Accessible React References
 
@@ -165,14 +170,18 @@ The system SHALL provide sign-in and sign-up AuthenticationForm examples that co
 
 | Requirement / Scenario | Evidence | Proves | Status |
 |---|---|---|---|
-| S2/R1-S1 | `src/components/Controls.stories.tsx` and `npm run build:storybook` | Supported controls and visual states render. | Passing 2026-07-17 |
+| S2/R1-S1 | `src/components/Controls.stories.tsx`, `src/components/components.test.tsx`, axe inspection, and `npm run build:storybook` | Supported controls render with semantic names, disabled/invalid state, and token styling. | Passing 2026-07-17 |
 | S2/R1-S2 | `src/components/components.test.tsx` - pending Button test | Busy state disables duplicate activation. | Passing 2026-07-17 |
 | S2/R2-S1 | `src/components/components.test.tsx` - field error test | Invalid fields retain their label and expose the error description. | Passing 2026-07-17 |
 | S2/R3-S1, S2/R3-S2 | `src/patterns/AuthenticationForm/AuthenticationForm.test.tsx` | Confirmation renders, mismatch blocks delegation, and valid values delegate. | Passing 2026-07-17 |
 
 #### Verification Gaps
 
-- The initial Storybook visual baseline was user-confirmed on 2026-07-17.
+- Provider integration is intentionally application-owned and not verified here.
+
+#### Story Notes
+
+- Native browser validation handles required and email constraints; the pattern owns password-match validation and delegates valid values.
 - Provider integration is intentionally application-owned and not verified here.
 
 ## Cross-Story Concerns
@@ -183,6 +192,10 @@ The system SHALL provide sign-in and sign-up AuthenticationForm examples that co
 ## Open Decisions
 
 - None for the implemented slice.
+
+## Notes
+
+- UI Foundations remains pre-release. Reference APIs may evolve as real application adoption produces evidence.
 
 ## Completion Criteria
 

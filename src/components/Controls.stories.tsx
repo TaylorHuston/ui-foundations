@@ -9,6 +9,7 @@ import styles from './Controls.stories.module.css'
 function ControlReference() {
   return (
     <main className={styles.reference}>
+      <h1>Control references</h1>
       <section>
         <h2>Buttons</h2>
         <div className={styles.row}>

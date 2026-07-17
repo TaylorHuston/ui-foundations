@@ -13,4 +13,4 @@
 .input[aria-invalid="true"] { border-color: var(--danger); }
 .supporting, .error { font-size: var(--font-size-label); }
 .supporting { color: var(--text-muted); }
-.error { color: var(--danger); }
+.error { color: var(--danger-text); }

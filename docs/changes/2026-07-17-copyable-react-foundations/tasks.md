@@ -5,8 +5,8 @@ status: in_review
 
 ## Resume Here
 
-- Last completed action: implementation, focused tests, Storybook build, and desktop/mobile visual inspection completed.
-- Next action: run scoped SDD validation and independent review.
+- Last completed action: independent review findings consolidated and safe remediation applied.
+- Next action: rerun all verification, Epic validation, and regression review against the remediated diff.
 - Active branch/ref: `change/copyable-react-foundations`
 - Expected dirty files: Change, Epic, ADR, CSS, component, pattern, Storybook, test, and supporting documentation files.
 - Known blockers: none.
@@ -38,7 +38,7 @@ status: in_review
 
 ### 4. Verification
 
-- [x] Add focused tests for every automatable `UIF-001/S2` Scenario.
+- [x] Add focused tests for automatable `UIF-001/S2` semantics and record visual evidence separately.
 - [x] Run `npm run check`, typecheck, tests, and Storybook production build.
 - [x] Inspect component stories at desktop and narrow widths.
 - [x] Update Epic `Implemented By`, `Verified By`, and `Verification Gaps` with durable evidence.
@@ -63,11 +63,13 @@ status: in_review
 | Date | Check | Evidence Type | What It Proves | Result |
 |---|---|---|---|---|
 | 2026-07-17 | `npm run check` | Focused contract check | UIF-001/S1 token inventory, import order, and forbidden aliases | Passing |
-| 2026-07-17 | `npm test` | Focused automated tests | UIF-001/S2 pending actions, field errors, and authentication confirmation | 5 passing |
+| 2026-07-17 | `npm test` | Focused automated tests | UIF-001/S2 pending actions, labels/errors, icon names, disabled controls, native validation, mode changes, and authentication confirmation | 10 passing |
 | 2026-07-17 | `npm run typecheck` | Broad supporting gate | React reference type contracts | Passing |
 | 2026-07-17 | `npm run build:storybook` | Broad supporting gate | Foundation, component, and pattern stories compile | Passing |
-| 2026-07-17 | Playwright desktop/mobile capture | Manual UI support | Stories render nonblank without horizontal overflow at 1280px and 390px | Passing; user confirmation pending |
-| 2026-07-17 | `sdd validate ui-foundations --change 2026-07-17-copyable-react-foundations` | Structural gate | Active Change and repository artifacts follow the managed SDD structure | Passing, no findings |
+| 2026-07-17 | Playwright desktop/mobile capture | Manual UI support | Stories render nonblank without horizontal overflow at 1280px and 390px | Passing; user confirmed |
+| 2026-07-17 | `sdd validate ui-foundations --change 2026-07-17-copyable-react-foundations` | Structural gate | Active Change structure | Passing, no findings |
+| 2026-07-17 | Independent review discovery | PR-style review | Artifact truth, code failure cases, token enforcement, and accessibility | Required findings remediated; regression review pending |
+| 2026-07-17 | Playwright hover and axe inspection | Deterministic browser evidence | Action and Danger darken, neutral controls lighten, Danger uses white text, and Controls has no axe violations | Passing |
 
 ## Manual UI Confirmation
 
@@ -84,10 +86,12 @@ status: in_review
 
 ## Closeout
 
-- Change status: in_progress
+- Change status: in_review
 - Epic files updated: yes
 - ADR status: accepted
 - Release communication current: yes
 - `sdd-review` verdict: pending
 - Manual UI confirmation status: user confirmed
 - PR / merge state: not started
+- Deferred scope accepted: yes
+- Change moved to `docs/changes/closed/`: no

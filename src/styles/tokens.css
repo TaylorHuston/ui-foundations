@@ -22,7 +22,11 @@
 
   --success: #4ade80;
   --warning: #fbbf24;
-  --danger: #dc5060;
+  --danger: #ce4053;
+  --danger-hover: #bb3649;
+  --danger-active: #a92f40;
+  --danger-foreground: #ffffff;
+  --danger-text: #ef7580;
 
   --focus-ring: var(--action);
   --selection: color-mix(in srgb, var(--action) 35%, transparent);
