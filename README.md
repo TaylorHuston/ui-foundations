@@ -37,6 +37,11 @@ This repository does not currently ship React components. If repeated applicatio
 ## Structure
 
 ```text
+.storybook/
+  main.ts
+  preview.tsx
+stories/
+  Foundations.stories.tsx
 src/
   accessibility.css
   base.css
@@ -44,18 +49,54 @@ src/
   reset.css
   tokens.css
 scripts/
+  capture-comparison.mjs
   check.mjs
 ```
 
 ## Validation
 
-No installation is required.
+The CSS starter itself has no runtime dependencies. Install development dependencies only when working with the reference Storybook or comparison tooling.
 
 ```bash
+npm install
 npm run check
+npm run check:all
 ```
 
-The check verifies the starter file inventory, import order, required baseline tokens, and absence of unresolved token placeholders or shared brand-color defaults.
+`npm run check` verifies the starter file inventory, import order, required baseline tokens, and absence of unresolved token placeholders or shared brand-color defaults. `npm run check:all` also typechecks and builds the reference Storybook.
+
+## Cross-App Comparison
+
+UI Foundations can compose application-owned Storybooks into one navigation surface. Composition keeps every story and production component in its owning repository; it does not create a shared runtime dependency.
+
+Start the matched app catalogs and this hub in separate terminals:
+
+```bash
+# spaces/code/dashboard-spike
+pnpm --filter @dashboard/web storybook:compare
+
+# spaces/code/coordinator-local
+pnpm --filter @coordinator-local/web storybook:compare
+
+# spaces/code/ui-foundations
+npm run storybook
+```
+
+Open `http://127.0.0.1:6008`. Dashboard is composed from port `6006` and Coordinator from port `6007`. Override either source when needed:
+
+```bash
+DASHBOARD_STORYBOOK_URL=https://example.test/dashboard \
+COORDINATOR_STORYBOOK_URL=https://example.test/coordinator \
+npm run storybook
+```
+
+Each participating app exposes the same stable `Comparison/Workbench` story names for desktop, mobile, file-browser, empty, and error states. Generate a fixed-viewport side-by-side report after the app catalogs are running:
+
+```bash
+npm run compare:capture
+```
+
+The ignored `comparison-report/index.html` is a review artifact, not design-system truth. Use it to spot drift, choose deliberate differences, and route changes back through each application's own SDD artifacts and tests.
 
 ## Penpot Relationship
 
