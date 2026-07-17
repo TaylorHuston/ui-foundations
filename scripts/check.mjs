@@ -34,6 +34,8 @@ for (const requiredToken of [
   "--background:",
   "--surface:",
   "--text-primary:",
+  "--action:",
+  "--action-foreground:",
   "--focus-ring:",
   "--radius-control:",
   "--space-2:",

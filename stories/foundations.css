@@ -1,0 +1,131 @@
+.foundations-reference {
+  display: grid;
+  gap: var(--space-8);
+  min-height: 100vh;
+  padding: var(--space-8);
+  background: var(--background);
+}
+
+.foundations-reference section {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.foundations-reference h1,
+.foundations-reference h2,
+.foundations-reference p {
+  margin: 0;
+}
+
+.foundations-header {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.foundations-header > p,
+.foundations-reference h2,
+.type-samples span,
+.control-row label > span {
+  color: var(--text-muted);
+  font-size: var(--font-size-label);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.foundations-header h1 {
+  font-size: var(--font-size-title);
+}
+
+.foundations-header > span,
+.type-samples p {
+  color: var(--text-secondary);
+}
+
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.swatch {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.swatch-color {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: var(--radius-control);
+}
+
+.swatch code,
+.technical-sample {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.type-samples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.type-samples > div {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--surface);
+  border-radius: var(--radius-panel);
+}
+
+.control-row {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--surface);
+  border-radius: var(--radius-panel);
+}
+
+.control-row button,
+.control-row input {
+  min-height: var(--control-standard);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface-raised);
+  padding: 0 var(--space-3);
+}
+
+.control-row button {
+  background: var(--action);
+  color: var(--action-foreground);
+  font-weight: 700;
+}
+
+.control-row .secondary-control {
+  background: var(--surface-raised);
+  color: var(--text-primary);
+}
+
+.control-row label {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.status-sample {
+  align-self: center;
+  color: var(--success);
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 680px) {
+  .foundations-reference {
+    padding: var(--space-4);
+  }
+
+  .type-samples {
+    grid-template-columns: 1fr;
+  }
+}
