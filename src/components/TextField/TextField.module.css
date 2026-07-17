@@ -1,0 +1,16 @@
+.field { display: grid; gap: var(--space-1); }
+.label { color: var(--text-secondary); font-size: var(--font-size-ui); font-weight: 600; }
+.input {
+  inline-size: 100%;
+  min-block-size: var(--control-standard);
+  border: 1px solid var(--control-boundary);
+  border-radius: var(--radius-control);
+  padding-inline: var(--space-3);
+  background: var(--surface);
+  color: var(--text);
+}
+.input::placeholder { color: var(--text-muted); }
+.input[aria-invalid="true"] { border-color: var(--danger); }
+.supporting, .error { font-size: var(--font-size-label); }
+.supporting { color: var(--text-muted); }
+.error { color: var(--danger-text); }

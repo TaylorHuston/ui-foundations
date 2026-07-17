@@ -92,7 +92,7 @@
 .control-row button,
 .control-row input {
   min-height: var(--control-standard);
-  border: var(--border-width) solid var(--border-strong);
+  border: 1px solid var(--control-boundary);
   border-radius: var(--radius-control);
   background: var(--surface-raised);
   padding: 0 var(--space-3);

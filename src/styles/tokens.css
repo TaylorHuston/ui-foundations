@@ -1,0 +1,69 @@
+:root {
+  color-scheme: dark;
+
+  --canvas: #09090b;
+  --surface: #18181b;
+  --surface-raised: #27272a;
+
+  --text: #f4f4f5;
+  --text-secondary: #d4d4d8;
+  --text-muted: #a1a1aa;
+
+  --border: #3f3f46;
+  --control-boundary: #71717a;
+
+  --action: #356fa3;
+  --action-hover: #2e6292;
+  --action-active: #28557f;
+  --action-foreground: #ffffff;
+  --identity: #14263d;
+  --identity-foreground: #ffffff;
+  --info: #356fa3;
+
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #ce4053;
+  --danger-hover: #bb3649;
+  --danger-active: #a92f40;
+  --danger-foreground: #ffffff;
+  --danger-text: #ef7580;
+
+  --focus-ring: var(--action);
+  --selection: color-mix(in srgb, var(--action) 35%, transparent);
+  --selection-foreground: var(--text);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  --radius-row: 2px;
+  --radius-control: 4px;
+  --radius-panel: 6px;
+
+  --control-dense: 28px;
+  --control-toolbar: 32px;
+  --control-standard: 36px;
+  --control-touch: 44px;
+
+  --motion-fast: 150ms;
+  --motion-standard: 200ms;
+
+  --font-size-label: 0.75rem;
+  --font-size-mono: 0.8125rem;
+  --font-size-ui: 0.875rem;
+  --font-size-content: 1rem;
+  --font-size-section: 1.125rem;
+  --font-size-title: 1.5rem;
+
+  /* Temporary aliases ease adoption from the original pre-release starter. */
+  --background: var(--canvas);
+  --foreground: var(--text);
+  --text-primary: var(--text);
+  --border-strong: var(--control-boundary);
+  --control-icon: var(--control-toolbar);
+}
