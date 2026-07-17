@@ -1,4 +1,4 @@
-@import "./tokens.css";
-@import "./reset.css";
-@import "./base.css";
-@import "./accessibility.css";
+@import "./styles/fonts.css";
+@import "./styles/tokens.css";
+@import "./styles/global.css";
+@import "./styles/primitives.css";

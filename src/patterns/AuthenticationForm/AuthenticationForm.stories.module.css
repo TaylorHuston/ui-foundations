@@ -1,0 +1,7 @@
+.canvas {
+  display: grid;
+  place-items: center;
+  min-block-size: 100vh;
+  padding: var(--space-6);
+  background: var(--canvas);
+}

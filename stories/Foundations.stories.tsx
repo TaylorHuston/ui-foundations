@@ -6,10 +6,10 @@ const colors = [
   ['Raised', 'var(--surface-raised)', '#27272A'],
   ['Primary text', 'var(--text-primary)', '#F4F4F5'],
   ['Secondary text', 'var(--text-secondary)', '#D4D4D8'],
-  ['Action / information', 'var(--action)', '#3F6F99'],
+  ['Action / information', 'var(--action)', '#356FA3'],
   ['Success', 'var(--success)', '#4ADE80'],
   ['Warning', 'var(--warning)', '#FBBF24'],
-  ['Danger', 'var(--danger)', '#F87171'],
+  ['Danger', 'var(--danger)', '#DC5060'],
 ] as const
 
 function FoundationsReference() {

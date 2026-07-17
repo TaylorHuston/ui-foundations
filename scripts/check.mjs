@@ -1,49 +1,76 @@
-import { readFile } from "node:fs/promises";
+import { readFile } from 'node:fs/promises'
 
 const requiredFiles = [
-  "src/tokens.css",
-  "src/reset.css",
-  "src/base.css",
-  "src/accessibility.css",
-];
+  'src/styles/fonts.css',
+  'src/styles/tokens.css',
+  'src/styles/global.css',
+  'src/styles/primitives.css',
+]
 
-const index = await readFile("src/index.css", "utf8");
+const index = await readFile('src/index.css', 'utf8')
 const sources = await Promise.all(
-  requiredFiles.map(async (path) => [path, await readFile(path, "utf8")]),
-);
+  requiredFiles.map(async (path) => [path, await readFile(path, 'utf8')]),
+)
 
 for (const path of requiredFiles) {
-  const importPath = path.replace("src/", "./");
+  const importPath = path.replace('src/', './')
   if (!index.includes(`@import "${importPath}";`)) {
-    throw new Error(`src/index.css does not import ${path}`);
+    throw new Error(`src/index.css does not import ${path}`)
   }
 }
 
-const combined = sources.map(([, source]) => source).join("\n");
+const combined = sources.map(([, source]) => source).join('\n')
 if (/--[\w-]+:\s*;/.test(combined)) {
-  throw new Error("A CSS custom property has an unresolved empty value");
+  throw new Error('A CSS custom property has an unresolved empty value')
 }
 
-for (const projectToken of ["--primary:", "--accent:"]) {
+for (const projectToken of ['--primary:', '--secondary:', '--accent:']) {
   if (combined.includes(projectToken)) {
-    throw new Error(`${projectToken.slice(0, -1)} must remain project-owned`);
+    throw new Error(`${projectToken.slice(0, -1)} must remain project-owned`)
   }
 }
 
-for (const requiredToken of [
-  "--background:",
-  "--surface:",
-  "--text-primary:",
-  "--action:",
-  "--action-foreground:",
-  "--focus-ring:",
-  "--radius-control:",
-  "--space-2:",
-  "--control-touch:",
-]) {
+const requiredTokens = [
+  '--canvas:',
+  '--surface:',
+  '--surface-raised:',
+  '--text:',
+  '--text-secondary:',
+  '--text-muted:',
+  '--border:',
+  '--control-boundary:',
+  '--action:',
+  '--action-hover:',
+  '--action-active:',
+  '--action-foreground:',
+  '--identity:',
+  '--identity-foreground:',
+  '--info:',
+  '--success:',
+  '--warning:',
+  '--danger:',
+  '--focus-ring:',
+  '--selection:',
+  '--selection-foreground:',
+  '--space-1:',
+  '--space-12:',
+  '--radius-row:',
+  '--radius-control:',
+  '--radius-panel:',
+  '--control-dense:',
+  '--control-toolbar:',
+  '--control-standard:',
+  '--control-touch:',
+  '--motion-fast:',
+  '--motion-standard:',
+  '--font-sans:',
+  '--font-mono:',
+]
+
+for (const requiredToken of requiredTokens) {
   if (!combined.includes(requiredToken)) {
-    throw new Error(`Missing required starter token ${requiredToken.slice(0, -1)}`);
+    throw new Error(`Missing required starter token ${requiredToken.slice(0, -1)}`)
   }
 }
 
-console.log("UI Foundations checks passed");
+console.log('UI Foundations checks passed')
