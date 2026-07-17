@@ -6,7 +6,7 @@ status: in_review
 ## Resume Here
 
 - Last completed action: remediation verification and regression-focused review passed against implementation commit `08459c2`.
-- Next action: request user authorization for merge and closeout.
+- Next action: close the merged Change through the SDD CLI.
 - Active branch/ref: `change/copyable-react-foundations`
 - Expected dirty files: none in the implementation repository.
 - Known blockers: none.
@@ -95,6 +95,6 @@ status: in_review
 - Release communication current: yes
 - `sdd-review` verdict: ready; reviewed implementation commit `08459c2`
 - Manual UI confirmation status: user confirmed
-- PR / merge state: not started
+- PR / merge state: merged locally into `develop` at `8e57f04`
 - Deferred scope accepted: yes
 - Change moved to `docs/changes/closed/`: no
