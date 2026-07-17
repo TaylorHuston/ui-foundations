@@ -66,11 +66,14 @@ pnpm --filter @dashboard/web storybook:compare
 # spaces/code/coordinator-local
 pnpm --filter @coordinator-local/web storybook:compare
 
+# spaces/code/49th-floor-platform
+npm run storybook:compare --workspace @49th-floor/frontend
+
 # spaces/code/ui-foundations
 npm run storybook
 ```
 
-Open `http://127.0.0.1:6008`. Dashboard defaults to port `6006` and Coordinator to `6007`; `DASHBOARD_STORYBOOK_URL` and `COORDINATOR_STORYBOOK_URL` can override those sources. With both app catalogs running, `npm run compare:capture` generates the ignored `comparison-report/index.html` review artifact.
+Open `http://127.0.0.1:6008`. Dashboard defaults to port `6006`, Coordinator to `6007`, and 49th Floor to `6009`; `DASHBOARD_STORYBOOK_URL`, `COORDINATOR_STORYBOOK_URL`, and `FORTY_NINTH_FLOOR_STORYBOOK_URL` can override those sources. The hub composes all three catalogs through Storybook references. With all app catalogs running, `npm run compare:capture` generates the ignored `comparison-report/index.html` review artifact, including the shared `Navigation detail` row.
 
 Comparison detects drift; it does not make this repository the runtime owner of application components.
 

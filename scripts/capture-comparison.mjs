@@ -13,12 +13,17 @@ const applications = [
     name: 'Coordinator-Local',
     url: process.env.COORDINATOR_STORYBOOK_URL ?? 'http://127.0.0.1:6007',
   },
+  {
+    id: '49th-floor',
+    name: '49th Floor',
+    url: process.env.FORTY_NINTH_FLOOR_STORYBOOK_URL ?? 'http://127.0.0.1:6009',
+  },
 ]
 
 const comparisons = [
   { id: 'desktop', name: 'Desktop workbench', viewport: { width: 1440, height: 900 } },
   { id: 'mobile', name: 'Mobile workbench', viewport: { width: 390, height: 844 } },
-  { id: 'file-browser', name: 'File browser', viewport: { width: 1000, height: 800 } },
+  { id: 'file-browser', name: 'Navigation detail', viewport: { width: 1000, height: 800 } },
   { id: 'empty', name: 'Empty state', viewport: { width: 1000, height: 700 } },
   { id: 'error', name: 'Error state', viewport: { width: 1000, height: 700 } },
 ]
