@@ -1,0 +1,148 @@
+.foundations-reference {
+  display: grid;
+  gap: var(--space-8);
+  min-inline-size: 0;
+  min-height: 100vh;
+  padding: var(--space-8);
+  background: var(--background);
+}
+
+.foundations-reference > *,
+.swatch-grid,
+.type-samples,
+.control-row {
+  min-inline-size: 0;
+}
+
+.foundations-reference section {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.foundations-reference h1,
+.foundations-reference h2,
+.foundations-reference p {
+  margin: 0;
+}
+
+.foundations-header {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.foundations-header > p,
+.foundations-reference h2,
+.type-samples span,
+.control-row label > span {
+  color: var(--text-muted);
+  font-size: var(--font-size-label);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.foundations-header h1 {
+  font-size: var(--font-size-title);
+}
+
+.foundations-header > span,
+.type-samples p {
+  color: var(--text-secondary);
+}
+
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+  gap: var(--space-3);
+}
+
+.swatch {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.swatch > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+.swatch-color {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: var(--radius-control);
+}
+
+.swatch code,
+.technical-sample {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  overflow-wrap: anywhere;
+}
+
+.swatch code {
+  max-inline-size: 100%;
+  font-size: var(--font-size-mono);
+  overflow-wrap: anywhere;
+}
+
+.swatch strong {
+  overflow-wrap: anywhere;
+}
+
+.type-samples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.type-samples > div {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--surface);
+  border-radius: var(--radius-panel);
+}
+
+.control-row {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--surface);
+  border-radius: var(--radius-panel);
+}
+
+.control-row button {
+  font-weight: 700;
+}
+
+.control-row label {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.control-row input {
+  min-inline-size: min(100%, 220px);
+}
+
+.status-sample {
+  align-self: center;
+  color: var(--success);
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 680px) {
+  .foundations-reference {
+    padding: var(--space-4);
+  }
+
+  .type-samples {
+    grid-template-columns: 1fr;
+  }
+
+  .swatch-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

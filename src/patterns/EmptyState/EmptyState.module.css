@@ -1,0 +1,44 @@
+.empty {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: var(--space-3);
+  min-block-size: 240px;
+  padding: var(--space-8) var(--space-4);
+  color: var(--text);
+  text-align: center;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  inline-size: var(--control-touch);
+  block-size: var(--control-touch);
+  border-radius: var(--radius-control);
+  background: var(--identity);
+  color: var(--identity-foreground);
+}
+
+.copy {
+  display: grid;
+  gap: var(--space-1);
+  max-inline-size: 420px;
+}
+
+.copy h2,
+.copy p {
+  margin: 0;
+}
+
+.copy h2 {
+  font-size: var(--font-size-section);
+}
+
+.copy p {
+  color: var(--text-muted);
+  font-size: var(--font-size-ui);
+}
+
+.action {
+  margin-block-start: var(--space-1);
+}

@@ -1,0 +1,66 @@
+.label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-inline-size: 240px;
+  color: var(--text);
+  cursor: pointer;
+  font-size: var(--font-size-ui);
+}
+
+.label:has([data-disabled]) {
+  cursor: not-allowed;
+}
+
+.copy {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.text {
+  line-height: 1.35;
+}
+
+.description {
+  color: var(--text-muted);
+  font-size: var(--font-size-label);
+}
+
+.control {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  inline-size: 36px;
+  block-size: 20px;
+  padding: 2px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface-raised);
+  transition: background-color var(--motion-fast) ease;
+}
+
+.control[data-checked] {
+  background: var(--action);
+}
+
+.control[data-disabled] {
+  opacity: 0.5;
+}
+
+.thumb {
+  inline-size: 16px;
+  block-size: 16px;
+  border-radius: 50%;
+  background: var(--text);
+  transform: translateX(0);
+  transition: transform var(--motion-fast) ease;
+}
+
+.control[data-checked] .thumb {
+  transform: translateX(16px);
+}
+
+@media (pointer: coarse) {
+  .label { min-block-size: var(--control-touch); }
+}

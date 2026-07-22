@@ -1,0 +1,142 @@
+.patternPage {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--space-6);
+  min-block-size: 100vh;
+  padding: var(--space-8);
+  background: var(--canvas);
+  color: var(--text);
+}
+
+.patternPage > h1,
+.paneContent h2,
+.document h1,
+.editorContent h2,
+.editorContent p,
+.status {
+  margin: 0;
+}
+
+.patternPage > h1 {
+  font-size: var(--font-size-title);
+}
+
+.browserFrame {
+  inline-size: min(100%, 320px);
+  min-block-size: 520px;
+  padding: var(--space-4);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+}
+
+.editorFrame {
+  inline-size: min(100%, 800px);
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+}
+
+.editorContent {
+  min-block-size: 320px;
+  padding: var(--space-8);
+  background: var(--canvas);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  white-space: pre-wrap;
+}
+
+.status,
+.eyebrow {
+  color: var(--text-muted);
+  font-size: var(--font-size-label);
+}
+
+.paneContent,
+.mainPane {
+  min-inline-size: 0;
+}
+
+.paneContent {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.paneContent h2 {
+  font-size: var(--font-size-section);
+}
+
+.paneContent dl {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.paneContent dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  font-size: var(--font-size-ui);
+}
+
+.paneContent dt {
+  color: var(--text-muted);
+}
+
+.paneContent dd {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.document {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  min-block-size: 560px;
+  padding: var(--space-10) clamp(var(--space-4), 8%, var(--space-12));
+}
+
+.document h1 {
+  font-size: var(--font-size-title);
+}
+
+.document p:last-child {
+  max-inline-size: 68ch;
+  color: var(--text-secondary);
+}
+
+.railReference {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  min-block-size: 100vh;
+  background: var(--canvas);
+  color: var(--text);
+}
+
+.railCanvas {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: var(--space-3);
+  padding: clamp(var(--space-6), 8vw, var(--space-12));
+}
+
+.railCanvas h1,
+.railCanvas p {
+  margin: 0;
+}
+
+.railCanvas p:last-child {
+  max-inline-size: 56ch;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 640px) {
+  .patternPage {
+    padding: var(--space-4);
+  }
+
+  .editorContent {
+    padding: var(--space-4);
+  }
+}

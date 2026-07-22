@@ -1,0 +1,44 @@
+.shell {
+  display: grid;
+  grid-template-columns: minmax(208px, 280px) minmax(0, 1fr) minmax(240px, 320px);
+  min-inline-size: 0;
+  min-block-size: 480px;
+  background: var(--canvas);
+  color: var(--text);
+}
+
+.navigation,
+.main,
+.context {
+  min-inline-size: 0;
+  padding: var(--space-4);
+}
+
+.navigation,
+.context {
+  background: var(--surface);
+}
+
+.navigation {
+  border-inline-end: 1px solid var(--border);
+}
+
+.context {
+  border-inline-start: 1px solid var(--border);
+}
+
+@media (max-width: 880px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .main {
+    order: -1;
+    min-block-size: 320px;
+  }
+
+  .navigation,
+  .context {
+    border-inline: 0;
+  }
+}

@@ -1,0 +1,90 @@
+/* Plain-CSS equivalents for consumers that do not copy the React references. */
+.primaryAction,
+.dangerAction,
+.secondaryAction,
+.textControl,
+.iconControl {
+  min-block-size: var(--control-standard);
+  border: 0;
+  border-radius: var(--radius-control);
+  transition:
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    opacity var(--motion-fast) ease;
+}
+
+.primaryAction {
+  padding-inline: var(--space-3);
+  background: var(--action);
+  color: var(--action-foreground);
+}
+
+.primaryAction:hover:not(:disabled) {
+  background: var(--action-hover);
+}
+
+.primaryAction:active:not(:disabled) {
+  background: var(--action-active);
+}
+
+.dangerAction {
+  padding-inline: var(--space-3);
+  background: var(--danger);
+  color: var(--danger-foreground);
+}
+
+.dangerAction:hover:not(:disabled) {
+  background: var(--danger-hover);
+}
+
+.dangerAction:active:not(:disabled) {
+  background: var(--danger-active);
+}
+
+.secondaryAction,
+.iconControl {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+:where(.secondaryAction, .iconControl):hover:not(:disabled) {
+  background: color-mix(in srgb, var(--surface-raised) 88%, var(--text) 12%);
+}
+
+:where(.secondaryAction, .iconControl):active:not(:disabled) {
+  background: color-mix(in srgb, var(--surface-raised) 94%, var(--text) 6%);
+}
+
+.textControl {
+  padding-inline: var(--space-3);
+  border: 1px solid var(--control-boundary);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.iconControl {
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--control-toolbar);
+  min-block-size: var(--control-toolbar);
+  padding: 0;
+}
+
+:where(.primaryAction, .dangerAction, .secondaryAction, .textControl, .iconControl):disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+@media (pointer: coarse) {
+  .primaryAction,
+  .dangerAction,
+  .secondaryAction,
+  .textControl,
+  .iconControl {
+    min-block-size: var(--control-touch);
+  }
+
+  .iconControl {
+    inline-size: var(--control-touch);
+  }
+}

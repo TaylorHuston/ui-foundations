@@ -1,0 +1,62 @@
+.label {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--text);
+  cursor: pointer;
+  font-size: var(--font-size-ui);
+}
+
+.label:has([data-disabled]) {
+  cursor: not-allowed;
+}
+
+.control {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  inline-size: 18px;
+  block-size: 18px;
+  margin-block-start: 1px;
+  border: 1px solid var(--control-boundary);
+  border-radius: var(--radius-row);
+  background: var(--canvas);
+  color: var(--action-foreground);
+}
+
+.control[data-checked],
+.control[data-indeterminate] {
+  border-color: var(--action);
+  background: var(--action);
+}
+
+.control[data-disabled] {
+  opacity: 0.5;
+}
+
+.indicator {
+  display: grid;
+  place-items: center;
+}
+
+.indicator[data-unchecked] {
+  visibility: hidden;
+}
+
+.copy {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.text {
+  line-height: 1.35;
+}
+
+.description {
+  color: var(--text-muted);
+  font-size: var(--font-size-label);
+}
+
+@media (pointer: coarse) {
+  .label { min-block-size: var(--control-touch); }
+}
