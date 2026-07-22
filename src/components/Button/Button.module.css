@@ -39,3 +39,7 @@
 .danger { background: var(--danger); color: var(--danger-foreground); }
 .danger:hover:not(:disabled) { background: var(--danger-hover); }
 .danger:active:not(:disabled) { background: var(--danger-active); }
+
+@media (pointer: coarse) {
+  .button { min-block-size: var(--control-touch); }
+}

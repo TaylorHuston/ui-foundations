@@ -1,0 +1,75 @@
+.reference {
+  display: grid;
+  align-content: start;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-8);
+  min-block-size: 100vh;
+  padding: var(--space-8);
+  background: var(--canvas);
+}
+
+.reference h1 {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: var(--font-size-title);
+}
+
+.reference section {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--space-3);
+  min-inline-size: 0;
+  padding: var(--space-4);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+}
+
+.reference h2,
+.bodyCopy {
+  margin: 0;
+}
+
+.reference h2 {
+  font-size: var(--font-size-section);
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.bodyCopy {
+  color: var(--text-secondary);
+  font-size: var(--font-size-ui);
+}
+
+.sheetNavigation {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.sheetNavigation a,
+.sheetNavigation button {
+  display: flex;
+  min-block-size: var(--control-touch);
+  align-items: center;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--text-secondary);
+  padding-inline: var(--space-3);
+  text-align: start;
+  text-decoration: none;
+}
+
+.sheetNavigation a:hover,
+.sheetNavigation button:hover,
+.sheetNavigation a[aria-current='page'] {
+  background: var(--surface-raised);
+  color: var(--text);
+}

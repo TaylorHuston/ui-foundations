@@ -16,6 +16,14 @@
   color: var(--text);
 }
 
+.button:active:not(:disabled) {
+  background: color-mix(in srgb, var(--surface-raised) 94%, var(--text) 6%);
+}
+
 .button:disabled { cursor: not-allowed; opacity: 0.55; }
 .toolbar { inline-size: var(--control-toolbar); block-size: var(--control-toolbar); }
 .touch { inline-size: var(--control-touch); block-size: var(--control-touch); }
+
+@media (pointer: coarse) {
+  .button { inline-size: var(--control-touch); block-size: var(--control-touch); }
+}

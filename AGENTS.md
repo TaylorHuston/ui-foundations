@@ -8,8 +8,10 @@ Maintain copyable CSS and React references that record useful defaults without b
 
 ## Read First
 
+- Inspect the current branch, worktree status, and relevant diff. Preserve unrelated in-progress catalog work.
 - Read `README.md` for scope and intended adoption.
 - Inspect all files under `src/` before changing shared tokens or global behavior.
+- Run `sdd context . --json` inside an initialized SDD workspace and read the returned workflow before changing durable component APIs or active Change artifacts.
 - Preserve application ownership: consumers may copy and diverge from these files and components.
 
 ## Branch Policy
@@ -21,12 +23,16 @@ Maintain copyable CSS and React references that record useful defaults without b
 ## Project Rules
 
 - Keep the CSS starter standards-based and dependency-free. React references may use a dependency only when the behavior warrants it.
+- Do not add Tailwind or another utility-class framework.
 - Do not add a utility-class matrix or generate classes for token combinations.
 - Keep selectors shallow and global rules limited to resets, tokens, document foundations, and accessibility behavior.
 - Keep `primary`, `accent`, brand assets, app shells, and domain-specific component styles out of the shared baseline.
 - Keep application comparison stories in their owning applications. This repository owns canonical reference stories and may compose app catalogs, but must not become an imported runtime component owner.
 - Use TypeScript, semantic props, CSS Modules, native controls when sufficient, and Base UI for behavior-heavy accessible primitives.
 - Colocate every React reference with representative stories and focused behavioral tests.
+- Treat new components and patterns as candidates unless repository docs and real application evidence establish them as standardized references.
+- Use the reference lifecycle in `README.md`: candidate, Storybook prototype, app-owned adoption, real-application validation, then standardized reference.
+- Keep product- or domain-specific components in their owning application. Do not make Foundation-first work an application dependency unless the accepted SDD Change explicitly requires it.
 - Treat Penpot output as design input. Do not paste generated markup into the starter without reviewing semantics, accessibility, responsiveness, and maintainability.
 - Before adding a stable reusable component API or other durable behavior, establish the appropriate SDD Epic and change artifacts under `docs/`.
 

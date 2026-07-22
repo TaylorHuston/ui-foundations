@@ -2,6 +2,8 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { Button } from './Button/Button'
 import { IconButton } from './IconButton/IconButton'
+import { InlineNotice } from './InlineNotice/InlineNotice'
+import { OperationStatus } from './OperationStatus/OperationStatus'
 import { TextField } from './TextField/TextField'
 import { Textarea } from './Textarea/Textarea'
 
@@ -40,5 +42,28 @@ describe('reference controls', () => {
   it('preserves disabled semantics across button variants and sizes', () => {
     render(<Button disabled size="dense" variant="danger">Delete</Button>)
     expect(screen.getByRole('button', { name: 'Delete' })).toBeDisabled()
+  })
+
+  it('exposes operation updates without turning recovery actions into icon-only controls', () => {
+    render(
+      <OperationStatus
+        action={<Button variant="secondary">Retry save</Button>}
+        label="Save failed"
+        phase="error"
+      />,
+    )
+
+    expect(screen.getByRole('status')).toHaveTextContent('Save failed')
+    expect(screen.getByRole('button', { name: 'Retry save' })).toBeInTheDocument()
+  })
+
+  it('lets callers choose urgent notice semantics explicitly', () => {
+    render(
+      <InlineNotice role="alert" title="Workspace unavailable" tone="danger">
+        <p>Your draft remains local.</p>
+      </InlineNotice>,
+    )
+
+    expect(screen.getByRole('alert', { name: 'Workspace unavailable' })).toHaveTextContent('Your draft remains local.')
   })
 })

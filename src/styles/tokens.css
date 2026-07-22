@@ -1,25 +1,12 @@
 :root {
   color-scheme: dark;
 
-  --canvas: #09090b;
-  --surface: #18181b;
-  --surface-raised: #27272a;
-
+  /* Text and status meaning stay stable across identity profiles. */
   --text: #f4f4f5;
   --text-secondary: #d4d4d8;
   --text-muted: #a1a1aa;
 
-  --border: #3f3f46;
-  --control-boundary: #71717a;
-
-  --action: #356fa3;
-  --action-hover: #2e6292;
-  --action-active: #28557f;
   --action-foreground: #ffffff;
-  --identity: #14263d;
-  --identity-foreground: #ffffff;
-  --info: #356fa3;
-
   --success: #4ade80;
   --warning: #fbbf24;
   --danger: #ce4053;
@@ -28,7 +15,7 @@
   --danger-foreground: #ffffff;
   --danger-text: #ef7580;
 
-  --focus-ring: var(--action);
+  --info: var(--action-text);
   --selection: color-mix(in srgb, var(--action) 35%, transparent);
   --selection-foreground: var(--text);
 
@@ -66,4 +53,159 @@
   --text-primary: var(--text);
   --border-strong: var(--control-boundary);
   --control-icon: var(--control-toolbar);
+}
+
+/*
+ * Graphite is the default reference profile. Structural surfaces remain quiet;
+ * identity is concentrated in selections, focus, accent text, and actions.
+ */
+:root,
+[data-theme='graphite'] {
+  --canvas: #0c0c0e;
+  --surface: #202024;
+  --surface-raised: #2f2e33;
+  --border: #414047;
+  --control-boundary: #75737e;
+  --identity: #2d254d;
+  --identity-foreground: #f7f7ff;
+  --action: #725bc6;
+  --action-hover: #654eb4;
+  --action-active: #5843a0;
+  --action-text: #b3a6fe;
+  --focus-ring: #b6aaff;
+}
+
+[data-theme='steel'] {
+  --canvas: #09090b;
+  --surface: #212125;
+  --surface-raised: #303034;
+  --border: #3f3f46;
+  --control-boundary: #71717a;
+  --identity: #0c2545;
+  --identity-foreground: #ffffff;
+  --action: #1d6fb1;
+  --action-hover: #18629e;
+  --action-active: #16558a;
+  --action-text: #60a8e3;
+  --focus-ring: #398bd0;
+}
+
+[data-theme='mono'] {
+  --canvas: #0a0a0a;
+  --surface: #202020;
+  --surface-raised: #2f2f2f;
+  --border: #404040;
+  --control-boundary: #737373;
+  --identity: #2f2f2f;
+  --identity-foreground: #ffffff;
+  --action: #525252;
+  --action-hover: #464646;
+  --action-active: #3a3a3a;
+  --action-text: #b3b3b3;
+  --focus-ring: #a3a3a3;
+}
+
+[data-theme='ember'] {
+  --canvas: #0d0c0c;
+  --surface: #21201f;
+  --surface-raised: #312f2d;
+  --border: #45413f;
+  --control-boundary: #79736f;
+  --identity: #2f241e;
+  --identity-foreground: #fff8f2;
+  --action: #9f5a29;
+  --action-hover: #8c4c22;
+  --action-active: #78411e;
+  --action-text: #e19666;
+  --focus-ring: #d1885c;
+}
+
+[data-theme='moss'] {
+  --canvas: #0c0d0c;
+  --surface: #202120;
+  --surface-raised: #2f312f;
+  --border: #414441;
+  --control-boundary: #747975;
+  --identity: #202b23;
+  --identity-foreground: #f2fff5;
+  --action: #4b7657;
+  --action-hover: #42684b;
+  --action-active: #395941;
+  --action-text: #89b697;
+  --focus-ring: #7bac89;
+}
+
+[data-theme='pine'] {
+  --canvas: #0a0d0b;
+  --surface: #1b221e;
+  --surface-raised: #28312a;
+  --border: #39453d;
+  --control-boundary: #707b73;
+  --identity: #08321f;
+  --identity-foreground: #f1fff5;
+  --action: #1b6a3f;
+  --action-hover: #175c36;
+  --action-active: #134c2d;
+  --action-text: #73b989;
+  --focus-ring: #66ab7c;
+}
+
+[data-theme='tide'] {
+  --canvas: #0b0d0e;
+  --surface: #1e2223;
+  --surface-raised: #2c3132;
+  --border: #3f4547;
+  --control-boundary: #727a7d;
+  --identity: #182c2f;
+  --identity-foreground: #f2ffff;
+  --action: #2b767f;
+  --action-hover: #256871;
+  --action-active: #1f5960;
+  --action-text: #75b9c2;
+  --focus-ring: #6bb0b9;
+}
+
+[data-theme='plum'] {
+  --canvas: #0d0c0e;
+  --surface: #221f23;
+  --surface-raised: #312d33;
+  --border: #444047;
+  --control-boundary: #777279;
+  --identity: #2d2131;
+  --identity-foreground: #fff8ff;
+  --action: #7b4e85;
+  --action-hover: #6c4375;
+  --action-active: #5d3866;
+  --action-text: #bd97c5;
+  --focus-ring: #b088b9;
+}
+
+[data-theme='rosewood'] {
+  --canvas: #0e0c0d;
+  --surface: #231f20;
+  --surface-raised: #332d2f;
+  --border: #474043;
+  --control-boundary: #7a7275;
+  --identity: #331f26;
+  --identity-foreground: #fff7fa;
+  --action: #91445c;
+  --action-hover: #7f384f;
+  --action-active: #6d3043;
+  --action-text: #d28d9f;
+  --focus-ring: #c47f91;
+}
+
+[data-theme='oxblood'] {
+  --canvas: #0e0b0b;
+  --surface: #231e1e;
+  --surface-raised: #332c2c;
+  --border: #483d3d;
+  --control-boundary: #7c7070;
+  --identity: #3a1418;
+  --identity-foreground: #fff5f8;
+  --action: #8f2733;
+  --action-hover: #7c202c;
+  --action-active: #691c25;
+  --action-text: #d88287;
+  --focus-ring: #c7747a;
 }

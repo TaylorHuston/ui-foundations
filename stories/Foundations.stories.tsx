@@ -1,15 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 const colors = [
-  ['Canvas', 'var(--background)', '#09090B'],
-  ['Surface', 'var(--surface)', '#18181B'],
-  ['Raised', 'var(--surface-raised)', '#27272A'],
-  ['Primary text', 'var(--text-primary)', '#F4F4F5'],
-  ['Secondary text', 'var(--text-secondary)', '#D4D4D8'],
-  ['Action / information', 'var(--action)', '#356FA3'],
-  ['Success', 'var(--success)', '#4ADE80'],
-  ['Warning', 'var(--warning)', '#FBBF24'],
-  ['Danger', 'var(--danger)', '#CE4053'],
+  ['Canvas', '--canvas'],
+  ['Surface', '--surface'],
+  ['Raised', '--surface-raised'],
+  ['Identity', '--identity'],
+  ['Action', '--action'],
+  ['Action text', '--action-text'],
+  ['Focus', '--focus-ring'],
+  ['Primary text', '--text'],
+  ['Secondary text', '--text-secondary'],
+  ['Success', '--success'],
+  ['Warning', '--warning'],
+  ['Danger', '--danger'],
 ] as const
 
 function FoundationsReference() {
@@ -24,11 +27,11 @@ function FoundationsReference() {
       <section aria-labelledby="foundation-colors">
         <h2 id="foundation-colors">Color roles</h2>
         <div className="swatch-grid">
-          {colors.map(([name, value, hex]) => (
+          {colors.map(([name, token]) => (
             <article className="swatch" key={name}>
-              <span className="swatch-color" style={{ background: value }} />
+              <span className="swatch-color" style={{ background: `var(${token})` }} />
               <strong>{name}</strong>
-              <code>{hex}</code>
+              <code>{token}</code>
             </article>
           ))}
         </div>
@@ -53,11 +56,11 @@ function FoundationsReference() {
       <section aria-labelledby="foundation-controls">
         <h2 id="foundation-controls">Controls and states</h2>
         <div className="control-row">
-          <button type="button">Primary action</button>
-          <button className="secondary-control" type="button">Secondary</button>
+          <button className="primaryAction" type="button">Primary action</button>
+          <button className="secondaryAction" type="button">Secondary action</button>
           <label>
             <span>Search</span>
-            <input type="search" placeholder="Filter files" />
+            <input className="textControl" type="search" placeholder="Filter files" />
           </label>
           <span className="status-sample">Ready</span>
         </div>

@@ -1,9 +1,17 @@
 .foundations-reference {
   display: grid;
   gap: var(--space-8);
+  min-inline-size: 0;
   min-height: 100vh;
   padding: var(--space-8);
   background: var(--background);
+}
+
+.foundations-reference > *,
+.swatch-grid,
+.type-samples,
+.control-row {
+  min-inline-size: 0;
 }
 
 .foundations-reference section {
@@ -43,14 +51,20 @@
 
 .swatch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
   gap: var(--space-3);
 }
 
 .swatch {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2);
   min-width: 0;
+}
+
+.swatch > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .swatch-color {
@@ -63,6 +77,17 @@
 .technical-sample {
   color: var(--text-secondary);
   font-family: var(--font-mono);
+  overflow-wrap: anywhere;
+}
+
+.swatch code {
+  max-inline-size: 100%;
+  font-size: var(--font-size-mono);
+  overflow-wrap: anywhere;
+}
+
+.swatch strong {
+  overflow-wrap: anywhere;
 }
 
 .type-samples {
@@ -89,29 +114,17 @@
   border-radius: var(--radius-panel);
 }
 
-.control-row button,
-.control-row input {
-  min-height: var(--control-standard);
-  border: 1px solid var(--control-boundary);
-  border-radius: var(--radius-control);
-  background: var(--surface-raised);
-  padding: 0 var(--space-3);
-}
-
 .control-row button {
-  background: var(--action);
-  color: var(--action-foreground);
   font-weight: 700;
-}
-
-.control-row .secondary-control {
-  background: var(--surface-raised);
-  color: var(--text-primary);
 }
 
 .control-row label {
   display: grid;
   gap: var(--space-1);
+}
+
+.control-row input {
+  min-inline-size: min(100%, 220px);
 }
 
 .status-sample {
@@ -127,5 +140,9 @@
 
   .type-samples {
     grid-template-columns: 1fr;
+  }
+
+  .swatch-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

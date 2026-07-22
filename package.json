@@ -1,8 +1,14 @@
 {
   "name": "ui-foundations",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Copyable CSS and tested React references for authored application interfaces.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TaylorHuston/ui-foundations.git"
+  },
+  "homepage": "https://github.com/TaylorHuston/ui-foundations#readme",
+  "bugs": "https://github.com/TaylorHuston/ui-foundations/issues",
   "type": "module",
   "files": [
     "src"
@@ -42,5 +48,8 @@
     "typescript": "~6.0.2",
     "vite": "^8.1.1",
     "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.6.0"
   }
 }

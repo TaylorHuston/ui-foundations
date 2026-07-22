@@ -1,0 +1,48 @@
+.positioner {
+  z-index: 40;
+}
+
+.popup {
+  min-inline-size: 184px;
+  padding: var(--space-1);
+  border-radius: var(--radius-control);
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--control-toolbar);
+  padding-inline: var(--space-2);
+  border-radius: var(--radius-row);
+  color: var(--text-secondary);
+  font-size: var(--font-size-ui);
+  outline: none;
+  user-select: none;
+}
+
+.item[data-highlighted] {
+  background: var(--identity);
+  color: var(--identity-foreground);
+}
+
+.item[data-disabled] {
+  opacity: 0.5;
+}
+
+.destructive {
+  color: var(--danger-text);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  inline-size: 18px;
+  block-size: 18px;
+}
+
+@media (pointer: coarse) {
+  .item { min-block-size: var(--control-touch); }
+}

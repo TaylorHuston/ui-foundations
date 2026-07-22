@@ -3,7 +3,7 @@
 - Status: Accepted
 - Date: 2026-07-17
 - Related change: `docs/changes/2026-07-17-copyable-react-foundations/`
-- Related Epics / Stories: `UIF-001/S1`, `UIF-001/S2`
+- Related Epics / Stories: `UIF-001/S1`, `UIF-001/S2`, `UIF-001/S3`, `UIF-001/S4`
 
 ## Context
 
@@ -39,6 +39,8 @@ Reference components use TypeScript, semantic props, CSS Modules, native HTML wh
 
 - `UIF-001/S1` verifies the copyable CSS contract through `scripts/check.mjs` and Storybook compilation.
 - `UIF-001/S2` verifies semantic component behavior through focused tests, Storybook states, axe inspection, and user visual confirmation.
+- `UIF-001/S3` verifies that Base UI can supply tested overlay and selection mechanics behind small copy-owned wrappers.
+- `UIF-001/S4` verifies that application-neutral workbench compositions can remain data- and integration-agnostic.
 - Adoption in a real application remains the proof required before promoting additional patterns as stable references.
 
 ## Reconsider When

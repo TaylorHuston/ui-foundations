@@ -14,3 +14,7 @@
 .supporting, .error { font-size: var(--font-size-label); }
 .supporting { color: var(--text-muted); }
 .error { color: var(--danger-text); }
+
+@media (pointer: coarse) {
+  .input { min-block-size: var(--control-touch); }
+}

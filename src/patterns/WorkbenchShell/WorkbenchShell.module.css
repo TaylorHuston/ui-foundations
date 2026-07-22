@@ -1,0 +1,99 @@
+.shell {
+  --workbench-rail-width: 56px;
+  --workbench-navigation-width: 264px;
+  --workbench-context-width: calc(var(--workbench-rail-width) + var(--workbench-navigation-width));
+  --workbench-content-width: 824px;
+  --workbench-navigation-track: var(--workbench-navigation-width);
+  --workbench-context-track: var(--workbench-context-width);
+  --workbench-left-occupied: calc(var(--workbench-rail-width) + var(--workbench-navigation-track));
+  --workbench-safe-edge: max(var(--workbench-left-occupied), var(--workbench-context-track));
+
+  position: relative;
+  min-inline-size: 0;
+  min-block-size: 100vh;
+  overflow: hidden;
+  background: var(--canvas);
+  color: var(--text);
+}
+
+.shell[data-navigation-collapsed='true'] {
+  --workbench-navigation-track: 0px;
+}
+
+.shell[data-context-collapsed='true'] {
+  --workbench-context-track: 0px;
+}
+
+.rail,
+.navigation,
+.context {
+  position: absolute;
+  z-index: 2;
+  inset-block: 0;
+  min-inline-size: 0;
+  min-block-size: 100vh;
+  background: var(--surface);
+}
+
+.rail {
+  inset-inline-start: 0;
+  inline-size: var(--workbench-rail-width);
+}
+
+.navigation {
+  inset-inline-start: var(--workbench-rail-width);
+  inline-size: var(--workbench-navigation-width);
+  overflow: auto;
+  border-inline-end: 1px solid var(--border);
+  padding: var(--space-4);
+}
+
+.context {
+  inset-inline-end: 0;
+  inline-size: var(--workbench-context-width);
+  overflow: auto;
+  border-inline-start: 1px solid var(--border);
+  padding: var(--space-4);
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  min-inline-size: 0;
+  min-block-size: 100vh;
+  background: var(--canvas);
+}
+
+.mainContent {
+  min-inline-size: 0;
+  min-block-size: 100vh;
+}
+
+.mainContent[data-anchor='viewport'] {
+  inline-size: min(
+    var(--workbench-content-width),
+    max(0px, calc(100% - 2 * var(--workbench-safe-edge)))
+  );
+  margin-inline: auto;
+}
+
+.mainContent[data-anchor='available'] {
+  margin-inline-start: var(--workbench-left-occupied);
+  margin-inline-end: var(--workbench-context-track);
+}
+
+@media (max-width: 880px) {
+  .shell {
+    overflow: visible;
+  }
+
+  .navigation,
+  .context {
+    display: none;
+  }
+
+  .mainContent[data-anchor] {
+    inline-size: auto;
+    margin-inline: var(--workbench-rail-width) 0;
+  }
+}

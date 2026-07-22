@@ -8,6 +8,7 @@ const requiredFiles = [
 ]
 
 const index = await readFile('src/index.css', 'utf8')
+const packageManifest = JSON.parse(await readFile('package.json', 'utf8'))
 const sources = await Promise.all(
   requiredFiles.map(async (path) => [path, await readFile(path, 'utf8')]),
 )
@@ -20,6 +21,19 @@ for (const path of requiredFiles) {
 }
 
 const combined = sources.map(([, source]) => source).join('\n')
+const packageDependencies = {
+  ...packageManifest.dependencies,
+  ...packageManifest.devDependencies,
+}
+
+if (Object.keys(packageDependencies).some((dependency) => dependency.includes('tailwind'))) {
+  throw new Error('Tailwind dependencies are outside the UI Foundations architecture')
+}
+
+if (/@(?:import|use)\s+["'](?:tailwindcss|@tailwindcss)|@tailwind\b/.test(combined)) {
+  throw new Error('Tailwind directives are outside the UI Foundations architecture')
+}
+
 if (/--[\w-]+:\s*;/.test(combined)) {
   throw new Error('A CSS custom property has an unresolved empty value')
 }
@@ -43,6 +57,7 @@ const requiredTokens = [
   '--action-hover:',
   '--action-active:',
   '--action-foreground:',
+  '--action-text:',
   '--identity:',
   '--identity-foreground:',
   '--info:',
@@ -86,6 +101,12 @@ const requiredTokens = [
 for (const requiredToken of requiredTokens) {
   if (!combined.includes(requiredToken)) {
     throw new Error(`Missing required starter token ${requiredToken.slice(0, -1)}`)
+  }
+}
+
+for (const theme of ['steel', 'mono', 'graphite', 'ember', 'moss', 'pine', 'tide', 'plum', 'rosewood', 'oxblood']) {
+  if (!combined.includes(`[data-theme='${theme}']`)) {
+    throw new Error(`Missing identity theme profile ${theme}`)
   }
 }
 

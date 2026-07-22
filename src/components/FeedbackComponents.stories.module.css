@@ -1,0 +1,32 @@
+.reference {
+  display: grid;
+  align-content: start;
+  gap: var(--space-8);
+  min-block-size: 100vh;
+  padding: var(--space-8);
+  background: var(--canvas);
+}
+
+.reference > h1,
+.reference h2 {
+  margin: 0;
+}
+
+.reference > h1 { font-size: var(--font-size-title); }
+
+.reference section {
+  display: grid;
+  gap: var(--space-3);
+  inline-size: min(100%, 760px);
+}
+
+.reference h2 { font-size: var(--font-size-section); }
+
+.stack {
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .reference { padding: var(--space-4); }
+}
