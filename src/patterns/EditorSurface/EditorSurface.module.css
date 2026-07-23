@@ -1,0 +1,37 @@
+.surface {
+  --editor-content-width: 50rem;
+  --editor-text-inset: 0px;
+
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  min-block-size: 0;
+  min-inline-size: 0;
+  overflow: hidden;
+  background: var(--canvas);
+  color: var(--text);
+}
+
+.header,
+.toolbar,
+.notice,
+.editor {
+  min-inline-size: 0;
+}
+
+.header,
+.toolbar {
+  border-block-end: 1px solid var(--border);
+}
+
+.notice {
+  padding: var(--space-2) max(
+    var(--space-3),
+    calc((100% - var(--editor-content-width)) / 2 + var(--editor-text-inset))
+  );
+  background: var(--surface);
+}
+
+.editor {
+  min-block-size: 0;
+  overflow: auto;
+}

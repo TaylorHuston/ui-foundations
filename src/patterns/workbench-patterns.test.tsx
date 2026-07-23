@@ -1,7 +1,13 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { useState } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { Button } from '../components/Button/Button'
+import { InlineNotice } from '../components/InlineNotice/InlineNotice'
+import { OperationStatus } from '../components/OperationStatus/OperationStatus'
+import { SegmentedControl } from '../components/SegmentedControl/SegmentedControl'
 import { ConfirmationDialog } from './ConfirmationDialog/ConfirmationDialog'
+import { DocumentHeader } from './DocumentHeader/DocumentHeader'
+import { EditorSurface } from './EditorSurface/EditorSurface'
 import { EditorToolbar } from './EditorToolbar/EditorToolbar'
 import { EmptyState } from './EmptyState/EmptyState'
 import { FileBrowser, type FileBrowserItem } from './FileBrowser/FileBrowser'
@@ -24,8 +30,8 @@ describe('workbench pattern references', () => {
     const onSelect = vi.fn()
     render(<FileBrowser items={items} onSelect={onSelect} searchable />)
 
-    fireEvent.click(screen.getByRole('button', { name: 'Expand Notes' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Session 12.md' }))
+    fireEvent.click(screen.getByRole('treeitem', { name: 'Notes' }))
+    fireEvent.click(screen.getByRole('treeitem', { name: 'Session 12.md' }))
     expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: 'session' }))
     expect(screen.getByRole('treeitem', { name: 'Session 12.md' })).toHaveAttribute('aria-selected', 'true')
 
@@ -37,14 +43,132 @@ describe('workbench pattern references', () => {
     expect(screen.getByText('No files found.')).toBeInTheDocument()
   })
 
-  it('exposes Source and Rendered editor modes and delegates changes', () => {
+  it('moves one tree tab stop with Arrow, Home, End, Left, and Right', async () => {
+    render(<FileBrowser items={items} />)
+
+    const notes = screen.getByRole('treeitem', { name: 'Notes' })
+    const readme = screen.getByRole('treeitem', { name: 'README.md' })
+    notes.focus()
+
+    expect(screen.getAllByRole('treeitem').filter((item) => item.tabIndex === 0)).toEqual([notes])
+    fireEvent.keyDown(notes, { key: 'ArrowRight' })
+    expect(notes).toHaveAttribute('aria-expanded', 'true')
+
+    fireEvent.keyDown(notes, { key: 'ArrowRight' })
+    const session = screen.getByRole('treeitem', { name: 'Session 12.md' })
+    await waitFor(() => expect(session).toHaveFocus())
+    expect(screen.getAllByRole('treeitem').filter((item) => item.tabIndex === 0)).toEqual([session])
+
+    fireEvent.keyDown(session, { key: 'End' })
+    await waitFor(() => expect(readme).toHaveFocus())
+    fireEvent.keyDown(readme, { key: 'Home' })
+    await waitFor(() => expect(notes).toHaveFocus())
+
+    fireEvent.keyDown(notes, { key: 'ArrowDown' })
+    await waitFor(() => expect(session).toHaveFocus())
+    fireEvent.keyDown(session, { key: 'ArrowLeft' })
+    await waitFor(() => expect(notes).toHaveFocus())
+    fireEvent.keyDown(notes, { key: 'ArrowLeft' })
+    expect(notes).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('exposes text-first editor modes and delegates controlled changes', () => {
     const onModeChange = vi.fn()
-    render(<EditorToolbar mode="source" onModeChange={onModeChange} status="Saved" />)
+    const onValueChange = vi.fn()
+    render(
+      <>
+        <EditorToolbar mode="source" onModeChange={onModeChange} status="Saved" />
+        <SegmentedControl
+          label="Editor density"
+          onValueChange={onValueChange}
+          options={[
+            { label: 'Comfortable', value: 'comfortable' },
+            { disabled: true, label: 'Compact', value: 'compact' },
+          ]}
+          value="comfortable"
+        />
+      </>,
+    )
 
     expect(screen.getByRole('button', { name: 'Source' })).toHaveAttribute('aria-pressed', 'true')
     fireEvent.click(screen.getByRole('button', { name: 'Rendered' }))
     expect(onModeChange).toHaveBeenCalledWith('rendered')
-    expect(screen.getByText('Saved')).toHaveAttribute('aria-live', 'polite')
+    expect(screen.getByRole('group', { name: 'Editor density' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Comfortable' })).toHaveAttribute('aria-pressed', 'true')
+    fireEvent.click(screen.getByRole('button', { name: 'Compact' }))
+    expect(onValueChange).not.toHaveBeenCalled()
+  })
+
+  it('delegates inline document-name editing through visible actions', () => {
+    const onRename = vi.fn()
+
+    function HeaderHarness() {
+      const [editing, setEditing] = useState(false)
+      const [value, setValue] = useState('Session 12.md')
+      return (
+        <DocumentHeader
+          path="Campaign notes / Sessions"
+          rename={{
+            editing,
+            onCancel: () => setEditing(false),
+            onChange: setValue,
+            onStart: () => setEditing(true),
+            onSubmit: () => onRename(value),
+            value,
+          }}
+          title="Session 12.md"
+        />
+      )
+    }
+
+    const { rerender } = render(<HeaderHarness />)
+    fireEvent.click(screen.getByRole('button', { name: 'Rename' }))
+    const filename = screen.getByRole('textbox', { name: 'Filename' })
+    fireEvent.change(filename, { target: { value: 'Session 13.md' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Save name' }))
+    expect(onRename).toHaveBeenCalledWith('Session 13.md')
+    expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+
+    rerender(<DocumentHeader readOnlyReason="This document has a protected filename." title="tasks.md" />)
+    expect(screen.queryByRole('button', { name: 'Rename' })).not.toBeInTheDocument()
+    expect(screen.getByText('This document has a protected filename.')).toBeInTheDocument()
+  })
+
+  it('exposes stable editor regions and shared alignment variables', () => {
+    render(
+      <EditorSurface
+        ariaLabel="Markdown editor"
+        header={<p>Document identity</p>}
+        notice={<p>Recovery notice</p>}
+        style={{ '--editor-content-width': '52rem', '--editor-text-inset': '24px' }}
+        toolbar={<p>Editor actions</p>}
+      >
+        <div>Editor engine</div>
+      </EditorSurface>,
+    )
+
+    const surface = screen.getByRole('region', { name: 'Markdown editor' })
+    expect(surface).toHaveStyle({ '--editor-content-width': '52rem', '--editor-text-inset': '24px' })
+    expect(surface.querySelector('[data-slot="editor-surface-header"]')).toHaveTextContent('Document identity')
+    expect(surface.querySelector('[data-slot="editor-surface-toolbar"]')).toHaveTextContent('Editor actions')
+    expect(surface.querySelector('[data-slot="editor-surface-notice"]')).toHaveTextContent('Recovery notice')
+    expect(surface.querySelector('[data-slot="editor-surface-editor"]')).toHaveTextContent('Editor engine')
+  })
+
+  it('composes one routine live status with an assertive recovery notice', () => {
+    render(
+      <>
+        <EditorToolbar status={<OperationStatus label="Saving…" phase="pending" />} />
+        <InlineNotice actions={<Button>Retry save</Button>} role="alert" title="Save failed" tone="danger">
+          Your text remains in the editor.
+        </InlineNotice>
+      </>,
+    )
+
+    expect(screen.getAllByRole('status')).toHaveLength(1)
+    expect(screen.getByRole('alert')).toHaveTextContent('Your text remains in the editor.')
+    expect(document.querySelector('[data-slot="editor-toolbar-status"]')).not.toHaveAttribute('aria-live')
+    expect(screen.getByRole('button', { name: 'Retry save' })).toBeInTheDocument()
   })
 
   it('delegates destructive work only after explicit confirmation', async () => {
@@ -132,6 +256,8 @@ describe('workbench pattern references', () => {
     )
 
     expect(screen.getByRole('navigation', { name: 'App switcher' })).toBeInTheDocument()
+    expect(document.querySelector('[data-slot="workbench-shell"]')).toBeInTheDocument()
+    expect(document.querySelector('[data-slot="workbench-rail"]')).toBeInTheDocument()
     expect(screen.getByRole('complementary', { name: 'Files' })).toBeInTheDocument()
     expect(screen.getByRole('main', { name: 'Editor' })).toBeInTheDocument()
     expect(screen.getByRole('complementary', { name: 'Inspector' })).toBeInTheDocument()

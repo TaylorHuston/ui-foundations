@@ -4,13 +4,17 @@
   align-items: center;
   gap: var(--space-3);
   min-block-size: var(--control-touch);
-  padding: var(--space-1) var(--space-2);
+  padding-block: var(--space-1);
+  padding-inline: max(
+    var(--space-2),
+    calc((100% - var(--editor-content-width, 50rem)) / 2 + var(--editor-text-inset, 0px))
+  );
   background: var(--surface);
 }
 
 .actions,
 .trailing,
-.modes {
+.center {
   display: flex;
   align-items: center;
   gap: var(--space-1);
@@ -21,10 +25,8 @@
   justify-content: flex-end;
 }
 
-.modes {
-  padding: var(--space-1);
-  border-radius: var(--radius-control);
-  background: var(--canvas);
+.center {
+  justify-content: center;
 }
 
 .status {
@@ -37,14 +39,33 @@
 
 @media (max-width: 640px) {
   .toolbar {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: var(--space-2);
+    padding-block: var(--space-2);
   }
 
   .actions {
-    display: none;
+    order: 2;
+    flex-wrap: wrap;
   }
 
-  .modes {
-    justify-self: start;
+  .center {
+    order: 1;
+    justify-content: stretch;
+  }
+
+  .center > * {
+    flex: 1 1 auto;
+  }
+
+  .trailing {
+    order: 3;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .status {
+    flex: 1 0 100%;
   }
 }

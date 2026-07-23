@@ -48,17 +48,18 @@ export function WorkbenchShell({
       className={classes}
       data-context-collapsed={contextCollapsed || !hasContext}
       data-navigation-collapsed={navigationCollapsed || !hasNavigation}
+      data-slot="workbench-shell"
       style={style}
     >
-      <div className={styles.rail}>{rail}</div>
+      <div className={styles.rail} data-slot="workbench-rail">{rail}</div>
       {hasNavigation && !navigationCollapsed ? (
-        <aside aria-label={navigationLabel} className={styles.navigation}>{navigation}</aside>
+        <aside aria-label={navigationLabel} className={styles.navigation} data-slot="workbench-navigation">{navigation}</aside>
       ) : null}
-      <main aria-label={mainLabel} className={styles.main}>
-        <div className={styles.mainContent} data-anchor={contentAnchor}>{main}</div>
+      <main aria-label={mainLabel} className={styles.main} data-slot="workbench-main">
+        <div className={styles.mainContent} data-anchor={contentAnchor} data-slot="workbench-main-content">{main}</div>
       </main>
       {hasContext && !contextCollapsed ? (
-        <aside aria-label={contextLabel} className={styles.context}>{context}</aside>
+        <aside aria-label={contextLabel} className={styles.context} data-slot="workbench-context">{context}</aside>
       ) : null}
     </div>
   )

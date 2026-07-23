@@ -29,8 +29,8 @@ Standardized means recommended and copyable, not mandatory or automatically sync
 ## Included References
 
 - Canonical semantic tokens, ten optional dark identity profiles, reset, document defaults, accessibility behavior, and plain-CSS primitive recipes.
-- TypeScript React references for Button, IconButton, TextField, Textarea, Tooltip, Dialog, Sheet, Menu, Tabs, Checkbox, Switch, OperationStatus, and InlineNotice.
-- Minimal AuthenticationForm, FileBrowser, EditorToolbar, ConfirmationDialog, EmptyState, NavigationRail, ThreePaneShell, and inspector-capable WorkbenchShell compositions.
+- TypeScript React references for Button, IconButton, TextField, Textarea, Tooltip, Dialog, Sheet, Menu, Tabs, Checkbox, Switch, SegmentedControl, TreeView, OperationStatus, and InlineNotice.
+- Minimal AuthenticationForm, FileTree, searchable FileBrowser, DocumentHeader, EditorToolbar, EditorSurface, ConfirmationDialog, EmptyState, NavigationRail, ThreePaneShell, and inspector-capable WorkbenchShell compositions.
 - Storybook stories for foundations, control states, behavior-heavy primitives, authentication, and workbench patterns.
 - A cross-app Storybook comparison hub for application-owned workbench stories.
 
@@ -53,15 +53,19 @@ src/
     IconButton/
     Menu/
     OperationStatus/
+    SegmentedControl/
     Sheet/
     Switch/
     Tabs/
     TextField/
     Textarea/
     Tooltip/
+    TreeView/
   patterns/
     AuthenticationForm/
     ConfirmationDialog/
+    DocumentHeader/
+    EditorSurface/
     EditorToolbar/
     EmptyState/
     FileBrowser/
@@ -74,13 +78,29 @@ stories/
 
 Each React reference is colocated with its CSS Module. Behavior components and workbench patterns have grouped Storybook catalogs and focused interaction tests. The patterns own presentation structure only: applications still own data, routing, persistence, authorization, editor engines, and product-specific responsive navigation.
 
+## Editor Work Surface
+
+`EditorSurface` composes stable document-header, toolbar, notice, and editor-engine slots. Its `--editor-content-width` and `--editor-text-inset` properties align surrounding chrome with the readable document while allowing the consuming application to supply any editor implementation.
+
+`DocumentHeader` keeps document context and controlled inline renaming together. `EditorToolbar` accepts text-first command groups, a centered `SegmentedControl` mode switch, one operation-status region, and trailing actions. Routine dirty, saving, saved, and read-only feedback belongs in `OperationStatus`; conflicts and failures that require a decision belong in persistent `InlineNotice` compositions with visible actions.
+
+CodeMirror or another editor engine, Markdown parsing and decoration, exact-source rules, undo history, persistence, autosave, revision identity, and navigation remain application-owned. The Foundation reference standardizes only the visible work-surface contract.
+
 ## Workbench Shell
 
 `WorkbenchShell` is the reference for applications with an app rail, navigation sidebar, central work surface, and optional contextual sidebar. Its default desktop geometry keeps the rail and navigation on one surface and makes the right context region exactly as wide as the rail and navigation combined. Thin center-facing borders frame the work surface without turning the shell into a grid.
 
+The rail and navigation share the same semantic surface while retaining a thin divider between their interaction zones. Stable `data-slot` attributes identify the shell, rail, navigation, main work surface, readable main content, and context region for app-owned styling and inspection.
+
 Navigation and context visibility are controlled by the application. The default `viewport` content anchor prevents the readable work surface from shifting when either sidebar collapses; use `available` when the work surface should instead consume all open space. Widths remain copy-friendly CSS custom properties: `--workbench-rail-width`, `--workbench-navigation-width`, `--workbench-context-width`, and `--workbench-content-width`.
 
 Below the desktop breakpoint, persistent navigation and context regions are hidden so the application can present those same destinations in its own labeled Sheet or drawer. The rail remains available and the central region avoids horizontal page overflow.
+
+## Tree And File Navigation
+
+`TreeView` owns the generic hierarchical interaction contract: one roving Tab stop, Arrow Up and Down movement, Home and End, Right to expand or enter a branch, Left to collapse or return to the parent, and Enter or Space activation. It supports controlled or uncontrolled expansion and selection while leaving item data and product actions to the consumer.
+
+`FileTree` adds file, closed-folder, and open-folder presentation to that behavior. `FileBrowser` composes the same tree with optional flat-result search. Search remains separate from tree navigation so applications can place it elsewhere without rewriting the accessible hierarchy.
 
 ## Validation
 

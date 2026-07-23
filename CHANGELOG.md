@@ -4,6 +4,20 @@ All notable user-facing changes to UI Foundations are documented here.
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- An accessible TreeView behavior reference and file-specific FileTree with roving focus and standard hierarchical keyboard navigation.
+- Text-first SegmentedControl, DocumentHeader, and EditorSurface references for composing application-owned editors.
+- Storybook references for document editing and save, read-only, conflict, failure, and literal-source states.
+
+### Changed
+
+- FileBrowser now composes the shared FileTree behavior while retaining optional flat-result search.
+- WorkbenchShell now exposes stable region slots and a thin rail-to-navigation divider while preserving matched desktop side occupancy.
+- EditorToolbar now accepts composable center content and a single caller-owned operation status without nesting live regions.
+
 ## [0.1.0] - 2026-07-22
 
 Initial public baseline.

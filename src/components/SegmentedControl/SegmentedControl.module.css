@@ -1,0 +1,19 @@
+.control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-inline-size: 0;
+  padding: var(--space-1);
+  border-radius: var(--radius-control);
+  background: var(--canvas);
+}
+
+.control > * {
+  flex: 1 1 0;
+}
+
+@media (max-width: 420px) {
+  .control {
+    max-inline-size: 100%;
+  }
+}

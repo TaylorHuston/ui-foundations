@@ -1,6 +1,6 @@
 .shell {
   --workbench-rail-width: 56px;
-  --workbench-navigation-width: 264px;
+  --workbench-navigation-width: 288px;
   --workbench-context-width: calc(var(--workbench-rail-width) + var(--workbench-navigation-width));
   --workbench-content-width: 824px;
   --workbench-navigation-track: var(--workbench-navigation-width);
@@ -10,7 +10,7 @@
 
   position: relative;
   min-inline-size: 0;
-  min-block-size: 100vh;
+  min-block-size: 100dvh;
   overflow: hidden;
   background: var(--canvas);
   color: var(--text);
@@ -31,13 +31,14 @@
   z-index: 2;
   inset-block: 0;
   min-inline-size: 0;
-  min-block-size: 100vh;
+  min-block-size: 100dvh;
   background: var(--surface);
 }
 
 .rail {
   inset-inline-start: 0;
   inline-size: var(--workbench-rail-width);
+  border-inline-end: 1px solid var(--border);
 }
 
 .navigation {
@@ -60,7 +61,7 @@
   position: relative;
   z-index: 1;
   min-inline-size: 0;
-  min-block-size: 100vh;
+  min-block-size: 100dvh;
   background: var(--canvas);
 }
 

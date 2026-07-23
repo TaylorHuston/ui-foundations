@@ -1,5 +1,6 @@
-import { ChevronDown, ChevronRight, FileText, Folder, Search } from 'lucide-react'
+import { FileText, Folder, FolderOpen, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
+import { TreeView, type TreeViewItem } from '../../components/TreeView/TreeView'
 import styles from './FileBrowser.module.css'
 
 export interface FileBrowserItem {
@@ -9,89 +10,81 @@ export interface FileBrowserItem {
   label: string
 }
 
-export interface FileBrowserProps {
+export interface FileTreeProps {
   defaultExpandedIds?: string[]
   defaultSelectedId?: string
-  emptyMessage?: string
+  expandedIds?: string[]
   items: FileBrowserItem[]
   label?: string
+  onExpandedIdsChange?: (expandedIds: string[]) => void
   onSelect?: (item: FileBrowserItem) => void
-  searchable?: boolean
   selectedId?: string
+}
+
+export interface FileBrowserProps extends FileTreeProps {
+  emptyMessage?: string
+  searchable?: boolean
 }
 
 function flattenItems(items: FileBrowserItem[]): FileBrowserItem[] {
   return items.flatMap((item) => [item, ...flattenItems(item.children ?? [])])
 }
 
-interface BranchProps {
-  depth: number
-  expandedIds: Set<string>
-  item: FileBrowserItem
-  onSelect: (item: FileBrowserItem) => void
-  onToggle: (id: string) => void
-  selectedId?: string
+function normalizeTree(items: FileBrowserItem[]): TreeViewItem[] {
+  return items.map((item) => ({
+    id: item.id,
+    label: item.label,
+    ...(item.kind === 'folder' ? { children: normalizeTree(item.children ?? []) } : {}),
+  }))
 }
 
-function Branch({ depth, expandedIds, item, onSelect, onToggle, selectedId }: BranchProps) {
-  const isFolder = item.kind === 'folder'
-  const isExpanded = isFolder && expandedIds.has(item.id)
-  const isSelected = selectedId === item.id
+export function FileTree({
+  defaultExpandedIds,
+  defaultSelectedId,
+  expandedIds,
+  items,
+  label = 'Files',
+  onExpandedIdsChange,
+  onSelect,
+  selectedId,
+}: FileTreeProps) {
+  const normalizedItems = useMemo(() => normalizeTree(items), [items])
+  const itemById = useMemo(() => new Map(flattenItems(items).map((item) => [item.id, item])), [items])
 
   return (
-    <li
-      aria-expanded={isFolder ? isExpanded : undefined}
-      aria-label={item.label}
-      aria-selected={isSelected}
-      className={styles.branch}
-      role="treeitem"
-    >
-      <div className={[styles.row, isSelected && styles.selected].filter(Boolean).join(' ')} style={{ '--tree-depth': depth } as React.CSSProperties}>
-        {isFolder ? (
-          <button
-            aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${item.label}`}
-            className={styles.disclosure}
-            onClick={() => onToggle(item.id)}
-            type="button"
-          >
-            {isExpanded ? <ChevronDown aria-hidden size={16} /> : <ChevronRight aria-hidden size={16} />}
-          </button>
-        ) : <span aria-hidden className={styles.disclosureSpacer} />}
-        <button className={styles.itemButton} onClick={() => onSelect(item)} type="button">
-          {isFolder ? <Folder aria-hidden size={16} /> : <FileText aria-hidden size={16} />}
-          <span>{item.label}</span>
-        </button>
-      </div>
-      {isFolder && isExpanded && item.children?.length ? (
-        <ul className={styles.group} role="group">
-          {item.children.map((child) => (
-            <Branch
-              depth={depth + 1}
-              expandedIds={expandedIds}
-              item={child}
-              key={child.id}
-              onSelect={onSelect}
-              onToggle={onToggle}
-              selectedId={selectedId}
-            />
-          ))}
-        </ul>
-      ) : null}
-    </li>
+    <TreeView
+      defaultExpandedIds={defaultExpandedIds}
+      defaultSelectedId={defaultSelectedId}
+      expandedIds={expandedIds}
+      items={normalizedItems}
+      label={label}
+      onExpandedIdsChange={onExpandedIdsChange}
+      onSelect={(item) => {
+        const fileItem = itemById.get(item.id)
+        if (fileItem) onSelect?.(fileItem)
+      }}
+      renderIcon={(_, state) => state.branch
+        ? state.expanded
+          ? <FolderOpen aria-hidden size={16} strokeWidth={1.75} />
+          : <Folder aria-hidden size={16} strokeWidth={1.75} />
+        : <FileText aria-hidden size={16} strokeWidth={1.75} />}
+      selectedId={selectedId}
+    />
   )
 }
 
 export function FileBrowser({
-  defaultExpandedIds = [],
+  defaultExpandedIds,
   defaultSelectedId,
   emptyMessage = 'No files found.',
+  expandedIds,
   items,
   label = 'Files',
+  onExpandedIdsChange,
   onSelect,
   searchable = false,
   selectedId,
 }: FileBrowserProps) {
-  const [expandedIds, setExpandedIds] = useState(() => new Set(defaultExpandedIds))
   const [internalSelectedId, setInternalSelectedId] = useState(defaultSelectedId)
   const [query, setQuery] = useState('')
   const activeSelectedId = selectedId ?? internalSelectedId
@@ -100,25 +93,15 @@ export function FileBrowser({
     if (!normalizedQuery) return []
     return flattenItems(items).filter((item) => item.label.toLocaleLowerCase().includes(normalizedQuery))
   }, [items, query])
+  const isSearching = query.trim().length > 0
 
   function handleSelect(item: FileBrowserItem) {
     if (selectedId === undefined) setInternalSelectedId(item.id)
     onSelect?.(item)
   }
 
-  function handleToggle(id: string) {
-    setExpandedIds((current) => {
-      const next = new Set(current)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
-      return next
-    })
-  }
-
-  const isSearching = query.trim().length > 0
-
   return (
-    <nav aria-label={label} className={styles.browser}>
+    <nav aria-label={label} className={styles.browser} data-slot="file-browser">
       {searchable ? (
         <label className={styles.search}>
           <Search aria-hidden size={16} />
@@ -138,7 +121,8 @@ export function FileBrowser({
             {matches.map((item) => (
               <button
                 aria-selected={activeSelectedId === item.id}
-                className={[styles.result, activeSelectedId === item.id && styles.selected].filter(Boolean).join(' ')}
+                className={styles.result}
+                data-selected={activeSelectedId === item.id || undefined}
                 key={item.id}
                 onClick={() => handleSelect(item)}
                 role="option"
@@ -151,19 +135,16 @@ export function FileBrowser({
           </div>
         ) : <p className={styles.empty}>{emptyMessage}</p>
       ) : items.length ? (
-        <ul aria-label={label} className={styles.tree} role="tree">
-          {items.map((item) => (
-            <Branch
-              depth={0}
-              expandedIds={expandedIds}
-              item={item}
-              key={item.id}
-              onSelect={handleSelect}
-              onToggle={handleToggle}
-              selectedId={activeSelectedId}
-            />
-          ))}
-        </ul>
+        <FileTree
+          defaultExpandedIds={defaultExpandedIds}
+          defaultSelectedId={defaultSelectedId}
+          expandedIds={expandedIds}
+          items={items}
+          label={label}
+          onExpandedIdsChange={onExpandedIdsChange}
+          onSelect={handleSelect}
+          selectedId={activeSelectedId}
+        />
       ) : <p className={styles.empty}>{emptyMessage}</p>}
     </nav>
   )

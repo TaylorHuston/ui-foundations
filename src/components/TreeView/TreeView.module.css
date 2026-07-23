@@ -1,0 +1,60 @@
+.tree {
+  display: grid;
+  gap: var(--space-1);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: var(--control-toolbar);
+  padding: 7px var(--space-2) 5px calc(var(--space-2) + var(--tree-level) * var(--space-4));
+  border: 0;
+  border-radius: var(--radius-row);
+  background: transparent;
+  color: var(--text-secondary);
+  text-align: start;
+}
+
+.item:hover {
+  background: color-mix(in srgb, var(--surface-raised) 88%, var(--text) 12%);
+  color: var(--text);
+}
+
+.item[data-selected='true'],
+.item[data-selected='true']:hover {
+  background: var(--identity);
+  color: var(--identity-foreground);
+}
+
+.item[data-branch='true']:not([data-selected='true']) {
+  color: var(--text-muted);
+}
+
+.item svg {
+  flex: 0 0 auto;
+  margin-block-start: 1px;
+}
+
+.item span {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
+  white-space: normal;
+}
+
+@media (pointer: coarse) {
+  .tree {
+    gap: var(--space-2);
+  }
+
+  .item {
+    min-block-size: var(--control-touch);
+    padding-block: 11px 9px;
+  }
+}

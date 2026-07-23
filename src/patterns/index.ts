@@ -1,5 +1,7 @@
 export * from './AuthenticationForm/AuthenticationForm'
 export * from './ConfirmationDialog/ConfirmationDialog'
+export * from './DocumentHeader/DocumentHeader'
+export * from './EditorSurface/EditorSurface'
 export * from './EditorToolbar/EditorToolbar'
 export * from './EmptyState/EmptyState'
 export * from './FileBrowser/FileBrowser'

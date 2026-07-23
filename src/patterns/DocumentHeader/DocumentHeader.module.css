@@ -1,0 +1,150 @@
+.header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  min-block-size: 64px;
+  padding-block: var(--space-2);
+  padding-inline: max(
+    var(--space-4),
+    calc((100% - var(--editor-content-width, 50rem)) / 2 + var(--editor-text-inset, 0px))
+  );
+  background: var(--surface);
+  color: var(--text);
+}
+
+.leading,
+.trailing,
+.titleRow,
+.renameRow {
+  display: flex;
+  align-items: center;
+}
+
+.leading,
+.trailing,
+.titleRow {
+  gap: var(--space-2);
+}
+
+.identity,
+.rename {
+  min-inline-size: 0;
+}
+
+.identity {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.path,
+.reason,
+.error,
+.titleRow h1 {
+  margin: 0;
+}
+
+.path,
+.reason,
+.label,
+.error {
+  font-size: var(--font-size-label);
+}
+
+.path,
+.reason {
+  color: var(--text-muted);
+}
+
+.titleRow h1 {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-size: var(--font-size-section);
+  line-height: 1.25;
+}
+
+.titleRow > :first-child {
+  flex: 0 1 auto;
+}
+
+.rename {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.label {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.renameRow {
+  gap: var(--space-1);
+  min-inline-size: 0;
+}
+
+.input {
+  flex: 1 1 18rem;
+  min-inline-size: 8rem;
+  min-block-size: var(--control-toolbar);
+  border: 1px solid var(--control-boundary);
+  border-radius: var(--radius-control);
+  padding-inline: var(--space-2);
+  background: var(--canvas);
+  color: var(--text);
+  font: inherit;
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.error {
+  color: var(--danger-text);
+}
+
+.trailing {
+  justify-content: flex-end;
+  min-inline-size: 0;
+}
+
+@media (max-width: 640px) {
+  .header {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    padding-inline: var(--space-3);
+  }
+
+  .leading {
+    grid-column: 1;
+  }
+
+  .identity {
+    grid-column: 1;
+  }
+
+  .leading + .identity {
+    grid-column: 1;
+  }
+
+  .trailing {
+    grid-column: 1;
+    grid-row: auto;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .renameRow {
+    flex-wrap: wrap;
+  }
+
+  .input {
+    flex-basis: 100%;
+  }
+}
+
+@media (pointer: coarse) {
+  .input {
+    min-block-size: var(--control-touch);
+  }
+}

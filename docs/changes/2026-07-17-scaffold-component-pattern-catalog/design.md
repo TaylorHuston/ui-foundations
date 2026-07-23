@@ -8,7 +8,7 @@ The catalog currently demonstrates foundational CSS, four native controls, and a
 
 **Goals:**
 
-- Provide functional, typed, accessible references for the sixteen confirmed components and patterns.
+- Provide functional, typed, accessible references for the confirmed component and pattern catalog, including reusable text-first editor chrome without taking ownership of an editor engine.
 - Keep visual treatment aligned with the current UI Foundations tokens and minimal-border conventions.
 - Make behavior and composition inspectable in Storybook and verifiable through focused tests.
 - Provide an inspector-capable shell reference with optional controlled side regions, symmetric desktop geometry, and a stable readable work surface.
@@ -22,11 +22,11 @@ The catalog currently demonstrates foundational CSS, four native controls, and a
 
 ## Planning Interview / Story Refinement
 
-- Scope boundary reviewed: nine component references and six compositional patterns added by this Change, with no consuming-app migration.
+- Scope boundary reviewed: reusable components and compositional patterns are added by this Change with no consuming-app migration; later app comparison promoted generic tree, shell, and editor-chrome candidates while keeping domain behavior app-owned.
 - User decisions: scaffold the initial eleven references, add four cross-app candidates, then add an inspector-capable shell refined from 49th Floor and GraphiteMD; keep this catalog an inspiration and copy source rather than a shared dependency.
 - Assumptions: existing Foundation tokens and current Storybook conventions are accepted visual direction.
-- Deferred scope: light mode and mature application integrations.
-- Story boundaries challenged: individual controls remain Requirements under capability-sized Stories rather than sixteen tiny Stories.
+- Deferred scope: light mode, mature application integrations, Markdown parsing and projection, autosave, source fidelity, revision handling, and editor-engine lifecycle.
+- Story boundaries challenged: individual controls remain Requirements under capability-sized Stories rather than many tiny Stories.
 - Requirements refined: overlay lifecycle, keyboard selection, labeled state, tree navigation, toolbar mode naming, destructive confirmation, empty-state semantics, compact operation status, explicit notice roles, application rail navigation, and pane composition.
 - Shell refinement: compact rails and adjacent left sidebars share one surface role, with quiet one-pixel boundaries mirrored at the center-facing edges of both sidebars. An optional right context region defaults to the combined rail and navigation width, while a viewport anchor keeps readable content stable as either side region collapses.
 - Scenario gaps considered: dismissal, disabled state, empty results, optional actions, and constrained viewport behavior.
@@ -118,7 +118,7 @@ As an application developer, I want copyable workbench patterns, so that recurri
 
 ##### Requirement R1: File Navigation Reference
 
-The system SHALL provide a FileBrowser pattern that renders hierarchical items, disclosure and selection state, wrapping labels, optional flat-result search, and an empty state while leaving file data and actions to the consumer.
+The system SHALL provide a generic TreeView behavior reference plus FileTree and searchable FileBrowser compositions that render hierarchical items, disclosure and selection state, wrapping labels, optional flat-result search, and an empty state while leaving file data and actions to the consumer.
 
 ###### Scenario R1-S1: Navigate Hierarchical Items
 
@@ -131,14 +131,38 @@ The system SHALL provide a FileBrowser pattern that renders hierarchical items, 
 - THEN matching items appear as a flat result list
 - AND a no-results state appears when no item matches.
 
-##### Requirement R2: Editor Command Reference
+###### Scenario R1-S3: Navigate The Tree From A Keyboard
 
-The system SHALL provide an EditorToolbar pattern with Source and Rendered modes, semantic command controls, and application-owned status or action slots.
+- WHEN a keyboard user enters the tree
+- THEN exactly one visible tree item participates in the Tab sequence
+- AND Arrow keys, Home, and End move focus using hierarchical tree conventions.
+
+##### Requirement R2: Editor Work Surface Reference
+
+The system SHALL provide a text-first SegmentedControl, EditorToolbar, DocumentHeader, and EditorSurface composition for Source and Rendered modes, semantic commands, inline filename editing, operation and recovery states, stable editor-region slots, and application-owned behavior.
 
 ###### Scenario R2-S1: Change Editor Presentation
 
 - WHEN a user selects Source or Rendered
 - THEN the selected mode is exposed and the consuming application receives the requested mode.
+
+###### Scenario R2-S2: Edit A Document Name
+
+- WHEN a user enters document-name editing
+- THEN the current name remains labeled and editable
+- AND visible Save name and Cancel actions delegate the result without owning rename validation or persistence.
+
+###### Scenario R2-S3: Present Save And Recovery State
+
+- WHEN an editor becomes dirty, pending, saved, conflicted, failed, read-only, or unable to use its richer presentation
+- THEN the visible state uses one appropriate live or persistent semantic region
+- AND recovery remains available through a visible text action when supplied.
+
+###### Scenario R2-S4: Compose An Editor Engine
+
+- WHEN an application places its editor inside EditorSurface
+- THEN header, toolbar, editor, and notice regions remain inspectable and align to the configured readable width and text inset
+- AND the application retains ownership of editor focus, source, parsing, autosave, and overflow behavior.
 
 ##### Requirement R3: Confirmation And Empty-State References
 
@@ -157,7 +181,7 @@ The system SHALL provide ConfirmationDialog and EmptyState patterns that communi
 
 ##### Requirement R4: Inspector-Capable Workbench Reference
 
-The system SHALL provide a WorkbenchShell with a compact rail, optional controlled navigation and context regions, symmetric desktop geometry, and a dominant primary work surface. The default content anchor SHALL keep readable primary content stable as optional side regions collapse, while the application retains ownership of collapse controls and responsive side-region presentation.
+The system SHALL provide a WorkbenchShell with a compact rail, optional controlled navigation and context regions, symmetric desktop geometry, stable inspectable region slots, and a dominant primary work surface. The rail and navigation SHALL share one surface with a thin internal divider. The default content anchor SHALL keep readable primary content stable as optional side regions collapse, while the application retains ownership of collapse controls and responsive side-region presentation.
 
 ###### Scenario R4-S1: Compose Named Work Areas
 
@@ -244,7 +268,7 @@ The system SHALL provide a compact NavigationRail with named link and button des
 
 ## Selected Approach
 
-Use Base UI as the unstyled behavior layer for Tooltip, Dialog, Sheet, Menu, Tabs, Checkbox, and Switch. Wrap those parts in small typed reference APIs and CSS Modules that consume existing semantic tokens. Build OperationStatus and InlineNotice from native semantic structure. Build FileBrowser, EditorToolbar, ConfirmationDialog, EmptyState, NavigationRail, ThreePaneShell, and WorkbenchShell as local semantic compositions; ConfirmationDialog composes Dialog and existing buttons. Keep data, routing, persistence, authorization, collapse controls, responsive shell decisions, and domain callbacks at the consumer boundary.
+Use Base UI as the unstyled behavior layer for Tooltip, Dialog, Sheet, Menu, Tabs, Checkbox, and Switch. Wrap those parts in small typed reference APIs and CSS Modules that consume existing semantic tokens. Build OperationStatus and InlineNotice from native semantic structure. Build TreeView with native tree semantics and a documented keyboard map; compose FileTree and searchable FileBrowser over it. Build EditorToolbar, ConfirmationDialog, EmptyState, NavigationRail, ThreePaneShell, and WorkbenchShell as local semantic compositions; ConfirmationDialog composes Dialog and existing buttons. Keep data, routing, persistence, authorization, collapse controls, responsive shell decisions, and domain callbacks at the consumer boundary.
 
 ## Experience Design
 
@@ -271,11 +295,11 @@ References expose semantic state and callbacks instead of low-level style props.
 |---|---|---|---|---|
 | Tooltip, Dialog, Sheet, Menu, Tabs, Checkbox, Switch | reference candidate | UI Foundations | open, closed, side placement, selected, disabled, focus and keyboard states as applicable | Validate through app-owned adoption before standardizing APIs. |
 | OperationStatus, InlineNotice | reference candidate | UI Foundations | dirty, pending, success, warning, error, note, status, alert, and recovery action states | Keep async state machines and recovery work in consumers. |
-| FileBrowser, EditorToolbar, ConfirmationDialog, EmptyState, NavigationRail, ThreePaneShell, WorkbenchShell | reference candidate | UI Foundations | default, empty, destructive, active, expanded, collapsed, constrained, and interactive states as applicable | Keep routing, collapse controls, responsive navigation, and domain behavior in consumers and promote only proven improvements. |
+| TreeView, FileTree, FileBrowser, SegmentedControl, EditorToolbar, DocumentHeader, EditorSurface, ConfirmationDialog, EmptyState, NavigationRail, ThreePaneShell, WorkbenchShell | reference candidate | UI Foundations | default, empty, destructive, active, expanded, collapsed, dirty, pending, saved, recovery, read-only, constrained, long-content, and interactive states as applicable | Keep routing, editor engines, source operations, collapse controls, responsive navigation, and domain behavior in consumers and promote only proven improvements. |
 
 ### Accessibility And Interaction
 
-Base UI owns difficult focus and keyboard mechanics. Local APIs require labels or accessible names and preserve visible focus. Text labels are the default for actions; icon-only controls are reserved for compact rails, familiar editor commands, and similarly constrained contexts, and still require accessible names and tooltip disclosure where meaning is not persistent.
+Base UI owns difficult focus and keyboard mechanics. Local APIs require labels or accessible names and preserve visible focus. Text labels are the default for actions, including editor commands and recovery. Icon-only controls are reserved for compact rails and similarly constrained contexts and still require accessible names and tooltip disclosure where meaning is not persistent.
 
 ### Visual Direction
 
@@ -321,7 +345,7 @@ It concentrates difficult accessibility behavior in a proven headless layer whil
 
 ## Verification Strategy
 
-- Focused automated tests: opening/dismissing overlays, focus restoration, keyboard selection, disabled behavior, FileBrowser disclosure/search/empty behavior, editor mode callbacks, confirmation delegation, conditional EmptyState action, and expanded/collapsed workbench region semantics.
+- Focused automated tests: opening/dismissing overlays, focus restoration, keyboard selection, disabled behavior, TreeView roving focus and hierarchical navigation, FileBrowser disclosure/search/empty behavior, editor mode callbacks, confirmation delegation, conditional EmptyState action, and expanded/collapsed workbench region semantics.
 - Broad supporting gates: `npm run check:all` for CSS contract, TypeScript, Vitest, and static Storybook compilation.
 - Deterministic E2E: Playwright inspection of representative primitive and pattern stories for overflow and interaction.
 - Live-provider or external-service playtests: not applicable.

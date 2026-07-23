@@ -10,6 +10,7 @@
   font-size: var(--font-size-ui);
   font-weight: 650;
   line-height: 1;
+  white-space: nowrap;
   transition:
     background-color var(--motion-fast) ease,
     color var(--motion-fast) ease,

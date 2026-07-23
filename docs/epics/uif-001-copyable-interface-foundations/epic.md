@@ -29,15 +29,15 @@ Application developers can inspect and copy a coherent CSS baseline and tested R
 
 - Semantic CSS tokens, global defaults, accessibility behavior, and plain-CSS control recipes.
 - Button, IconButton, TextField, and Textarea TypeScript React references.
-- Tooltip, Dialog, Sheet, Menu, Tabs, Checkbox, and Switch behavior references.
+- Tooltip, Dialog, Sheet, Menu, Tabs, Checkbox, Switch, and SegmentedControl behavior references.
 - OperationStatus and InlineNotice feedback references.
 - Minimal sign-in and sign-up AuthenticationForm composition.
-- FileBrowser, EditorToolbar, ConfirmationDialog, EmptyState, NavigationRail, ThreePaneShell, and inspector-capable WorkbenchShell compositions.
+- TreeView behavior plus FileTree, searchable FileBrowser, EditorToolbar, DocumentHeader, EditorSurface, ConfirmationDialog, EmptyState, NavigationRail, ThreePaneShell, and inspector-capable WorkbenchShell compositions.
 - Storybook examples and focused behavioral tests.
 
 ## Deferred Scope
 
-- SegmentedControl, resizable panes, drag and drop, virtualization, and editor engines.
+- Resizable panes, drag and drop, virtualization, editor engines, Markdown projection, autosave, source fidelity, and revision handling.
 - Light-mode implementation and dual-theme component verification.
 - CLI copying, synchronization, publishing, application migrations, and product-specific integrations.
 
@@ -52,7 +52,7 @@ Application developers can inspect and copy a coherent CSS baseline and tested R
 | S1 | implemented | verified | Adopt a copyable CSS foundation. | 2026-07-17 | Canonical contract is enforced by `scripts/check.mjs`. |
 | S2 | implemented | verified | Copy accessible React references. | 2026-07-22 | Native controls, authentication, and feedback references. |
 | S3 | implemented | verified | Copy behavior-heavy primitives. | 2026-07-22 | Base UI-backed overlay and selection references remain experimental. |
-| S4 | implemented | verified | Compose familiar workbench patterns. | 2026-07-22 | Optional side regions, symmetric desktop geometry, and content anchoring remain application-controlled. |
+| S4 | implemented | verified | Compose familiar workbench patterns. | 2026-07-22 | Editor engines, optional side regions, responsive navigation, and persistence remain application-controlled. |
 
 ## Stories
 
@@ -109,7 +109,7 @@ The system SHALL provide inspectable global defaults for reset, typography, sele
 | Requirement / Scenario | Evidence | Proves | Status |
 |---|---|---|---|
 | S1/R1-S1 | `npm run check` | Required semantic roles exist and vague project aliases are absent. | Passing 2026-07-17 |
-| S1/R1-S2 | `src/components/` and `src/styles/primitives.css` source inspection | Reference recipes consume semantic variables rather than embedded palette values. | Passing 2026-07-17 |
+| S1/R1-S2 | `src/components/Button/Button.module.css` and `src/styles/primitives.css` source inspection | Representative React and plain-CSS recipes consume semantic variables rather than embedded palette values. | Passing 2026-07-17 |
 | S1/R2-S1 | `npm run build:storybook` and `src/styles/global.css` inspection | Baseline compiles and focus/reduced-motion rules are present. | Passing 2026-07-17 |
 
 #### Verification Gaps
@@ -306,7 +306,7 @@ As an application developer, I want copyable workbench patterns, so that recurri
 
 ##### Requirement R1: File Navigation Reference
 
-The system SHALL provide a FileBrowser pattern that renders hierarchical items, disclosure and selection state, wrapping labels, optional flat-result search, and an empty state while leaving file data and actions to the consumer.
+The system SHALL provide a generic TreeView behavior reference plus FileTree and searchable FileBrowser compositions that render hierarchical items, disclosure and selection state, wrapping labels, optional flat-result search, and an empty state while leaving file data and actions to the consumer.
 
 ###### Scenario R1-S1: Navigate Hierarchical Items
 
@@ -319,14 +319,38 @@ The system SHALL provide a FileBrowser pattern that renders hierarchical items, 
 - THEN matching items appear as a flat result list
 - AND a no-results state appears when no item matches.
 
-##### Requirement R2: Editor Command Reference
+###### Scenario R1-S3: Navigate The Tree From A Keyboard
 
-The system SHALL provide an EditorToolbar pattern with Source and Rendered modes, semantic command controls, and application-owned status or action slots.
+- WHEN a keyboard user enters the tree
+- THEN exactly one visible tree item participates in the Tab sequence
+- AND Arrow keys, Home, and End move focus using hierarchical tree conventions.
+
+##### Requirement R2: Editor Work Surface Reference
+
+The system SHALL provide a text-first SegmentedControl, EditorToolbar, DocumentHeader, and EditorSurface composition for Source and Rendered modes, semantic commands, inline filename editing, operation and recovery states, stable editor-region slots, and application-owned behavior.
 
 ###### Scenario R2-S1: Change Editor Presentation
 
 - WHEN a user selects Source or Rendered
 - THEN the selected mode is exposed and the consuming application receives the requested mode.
+
+###### Scenario R2-S2: Edit A Document Name
+
+- WHEN a user enters document-name editing
+- THEN the current name remains labeled and editable
+- AND visible Save name and Cancel actions delegate the result without owning rename validation or persistence.
+
+###### Scenario R2-S3: Present Save And Recovery State
+
+- WHEN an editor becomes dirty, pending, saved, conflicted, failed, read-only, or unable to use its richer presentation
+- THEN the visible state uses one appropriate live or persistent semantic region
+- AND recovery remains available through a visible text action when supplied.
+
+###### Scenario R2-S4: Compose An Editor Engine
+
+- WHEN an application places its editor inside EditorSurface
+- THEN header, toolbar, editor, and notice regions remain inspectable and align to the configured readable width and text inset
+- AND the application retains ownership of editor focus, source, parsing, autosave, and overflow behavior.
 
 ##### Requirement R3: Confirmation And Empty-State References
 
@@ -345,19 +369,20 @@ The system SHALL provide ConfirmationDialog and EmptyState patterns that communi
 
 ##### Requirement R4: Inspector-Capable Workbench Reference
 
-The system SHALL provide a WorkbenchShell with a compact rail, optional controlled navigation and context regions, and a dominant primary work surface. On desktop, the rail and navigation SHALL share one surface role, the context region SHALL default to their combined width, and the default content anchor SHALL keep readable primary content stable when either optional side region collapses. Responsive side-region presentation remains owned by the consuming application.
+The system SHALL provide a WorkbenchShell with a compact rail, optional controlled navigation and context regions, stable inspectable region slots, and a dominant primary work surface. On desktop, the rail and navigation SHALL share one surface role with a thin internal divider, the context region SHALL default to their combined width, and the default content anchor SHALL keep readable primary content stable when either optional side region collapses. Responsive side-region presentation remains owned by the consuming application.
 
 ###### Scenario R4-S1: Compose Named Work Areas
 
 - WHEN rail, navigation, primary, and context content are supplied
 - THEN each content region is semantically identifiable
+- AND each shell region exposes a stable styling and inspection slot
 - AND the primary region remains the dominant work area.
 
 ###### Scenario R4-S2: Balance The Side Regions
 
 - WHEN the desktop shell uses its default widths
 - THEN the context region equals the combined rail and navigation width
-- AND thin center-facing borders frame the primary work surface.
+- AND thin dividers separate the rail interaction zone and frame the primary work surface.
 
 ###### Scenario R4-S3: Collapse Optional Side Regions
 
@@ -390,14 +415,18 @@ The system SHALL provide a compact NavigationRail with named link and button des
 
 | Requirement / Scenario | Location / Anchor | Kind | Responsibility |
 |---|---|---|---|
-| S4/R1 | `src/patterns/FileBrowser/FileBrowser.tsx#FileBrowser` | primary | Owns hierarchical disclosure, selection, optional flat search, and empty results. |
-| S4/R2 | `src/patterns/EditorToolbar/EditorToolbar.tsx#EditorToolbar` | primary | Owns Source and Rendered controls plus consumer-owned action and status slots. |
+| S4/R1-S1, S4/R1-S3 | `src/components/TreeView/TreeView.tsx#TreeView` | primary | Owns hierarchical disclosure, selection, roving focus, and Arrow/Home/End keyboard navigation. |
+| S4/R1-S1, S4/R1-S2 | `src/patterns/FileBrowser/FileBrowser.tsx#FileTree`; `src/patterns/FileBrowser/FileBrowser.tsx#FileBrowser` | primary | Add file/folder presentation and compose optional flat search and empty results over TreeView behavior. |
+| S4/R2-S1 | `src/components/SegmentedControl/SegmentedControl.tsx#SegmentedControl`; `src/patterns/EditorToolbar/EditorToolbar.tsx#EditorModeSwitch` | primary | Own text-first controlled single-selection and Source/Rendered delegation. |
+| S4/R2-S2 | `src/patterns/DocumentHeader/DocumentHeader.tsx#DocumentHeader` | primary | Presents document context and controlled inline filename editing with visible actions and caller-owned validation. |
+| S4/R2-S3 | `src/patterns/EditorToolbar/EditorToolbar.tsx#EditorToolbar`; `src/components/OperationStatus/OperationStatus.tsx#OperationStatus`; `src/components/InlineNotice/InlineNotice.tsx#InlineNotice` | primary | Compose one live operation state with persistent recovery messaging and caller-owned actions. |
+| S4/R2-S4 | `src/patterns/EditorSurface/EditorSurface.tsx#EditorSurface` | primary | Provides stable header, toolbar, notice, and editor slots with configurable content width and text inset. |
 | S4/R3-S1 | `src/patterns/ConfirmationDialog/ConfirmationDialog.tsx#ConfirmationDialog` | primary | Delegates destructive work only after explicit confirmation. |
 | S4/R3-S2 | `src/patterns/EmptyState/EmptyState.tsx#EmptyState` | primary | Presents concise empty content and an optional next action. |
-| S4/R4 | `src/patterns/WorkbenchShell/WorkbenchShell.tsx#WorkbenchShell` | primary | Composes a rail, controlled optional side regions, symmetric desktop geometry, and viewport-stable or available-space content anchoring. |
+| S4/R4 | `src/patterns/WorkbenchShell/WorkbenchShell.tsx#WorkbenchShell` | primary | Composes inspectable rail, controlled optional side regions, symmetric desktop geometry, and viewport-stable or available-space content anchoring. |
 | S4/R4 | `src/patterns/ThreePaneShell/ThreePaneShell.tsx#ThreePaneShell` | support | Preserves the simpler three-region reference for consumers that do not need a rail or independent side-region control. |
 | S4/R5 | `src/patterns/NavigationRail/NavigationRail.tsx#NavigationRail` | primary | Composes named link and button destinations with active state and tooltips. |
-| S4/R1-R5 | `src/patterns/WorkbenchPatterns.stories.tsx#ThreePaneComposition` | presentation | Presents standalone and composed workbench examples. |
+| S4/R1-R5 | `src/patterns/WorkbenchPatterns.stories.tsx#DocumentEditing`; `src/patterns/WorkbenchPatterns.stories.tsx#EditorRecovery`; `src/patterns/WorkbenchPatterns.stories.tsx#ThreePaneComposition` | presentation | Presents standalone and composed workbench examples. |
 
 #### Implementation Gaps
 
@@ -408,26 +437,32 @@ The system SHALL provide a compact NavigationRail with named link and button des
 | Requirement / Scenario | Evidence | Proves | Status |
 |---|---|---|---|
 | S4/R1-S1, S4/R1-S2 | `src/patterns/workbench-patterns.test.tsx#discloses, selects, searches, and reports an empty file result` | Disclosure, selection, flat search results, and no-results behavior work through semantic controls. | Passing 2026-07-22 |
-| S4/R2-S1 | `src/patterns/workbench-patterns.test.tsx#exposes Source and Rendered editor modes and delegates changes` | Source/Rendered state and callback delegation are explicit. | Passing 2026-07-22 |
+| S4/R1-S3 | `src/patterns/workbench-patterns.test.tsx#moves one tree tab stop with Arrow, Home, End, Left, and Right` | One roving Tab stop and hierarchical Arrow/Home/End movement remain available through the file-specific composition. | Passing 2026-07-22 |
+| S4/R2-S1 | `src/patterns/workbench-patterns.test.tsx#exposes text-first editor modes and delegates controlled changes` | Source/Rendered state and callback delegation are explicit and disabled segments reject activation. | Passing 2026-07-22 |
+| S4/R2-S2 | `src/patterns/workbench-patterns.test.tsx#delegates inline document-name editing through visible actions` | Rename, Save name, and Cancel stay visible while the application owns the resulting value and validation. | Passing 2026-07-22 |
+| S4/R2-S3 | `src/patterns/workbench-patterns.test.tsx#composes one routine live status with an assertive recovery notice` | Live save state is not nested and conflict/error recovery remains text-labeled. | Passing 2026-07-22 |
+| S4/R2-S4 | `src/patterns/workbench-patterns.test.tsx#exposes stable editor regions and shared alignment variables` | Editor chrome and engine slots remain inspectable and configurable without Foundation ownership of editor behavior. | Passing 2026-07-22 |
+| S4/R2-S1, S4/R2-S2, S4/R2-S3, S4/R2-S4 | Browser inspection of Document Editing and Editor Recovery at `1440x900` and `390x844` | Text actions, rename controls, save and recovery states, long filenames, and editor alignment reflow without overlap or horizontal overflow. | Passing 2026-07-22 |
+| S4/R2-S1, S4/R2-S2, S4/R2-S3, S4/R2-S4 | Storybook accessibility inspection of Document Editing and Editor Recovery | Both stories report zero violations; Editor Recovery has one documented inconclusive check and twenty-two passes. | Passing 2026-07-22 |
 | S4/R3-S1, S4/R3-S2 | `src/patterns/workbench-patterns.test.tsx#delegates destructive work only after explicit confirmation`; `src/patterns/workbench-patterns.test.tsx#renders an empty state action only when supplied` | Cancellation does not delegate destruction, confirmation does, and actions remain optional. | Passing 2026-07-22 |
-| S4/R4-S1, S4/R4-S3 | `src/patterns/workbench-patterns.test.tsx#composes optional controlled side regions around a stable work surface` | Named regions are exposed while expanded, and controlled navigation and context regions leave the accessibility tree when collapsed. | Passing 2026-07-22 |
-| S4/R4-S2, S4/R4-S3 | Browser geometry inspection of the Inspector Workbench at `1440x900` | Rail is 56px, navigation is 264px, context is their 320px sum, and primary readable content remains at the same x-position when context collapses. | Passing 2026-07-22 |
+| S4/R4-S1, S4/R4-S3 | `src/patterns/workbench-patterns.test.tsx#composes optional controlled side regions around a stable work surface` | Named regions expose stable slots while expanded, and controlled navigation and context regions leave the accessibility tree when collapsed. | Passing 2026-07-22 |
+| S4/R4-S2, S4/R4-S3 | Browser geometry inspection of the Inspector Workbench at `1440x900` | Rail is 56px with a 1px divider, navigation is 288px, context is their 344px sum, all side regions share the same computed surface, and page overflow is zero. | Passing 2026-07-22 |
 | S4/R4-S4 | Browser inspection of the Inspector Workbench at `390x844` | Persistent navigation and context regions are hidden, the rail remains available, and the primary region fits without horizontal overflow. | Passing 2026-07-22 |
 | S4/R5-S1 | `src/patterns/workbench-patterns.test.tsx#supports named link and button destinations in an application rail` | Link and button destinations remain named, expose active state, and delegate activation. | Passing 2026-07-22 |
 | S4/R5-S2 | Manual browser inspection of the rail-based Three Pane Composition at `1440x900` and `390x844` | Rail and navigation share one surface while thin mirrored sidebar boundaries frame the primary workspace; stacked panes remove the desktop dividers without overflow. | Passing 2026-07-20 |
-| S4/R1-S1, S4/R1-S2, S4/R2-S1, S4/R3-S1, S4/R3-S2, S4/R4-S1, S4/R4-S2, S4/R4-S3, S4/R4-S4, S4/R5-S1, S4/R5-S2 | `npm run check:all` supporting gate | No-Tailwind and CSS contracts, types, 25 focused tests, and static Storybook compilation pass together. | Passing 2026-07-22 |
+| S4/R1-S1, S4/R1-S2, S4/R1-S3, S4/R2-S1, S4/R2-S2, S4/R2-S3, S4/R2-S4, S4/R3-S1, S4/R3-S2, S4/R4-S1, S4/R4-S2, S4/R4-S3, S4/R4-S4, S4/R5-S1, S4/R5-S2 | `npm run check:all` supporting gate | No-Tailwind and CSS contracts, types, 29 focused tests, and static Storybook compilation pass together. | Passing 2026-07-22 |
 
 #### Verification Gaps
 
 - Data loading, routing, persistence, authorization, editor engines, pane persistence, collapse controls, and product-specific mobile navigation remain application-owned.
-- FileBrowser uses native-button keyboard access; a roving-focus arrow-key tree model is deferred until a consuming application requires it.
+- Large-inventory incremental loading or virtualization remains application-owned until real consumer evidence establishes a reusable contract.
 - API stability and visual convergence still need proof through application adoption.
 
 #### Story Notes
 
 - WorkbenchShell hides persistent side regions below its desktop breakpoint but intentionally does not choose the application's mobile Sheet, drawer, tab, or navigation state model.
 - ThreePaneShell remains a simpler reference for consumers without the inspector-capable rail layout.
-- FileBrowser search intentionally returns a flat result list.
+- FileBrowser search intentionally returns a flat result list while FileTree keeps the hierarchical keyboard contract separate and reusable.
 
 ## Cross-Story Concerns
 

@@ -6,8 +6,8 @@ UI Foundations has stable control and authentication references, but application
 
 ## What Changes
 
-- Add experimental Tooltip, Dialog, Sheet, Menu, Tabs, Checkbox, Switch, OperationStatus, and InlineNotice React references.
-- Add experimental FileBrowser, EditorToolbar, ConfirmationDialog, EmptyState, NavigationRail, and ThreePaneShell patterns.
+- Add experimental Tooltip, Dialog, Sheet, Menu, Tabs, Checkbox, Switch, SegmentedControl, OperationStatus, and InlineNotice React references.
+- Add experimental TreeView behavior plus FileTree, searchable FileBrowser, EditorToolbar, DocumentHeader, EditorSurface, ConfirmationDialog, EmptyState, NavigationRail, ThreePaneShell, and WorkbenchShell patterns.
 - Give each reference typed source, CSS Modules, representative Storybook states, and focused behavioral verification.
 - Use Base UI for behavior-heavy focus, overlay, keyboard, and selection mechanics; continue using semantic React composition and native HTML where sufficient.
 - Document the catalog as pre-release inspiration whose copied source becomes application-owned.
@@ -35,11 +35,11 @@ UI Foundations has stable control and authentication references, but application
 
 ## Scope Decisions
 
-- Confirmed: fifteen requested references will be functional, compilable, accessible starting points rather than empty placeholders.
+- Confirmed: the requested references will be functional, compilable, accessible starting points rather than empty placeholders.
 - Confirmed: applications copy and own adopted source; this repository remains a reference catalog rather than a runtime package.
 - Confirmed: existing dark-mode tokens are the implementation baseline for this Change.
 - Deferred: light-mode tokens and dual-theme Storybook validation will be handled by a separate Change.
-- Deferred: SegmentedControl, async data loading, persistence, routing, editor engines, drag and drop, resizable panes, and application migrations.
+- Deferred: async data loading, persistence, routing, editor engines, Markdown projection, drag and drop, resizable panes, and application migrations.
 - Confirmed: app evidence from 49th Floor, GraphiteMD, and Lorecraft supports prototyping Sheet, NavigationRail, OperationStatus, and InlineNotice while responsive breakpoints and domain recovery logic remain application-owned.
 - Assumptions: current UI Foundations spacing, radius, color, focus, and motion rules remain authoritative.
 - User decisions that shaped the Story/Requirement split: behavior primitives and composed workbench patterns should be inspectable as distinct catalog groups.
