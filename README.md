@@ -13,7 +13,7 @@ Current public baseline: **0.2.0**. See the [changelog](./CHANGELOG.md) for rele
 5. Keep data, routing, authorization, persistence, editor engines, responsive orchestration, and deliberate replacement application-owned.
 6. Upgrade deliberately after reviewing release notes and consumer verification.
 
-See [Library Adoption](https://github.com/TaylorHuston/ui-foundations/blob/develop/docs/library-adoption.md) for imports, wrappers, CSS layering, override hooks, and the pre-1.0 compatibility policy. Registry publication is not active yet and remains a separately authorized release action.
+See [Library Adoption](https://github.com/TaylorHuston/ui-foundations/blob/main/docs/library-adoption.md) for imports, wrappers, CSS layering, override hooks, and the pre-1.0 compatibility policy. Registry publication is not active yet and remains a separately authorized release action.
 
 ## Reference Lifecycle
 

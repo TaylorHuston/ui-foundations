@@ -13,7 +13,7 @@ Registry publication is not active yet. Until an authorized release exists, vali
 npm pack --pack-destination /tmp
 
 # From the consuming application:
-npm install /tmp/taylorhuston-ui-foundations-0.1.0.tgz
+npm install /tmp/taylorhuston-ui-foundations-0.2.0.tgz
 ```
 
 ```tsx
