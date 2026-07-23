@@ -4,7 +4,7 @@ id: UIF-002
 status: active
 created: 2026-07-22
 modified: 2026-07-22
-last_verified:
+last_verified: 2026-07-22
 stories:
   - S1
   - S2
@@ -18,11 +18,11 @@ stories:
 - Related docs: `README.md`, `CHANGELOG.md`
 - Related ADRs: `docs/adrs/2026-07-22-use-versioned-runtime-library-with-app-wrappers.md`
 
-UI Foundations already owns executable styles, tested React components, and compositional patterns, but consumers currently have to copy source and manually carry fixes forward. This capability makes those foundations installable while preserving each application's product identity, domain behavior, and release independence.
+UI Foundations owns executable styles, tested React components, compositional patterns, and a versioned package contract. Consumers can import those foundations while preserving each application's product identity, domain behavior, and release independence.
 
 ## Outcome
 
-UI Foundations will provide a versioned React package that applications can install, import, and override through documented semantic contracts. Applications will consume it behind app-owned wrappers and will continue to own product behavior, data, routing, persistence, and deliberate divergence.
+UI Foundations provides a versioned React package that applications can install, import, and override through documented semantic contracts. Applications consume it behind app-owned wrappers and continue to own product behavior, data, routing, persistence, and deliberate divergence.
 
 ## Current Scope
 
@@ -123,10 +123,10 @@ None.
 
 | Requirement / Scenario | Evidence | Proves | Status |
 |---|---|---|---|
-| S1/R1-S1 | `npm run check:package` | The exact archive contains the declared JS, type, style, and metadata surface and installs, typechecks, and production-builds in a fresh non-symlink consumer. | Passing 2026-07-22 |
-| S1/R1-S2 | `npm run check:package` | An undeclared `src/components` import fails with `ERR_PACKAGE_PATH_NOT_EXPORTED`. | Passing 2026-07-22 |
-| S1/R2-S1 | `npm run check:package` plus built-JavaScript import inspection | The consumer dependency tree contains one React and React DOM version, and distributed runtime imports remain external. | Passing 2026-07-22 |
-| S1/R3-S1 | `npm run check:package` | Complete and lower-level CSS entry points exist in the archive and resolve in a clean production build. | Passing 2026-07-22 |
+| S1/R1-S1 | Automated test `test/package-contract.node.mjs#verifies the exact packed package contract in an isolated consumer` | The exact archive contains the declared JS, type, style, and metadata surface and installs, typechecks, and production-builds in a fresh non-symlink consumer. | Passing 2026-07-22 |
+| S1/R1-S2 | Automated test `test/package-contract.node.mjs#verifies the exact packed package contract in an isolated consumer` | An undeclared `src/components` import fails with `ERR_PACKAGE_PATH_NOT_EXPORTED`. | Passing 2026-07-22 |
+| S1/R2-S1 | Automated test `test/package-contract.node.mjs#verifies the exact packed package contract in an isolated consumer` | The consumer dependency tree contains one React and React DOM version, manifest ownership remains correct, and distributed runtime imports remain external. | Passing 2026-07-22 |
+| S1/R3-S1 | Automated test `test/package-contract.node.mjs#verifies the exact packed package contract in an isolated consumer` | Complete and lower-level CSS entry points exist in the archive and resolve in a clean production build. | Passing 2026-07-22 |
 
 #### Verification Gaps
 
@@ -294,10 +294,10 @@ None.
 
 | Requirement / Scenario | Evidence | Proves | Status |
 |---|---|---|---|
-| S3/R1-S1 | `npm run check:package` | A fresh candidate reports 80 intended files, resolves every public surface in a clean consumer, and rejects private repository paths. | Passing 2026-07-22 |
-| S3/R1-S2 | `npm run check:package` plus recorded red phase for missing `CHANGELOG.md` | The candidate gate fails when a required package artifact is absent and passes only after the public contract is complete. | Passing 2026-07-22 |
-| S3/R2-S1 | `CHANGELOG.md` and `docs/library-adoption.md` source inspection | Consumer-visible changes, pre-1.0 compatibility, and deliberate upgrade ownership are explicit. | Passing 2026-07-22 |
-| S3/R3-S1 | `npm run check:package` and `package.json` source inspection | The exact local candidate retains `private: true`; no registry publication occurred or can occur through the ordinary Apply command. | Passing 2026-07-22 |
+| S3/R1-S1 | Automated test `test/package-contract.node.mjs#verifies the exact packed package contract in an isolated consumer` | A fresh candidate reports the intended files, resolves every public surface in a clean consumer, and rejects private repository paths. | Passing 2026-07-22 |
+| S3/R1-S2 | Automated test `test/package-contract.node.mjs#rejects a packed artifact with a missing exported target` | The candidate gate fails when an exported target is absent and passes only after the public contract is complete. | Passing 2026-07-22 |
+| S3/R2-S1 | `CHANGELOG.md#Unreleased`; `docs/library-adoption.md#Compatibility` | Consumer-visible changes, pre-1.0 compatibility, and deliberate upgrade ownership are explicit. | Passing 2026-07-22 |
+| S3/R3-S1 | Automated test `test/package-contract.node.mjs#verifies the exact packed package contract in an isolated consumer` | The exact local candidate retains `private: true`; no registry publication occurred or can occur through the ordinary Apply command. | Passing 2026-07-22 |
 
 #### Verification Gaps
 
@@ -338,4 +338,4 @@ This Epic is healthy when:
 
 ## Notes
 
-- The existing public repository remains useful as inspectable source, but package import becomes the primary shared-consumption model once the new ADR is accepted and UIF-002 is implemented.
+- The public repository remains useful as inspectable source; package import behind app-owned wrappers is the primary shared-consumption model, while copying remains available for deliberate divergence.

@@ -46,13 +46,13 @@
   "scripts": {
     "build:library": "node scripts/build-library.mjs",
     "check": "node scripts/check.mjs",
-    "check:package": "npm run build:library && node scripts/verify-package.mjs",
+    "check:package": "npm run build:library && node --test test/package-contract.node.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "storybook": "storybook dev -p 6008 --no-open",
     "build:storybook": "storybook build",
     "compare:capture": "node scripts/capture-comparison.mjs",
-    "check:all": "npm run check && npm run typecheck && npm test && npm run build:library && node scripts/verify-package.mjs && npm run build:storybook",
+    "check:all": "npm run check && npm run typecheck && npm test && npm run build:library && node --test test/package-contract.node.mjs && npm run build:storybook",
     "prepack": "npm run build:library"
   },
   "devDependencies": {

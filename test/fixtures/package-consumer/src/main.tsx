@@ -33,7 +33,7 @@ function App() {
       contentAnchor={contentAnchor}
       context={<aside><strong>Context</strong><p>Application-owned content</p></aside>}
       main={(
-        <main className="consumer-main">
+        <div className="consumer-main">
           <header>
             <p>Installed package fixture</p>
             <h1>Shared defaults with local identity</h1>
@@ -64,10 +64,10 @@ function App() {
               </InlineNotice>
             </section>
           </div>
-        </main>
+        </div>
       )}
       navigation={<nav aria-label="Files"><strong>Files</strong><p>Package adoption</p></nav>}
-      rail={<span aria-label="Application">UF</span>}
+      rail={<nav aria-label="Application"><span>UF</span></nav>}
     />
   )
 }

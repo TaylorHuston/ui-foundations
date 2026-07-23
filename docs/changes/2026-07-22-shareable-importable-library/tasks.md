@@ -206,8 +206,8 @@ Not applicable: this Change distributes presentational components and callbacks 
 - Status: pending user
 - App URL / route: `http://127.0.0.1:6008/?path=/story/foundations-library-overrides--default-and-product-identity`
 - Required setup or test data: built exact archive installed into the isolated consumer; default and custom identity configurations
-- Steps for the user: compare representative controls, overlay, file tree, editor/workbench, and recovery states under default styling; switch to the custom identity/geometry example; confirm local wrapper copy and deliberate override remain understandable
-- Expected result: defaults look unchanged, overrides affect only documented semantic regions, interactions remain accessible, and the examples make clear that product behavior remains app-owned
+- Steps for the user: compare the Graphite baseline and Juniper identity panels; activate Juniper's `Save workspace` action and confirm the notice changes; open `Review dialog`, move through it with the keyboard, and dismiss it with Escape; inspect the route at desktop and mobile widths
+- Expected result: identity remains scoped to Juniper's documented accents and hooks, the layout has no overflow, focus and dismissal remain clear, and the examples make clear that product behavior remains app-owned
 - Feedback that would change artifacts: any need for deeper internal selectors, missing portal/structural hook, changed default rendering, confusing wrapper ownership, or pressure to move domain behavior into the package
 
 ## Visual Verification Matrix

@@ -25,7 +25,7 @@ function LibraryOverridesReference() {
   const [saved, setSaved] = useState(false)
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <header className={styles.introduction}>
         <p>UI Foundations · Consumer contract</p>
         <h1>Import defaults. Override identity. Own behavior.</h1>
@@ -51,7 +51,7 @@ function LibraryOverridesReference() {
             style={{ '--editor-content-width': '68rem' }}
           >
             <div className={styles.comparison}>
-              <section className={styles.example}>
+              <section className={styles.example} id="comparison">
                 <div>
                   <p className={styles.eyebrow}>Foundation default</p>
                   <h2>Graphite baseline</h2>
@@ -67,7 +67,7 @@ function LibraryOverridesReference() {
                 </InlineNotice>
               </section>
 
-              <section className={[styles.example, styles.productIdentity].join(' ')}>
+              <section className={[styles.example, styles.productIdentity].join(' ')} id="tokens">
                 <div>
                   <p className={styles.eyebrow}>App-owned override</p>
                   <h2>Juniper identity</h2>
@@ -93,6 +93,7 @@ function LibraryOverridesReference() {
                 </div>
                 <InlineNotice
                   className={styles.productNotice}
+                  role="status"
                   title={saved ? 'Saved by the app' : 'Wrapper boundary'}
                   tone={saved ? 'success' : 'neutral'}
                 >
@@ -109,14 +110,14 @@ function LibraryOverridesReference() {
             <a href="#tokens">Theme overrides</a>
           </nav>
         )}
-        rail={<span className={styles.mark}>UF</span>}
+        rail={<nav aria-label="Application"><span className={styles.mark}>UF</span></nav>}
         style={{
           '--workbench-content-width': '74rem',
           '--workbench-navigation-width': '14rem',
           '--workbench-rail-width': '3.5rem',
         }}
       />
-    </main>
+    </div>
   )
 }
 
