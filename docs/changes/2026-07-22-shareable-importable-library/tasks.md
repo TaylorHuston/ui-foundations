@@ -5,8 +5,8 @@ status: in_review
 
 ## Resume Here
 
-- Last completed action: completed independent `sdd-review`, remediated all required findings, and reran package, accessibility, rendered UI, SDD, and aggregate evidence
-- Next action: collect the pending user walkthrough on `Foundations/Library Overrides`; merge/close only after user acceptance and explicit authorization
+- Last completed action: user confirmed the manual UI walkthrough and authorized local merge-and-close
+- Next action: fast-forward the reviewed branch into `develop`, reconcile the integrated closeout record, and run `sdd change close`
 - Active branch/ref: `change/shareable-importable-library` current HEAD; reviewed implementation candidate `4cbc923`
 - Expected dirty files: none after the review-ledger commit
 - Known blockers: npm scope ownership/authentication remains pending for actual publication but does not block local package implementation and verification
@@ -78,7 +78,7 @@ status: in_review
 - [x] 6.1 Update release communication with install, CSS, wrapper, override, dependency, versioning, and migration consequences.
 - [x] 6.2 Run independent `sdd-review` against the exact source and target commits.
 - [x] 6.3 Resolve review findings and rerun affected package, consumer, behavior, accessibility, and visual evidence.
-- [ ] 6.4 Record manual UI confirmation as `pending user`, `user confirmed`, or `accepted gap` after the final default/override walkthrough.
+- [x] 6.4 Record manual UI confirmation as `pending user`, `user confirmed`, or `accepted gap` after the final default/override walkthrough.
 - [x] 6.5 Confirm the new ADR is Accepted or remains Proposed with an explicit blocker; never leave both ADRs Accepted as competing current rules.
 - [x] 6.6 Confirm the exact intended implementation is committed and every required candidate/integration gate applies to that commit.
 - [x] 6.7 Keep Change status and Resume Here aligned through `planned -> in_progress -> in_review`; close only with `sdd change close`.
@@ -121,6 +121,7 @@ status: in_review
 
 | Date | Feedback | Classification | Action / Artifact Updates | Status |
 |---|---|---|---|---|
+| 2026-07-23 | User authorized “merge and close” after the ready review and current walkthrough were presented. | manual acceptance | Record the walkthrough as accepted and proceed with the policy-defined local fast-forward and SDD closeout; no push or publication. | user confirmed |
 | 2026-07-22 | Make UI Foundations a shared library applications import and override. | product/architecture direction | Created UIF-002 plan and Proposed runtime-library ADR; planned UIF-001 reconciliation and app-owned wrapper boundary. | resolved in planning |
 
 ## Planning Updates
@@ -206,7 +207,7 @@ Not applicable: this Change distributes presentational components and callbacks 
 
 ## Manual UI Confirmation
 
-- Status: pending user
+- Status: user confirmed
 - App URL / route: `http://127.0.0.1:6008/?path=/story/foundations-library-overrides--default-and-product-identity`
 - Required setup or test data: built exact archive installed into the isolated consumer; default and custom identity configurations
 - Steps for the user: compare the Graphite baseline and Juniper identity panels; activate Juniper's `Save workspace` action and confirm the notice changes; open `Review dialog`, move through it with the keyboard, and dismiss it with Escape; inspect the route at desktop and mobile widths
@@ -246,7 +247,7 @@ Not applicable: this Change distributes presentational components and callbacks 
 
 ## Closeout
 
-- Change status: `in_review`; independent review is ready with manual UI confirmation pending user.
+- Change status: `in_review`; independent review and manual UI confirmation are complete.
 - Epic files updated: UIF-002 implemented/verified; UIF-001 adoption truth reconciled.
 - Story labels/references and Requirement/Scenario IDs current: yes.
 - Implemented By maps current: yes; UIF-001 owns behavior and UIF-002 owns package/override/release surfaces.
@@ -257,7 +258,7 @@ Not applicable: this Change distributes presentational components and callbacks 
 - README/current-state docs and active/closed Change claims reconciled: yes.
 - ADR status: runtime-library ADR Accepted; copy-owned ADR Superseded.
 - Release communication current: yes.
-- `sdd-review` verdict: ready; manual UI confirmation remains pending user.
+- `sdd-review` verdict: ready; manual UI confirmation is user confirmed.
 - Review record: this task ledger records the consolidated findings, remediation commit, and fresh verification.
 - `review.md` findings resolved: all required findings were resolved in-review, so no unresolved `review.md` remains.
 - Planning updates resolved: yes; operational publish confirmation remains explicit.
@@ -270,8 +271,8 @@ Not applicable: this Change distributes presentational components and callbacks 
 - Verification Scope Decision current and required candidate gates passed: yes on `4cbc923`, with the affected aggregate rerun after the final review-ledger/test-harness commit.
 - Immutable review handoff candidate: current branch HEAD after the review-ledger commit; reviewed behavior tree `4cbc9230e25b6e75ab234e4e665a83313471bc29`.
 - Tested integration candidate matches actual integrated tree, or rerun recorded: yes; prospective fast-forward tree equals tested source.
-- Manual UI confirmation status: pending user.
+- Manual UI confirmation status: user confirmed.
 - Rendered UI verification status: representative default/override and portaled Dialog passed desktop/mobile; complete overlay hooks pass automated proof, with individual Sheet/Menu/Tooltip and unchanged editor surfaces honestly not re-inspected.
-- PR / merge state: not started.
+- PR / merge state: local fast-forward to `develop` authorized; not yet performed. No PR or push is required for this integration path.
 - Deferred scope accepted: yes.
-- Change moved to `docs/changes/closed/`: no; active implementation awaits user walkthrough acceptance and user-directed integration/closeout.
+- Change moved to `docs/changes/closed/`: no; local integration and SDD closeout are now authorized.
