@@ -7,8 +7,8 @@ status: in_progress
 
 - Last completed action: implemented and verified UIF-002/S1 against an exact packed archive and isolated React/Vite consumer
 - Next action: commit the reconciled UIF-002/S1 slice, then implement UIF-002/S2 public root, named-slot, portal, token, and app-wrapper override contracts
-- Active branch/ref: `change/shareable-importable-library@1d07740` plus the pending S1 slice
-- Expected dirty files: S1 package/build configuration, package-contract fixture, UIF-002, and this Change ledger
+- Active branch/ref: `change/shareable-importable-library@3736d85`
+- Expected dirty files: none before UIF-002/S2 begins
 - Known blockers: npm scope ownership/authentication remains pending for actual publication but does not block local package implementation and verification
 
 ## Task Checklist
@@ -91,7 +91,7 @@ status: in_progress
 |---|---|---|---|---|---|
 | 2026-07-22 | UIF-002 planning and ADR candidate | main; `sdd-change`, `sdd-adr`, Context7 Vite/npm docs | private Change, draft Epic, Proposed ADR | Planned; implementation not started | repository `develop@b5dda9d` |
 | 2026-07-22 | Promotion and implementation readiness | main; `sdd-apply` | closed catalog prerequisite, active Change, UIF-002, Proposed ADR | Promoted, branched, and transitioned to `in_progress` | `09dbcfe` |
-| 2026-07-22 | UIF-002/S1 installable artifact | main; `sdd-apply`, `tdd`, `building-components`, Vite/npm primary docs | package manifest, two-pass library build, declarations, package verifier, isolated consumer | Exact archive builds, exposes only public entries, resolves CSS/types, and uses the consumer React runtime | pending commit |
+| 2026-07-22 | UIF-002/S1 installable artifact | main; `sdd-apply`, `tdd`, `building-components`, Vite/npm primary docs | package manifest, two-pass library build, declarations, package verifier, isolated consumer | Exact archive builds, exposes only public entries, resolves CSS/types, and uses the consumer React runtime | `3736d85` |
 
 ## Verification Ledger
 
