@@ -92,6 +92,7 @@ status: in_review
 | 2026-07-22 | Inspector-capable shell refinement | main; `ui-ux-pro-max`, `building-components` | WorkbenchShell, workbench story, tests, docs, CSS guardrails | Optional side regions, exact side symmetry, stable readable content, mobile handoff, and explicit no-Tailwind enforcement added | `b5dda9d` |
 | 2026-07-22 | Anthracite-aligned navigation refinement | main; `ui-ux-pro-max`, `building-components` | TreeView, FileTree/FileBrowser, WorkbenchShell, stories, tests, docs | Accessible hierarchical keyboard behavior, inspectable shell regions, and the rail/sidebar divider promoted from real-app evidence | `b5dda9d` |
 | 2026-07-22 | Cross-spike editor work surface | main; `building-components`, `tdd` | SegmentedControl, DocumentHeader, EditorToolbar, EditorSurface, stories, tests, docs | Text-first modes and actions, controlled renaming, aligned editor slots, and canonical save/recovery states added without adopting an editor engine or persistence contract | `b5dda9d` |
+| 2026-07-22 | Historical closeout | main; `sdd-apply` | Change status, review waiver, confirmation, evidence, and closed-folder transition | Closed after verifying the already-integrated candidate | `7c72017` |
 
 ## Verification Ledger
 
