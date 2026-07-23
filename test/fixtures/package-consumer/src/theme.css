@@ -1,0 +1,8 @@
+:root {
+  --accent: #ff9a4d;
+  --accent-strong: #ffb273;
+}
+
+.consumer-shell {
+  --workbench-navigation-width: 15rem;
+}

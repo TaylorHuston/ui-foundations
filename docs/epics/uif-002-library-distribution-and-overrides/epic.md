@@ -50,7 +50,7 @@ UI Foundations will provide a versioned React package that applications can inst
 
 | Story | Implementation | Verification | Capability | Last Verified | Notes |
 |---|---|---|---|---|---|
-| S1 | not implemented | unverified | Install and import the versioned library. |  | Public registry publication remains a separately authorized release action. |
+| S1 | implemented | verified | Install and import the versioned library. | 2026-07-22 | Exact packed-artifact verification; public registry publication remains separately authorized. |
 | S2 | not implemented | unverified | Override foundations without patching package internals. |  | App-owned wrappers are the required consumer seam. |
 | S3 | not implemented | unverified | Inspect, version, and upgrade a release candidate. |  | Pre-1.0 compatibility changes require explicit release communication. |
 
@@ -58,11 +58,11 @@ UI Foundations will provide a versioned React package that applications can inst
 
 ### Story S1: Install And Import The Versioned Library
 
-Implementation: not implemented
-Verification: unverified
+Implementation: implemented
+Verification: verified
 Created: 2026-07-22
 Modified: 2026-07-22
-Last verified:
+Last verified: 2026-07-22
 
 As an application developer, I want to install and import UI Foundations as a versioned dependency, so that I can use its tested defaults without copying repository source.
 
@@ -106,27 +106,30 @@ The system SHALL expose documented opt-in CSS entry points for the complete foun
 
 | Requirement / Scenario | Location / Anchor | Kind | Responsibility |
 |---|---|---|---|
-| S1/R1 | Not implemented yet. | primary | Package build, manifest exports, and generated declarations after implementation. |
-| S1/R2 | Not implemented yet. | configuration | Peer and runtime dependency ownership after implementation. |
-| S1/R3 | Not implemented yet. | presentation | Published CSS-layer contract after implementation. |
+| S1/R1 | `scripts/build-library.mjs#buildJavaScript` | primary | Build the compiled ESM entry points. |
+| S1/R1 | `scripts/build-library.mjs#buildDeclarations`; `tsconfig.build.json#compilerOptions` | support | Generate public TypeScript declarations. |
+| S1/R1 | `package.json#exports` | configuration | Define the explicit public export map. |
+| S1/R2 | `scripts/build-library.mjs#external` | primary | Keep React and all package runtime imports external to the bundle. |
+| S1/R2 | `package.json#peerDependencies`; `package.json#dependencies` | configuration | Keep React consumer-owned while declaring every other exported runtime dependency. |
+| S1/R3 | `scripts/build-library.mjs#buildStyles` | primary | Build the complete foundation and supported opt-in CSS layers. |
+| S1/R3 | `package.json#exports` | configuration | Expose documented stylesheet entry points without source imports. |
 
 #### Implementation Gaps
 
-- `S1/R1`: Not implemented yet.
-- `S1/R2`: Not implemented yet.
-- `S1/R3`: Not implemented yet.
+None.
 
 #### Verified By
 
 | Requirement / Scenario | Evidence | Proves | Status |
 |---|---|---|---|
+| S1/R1-S1 | `npm run check:package` | The exact archive contains the declared JS, type, style, and metadata surface and installs, typechecks, and production-builds in a fresh non-symlink consumer. | Passing 2026-07-22 |
+| S1/R1-S2 | `npm run check:package` | An undeclared `src/components` import fails with `ERR_PACKAGE_PATH_NOT_EXPORTED`. | Passing 2026-07-22 |
+| S1/R2-S1 | `npm run check:package` plus built-JavaScript import inspection | The consumer dependency tree contains one React and React DOM version, and distributed runtime imports remain external. | Passing 2026-07-22 |
+| S1/R3-S1 | `npm run check:package` | Complete and lower-level CSS entry points exist in the archive and resolve in a clean production build. | Passing 2026-07-22 |
 
 #### Verification Gaps
 
-- `S1/R1-S1`: Not verified yet.
-- `S1/R1-S2`: Not verified yet.
-- `S1/R2-S1`: Not verified yet.
-- `S1/R3-S1`: Not verified yet.
+None.
 
 #### Story Notes
 

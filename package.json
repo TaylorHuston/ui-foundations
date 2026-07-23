@@ -1,8 +1,8 @@
 {
-  "name": "ui-foundations",
+  "name": "@taylorhuston/ui-foundations",
   "version": "0.1.0",
   "private": true,
-  "description": "Copyable CSS and tested React references for authored application interfaces.",
+  "description": "Typed React interface foundations with semantic CSS and app-owned override seams.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TaylorHuston/ui-foundations.git"
@@ -10,24 +10,50 @@
   "homepage": "https://github.com/TaylorHuston/ui-foundations#readme",
   "bugs": "https://github.com/TaylorHuston/ui-foundations/issues",
   "type": "module",
+  "types": "./dist/types/index.d.ts",
   "files": [
-    "src"
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
   ],
   "exports": {
-    ".": "./src/index.css",
-    "./fonts.css": "./src/styles/fonts.css",
-    "./global.css": "./src/styles/global.css",
-    "./primitives.css": "./src/styles/primitives.css",
-    "./tokens.css": "./src/styles/tokens.css"
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "types": "./dist/types/components/index.d.ts",
+      "import": "./dist/components.js"
+    },
+    "./patterns": {
+      "types": "./dist/types/patterns/index.d.ts",
+      "import": "./dist/patterns.js"
+    },
+    "./theme-profiles": {
+      "types": "./dist/types/theme-profiles.d.ts",
+      "import": "./dist/theme-profiles.js"
+    },
+    "./styles.css": "./dist/foundation.css",
+    "./components.css": "./dist/components.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./global.css": "./dist/global.css",
+    "./primitives.css": "./dist/primitives.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./package.json": "./package.json"
   },
   "scripts": {
+    "build:library": "node scripts/build-library.mjs",
     "check": "node scripts/check.mjs",
+    "check:package": "npm run build:library && node scripts/verify-package.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "storybook": "storybook dev -p 6008 --no-open",
     "build:storybook": "storybook build",
     "compare:capture": "node scripts/capture-comparison.mjs",
-    "check:all": "npm run check && npm run typecheck && npm test && npm run build:storybook"
+    "check:all": "npm run check && npm run typecheck && npm test && npm run build:library && node scripts/verify-package.mjs && npm run build:storybook",
+    "prepack": "npm run build:library"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^10.5.0",
@@ -40,7 +66,6 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
     "jsdom": "^29.1.1",
-    "lucide-react": "^1.24.0",
     "playwright": "^1.61.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
@@ -49,7 +74,12 @@
     "vite": "^8.1.1",
     "vitest": "^4.1.10"
   },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
   "dependencies": {
-    "@base-ui/react": "^1.6.0"
+    "@base-ui/react": "^1.6.0",
+    "lucide-react": "^1.24.0"
   }
 }

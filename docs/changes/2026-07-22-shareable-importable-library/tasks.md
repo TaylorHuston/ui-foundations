@@ -5,10 +5,10 @@ status: in_progress
 
 ## Resume Here
 
-- Last completed action: closed the prerequisite catalog Change, promoted this Change, created `change/shareable-importable-library`, and transitioned implementation to `in_progress`
-- Next action: characterize and implement UIF-002/S1 package artifact, export, dependency, and CSS-layer contracts through vertical TDD slices
-- Active branch/ref: `change/shareable-importable-library@09dbcfe`
-- Expected dirty files: this Change, UIF-002, the Proposed runtime-library ADR, package/build configuration, focused package-contract tests, and later public-hook/docs reconciliation
+- Last completed action: implemented and verified UIF-002/S1 against an exact packed archive and isolated React/Vite consumer
+- Next action: commit the reconciled UIF-002/S1 slice, then implement UIF-002/S2 public root, named-slot, portal, token, and app-wrapper override contracts
+- Active branch/ref: `change/shareable-importable-library@1d07740` plus the pending S1 slice
+- Expected dirty files: S1 package/build configuration, package-contract fixture, UIF-002, and this Change ledger
 - Known blockers: npm scope ownership/authentication remains pending for actual publication but does not block local package implementation and verification
 
 ## Task Checklist
@@ -42,11 +42,11 @@ status: in_progress
 ### 4. Implementation
 
 - [x] 4.1 Complete and close the overlapping component-catalog Change before promotion; create `change/shareable-importable-library` from current `develop` for implementation.
-- [ ] 4.2 Implement `UIF-002/S1` through adaptive BDD/TDD slices.
-  - [ ] R1/R1-S1: build and consume compiled JavaScript, declarations, CSS, and metadata from an exact packed artifact without repository-source access.
-  - [ ] R1/R1-S2: expose only documented package entry points and reject private source imports.
-  - [ ] R2/R2-S1: externalize React/React DOM and declare every other runtime dependency used by exports.
-  - [ ] R3/R3-S1: expose documented complete and lower-level CSS entry points with deliberate global-style opt-in.
+- [x] 4.2 Implement `UIF-002/S1` through adaptive BDD/TDD slices.
+  - [x] R1/R1-S1: build and consume compiled JavaScript, declarations, CSS, and metadata from an exact packed artifact without repository-source access.
+  - [x] R1/R1-S2: expose only documented package entry points and reject private source imports.
+  - [x] R2/R2-S1: externalize React/React DOM and declare every other runtime dependency used by exports.
+  - [x] R3/R3-S1: expose documented complete and lower-level CSS entry points with deliberate global-style opt-in.
 - [ ] 4.3 Implement `UIF-002/S2` through adaptive BDD/TDD slices.
   - [ ] R1/R1-S1-R1-S2: prove custom identity values and safe defaults through the published CSS contract.
   - [ ] R2/R2-S1: normalize public root class/style and named-slot hooks without changing semantics.
@@ -63,10 +63,10 @@ status: in_progress
 ### 5. Verification
 
 - [ ] 5.1 Add exact focused tests for every implemented UIF-002 Scenario and inspect their assertions before mapping them.
-- [ ] 5.2 Inspect `npm pack --dry-run --json` and the exact archive; confirm only intended public files, docs, and metadata ship.
-- [ ] 5.3 Install the exact archive into an isolated React 19/Vite 8 consumer without symlinks or source-path imports; typecheck and production-build it.
+- [x] 5.2 Inspect `npm pack --dry-run --json` and the exact archive; confirm only intended public files, docs, and metadata ship.
+- [x] 5.3 Install the exact archive into an isolated React 19/Vite 8 consumer without symlinks or source-path imports; typecheck and production-build it.
 - [ ] 5.4 Exercise default theme, custom identity, root/slot override, WorkbenchShell structural override, app wrapper, and portaled overlay override in the isolated consumer.
-- [ ] 5.5 Confirm React/React DOM are external and singular in the consumer and all other runtime imports resolve from declared dependencies.
+- [x] 5.5 Confirm React/React DOM are external and singular in the consumer and all other runtime imports resolve from declared dependencies.
 - [ ] 5.6 Run existing focused component/pattern tests, accessibility checks, and Storybook rendering to detect packaging-hook regressions.
 - [ ] 5.7 Directly inspect default and overridden Storybook/consumer rendering at representative desktop and constrained viewports, including console/network state.
 - [ ] 5.8 Run the project aggregate package-aware gate on the exact committed candidate and record meaningful test/build/package counts.
@@ -91,6 +91,7 @@ status: in_progress
 |---|---|---|---|---|---|
 | 2026-07-22 | UIF-002 planning and ADR candidate | main; `sdd-change`, `sdd-adr`, Context7 Vite/npm docs | private Change, draft Epic, Proposed ADR | Planned; implementation not started | repository `develop@b5dda9d` |
 | 2026-07-22 | Promotion and implementation readiness | main; `sdd-apply` | closed catalog prerequisite, active Change, UIF-002, Proposed ADR | Promoted, branched, and transitioned to `in_progress` | `09dbcfe` |
+| 2026-07-22 | UIF-002/S1 installable artifact | main; `sdd-apply`, `tdd`, `building-components`, Vite/npm primary docs | package manifest, two-pass library build, declarations, package verifier, isolated consumer | Exact archive builds, exposes only public entries, resolves CSS/types, and uses the consumer React runtime | pending commit |
 
 ## Verification Ledger
 
@@ -100,6 +101,9 @@ status: in_progress
 | 2026-07-22 | Current npm CLI documentation review | primary documentation | `npm pack --dry-run --json` exposes archive contents; public scoped publication requires public access and authenticated release authority. | Planning evidence only |
 | 2026-07-22 | Consumer manifest comparison | source inspection | 49th Floor, Anthracite, and Lorecraft intended web clients use React 19 and Vite 8; Base UI 1.6 is already present in two consumers. | Planning evidence only |
 | 2026-07-22 | npm registry/package preflight | external operational check | Unscoped `ui-foundations` is occupied; `@taylorhuston/ui-foundations` is not currently published; this machine lacks npm authentication. | Package name assumed; publish environment pending |
+| 2026-07-22 | `node scripts/verify-package.mjs` red phase | focused contract test | The verifier detects a missing required public artifact before implementation. | Failed as expected: packed artifact missing `CHANGELOG.md`. |
+| 2026-07-22 | `npm run check:package` | exact archive and isolated-consumer gate | Two-pass build, 78-file archive, public export/declaration/CSS resolution, private-import rejection, consumer typecheck/build, and one React/React DOM runtime. | Passed; `@taylorhuston/ui-foundations@0.1.0`, React/React DOM 19.2.8. |
+| 2026-07-22 | `npm pack --dry-run --ignore-scripts --json` and built-import inspection | artifact inspection | Archive contains only README, CHANGELOG, manifest, and `dist`; built JS keeps React, Base UI, and Lucide as bare external imports. | Passed. |
 
 ## Manual Feedback
 
@@ -124,8 +128,8 @@ status: in_progress
 
 | Requirement / Surface | End-State Invariant | Risk / Failure Mode | Check Or Confirmation Needed | Evidence / Finding | Status |
 |---|---|---|---|---|---|
-| UIF-002/S1 R1/R3 package artifact | Every documented JS, declaration, and CSS export exists in the archive and resolves without repository source. | Local source or Storybook succeeds while the published archive omits files or leaks private paths. | Inspect exact archive and build isolated non-symlink consumer. | Pending implementation. | known |
-| UIF-002/S1 R2 runtime dependencies | Consumer supplies one compatible React runtime; all other runtime imports are declared. | Duplicate React, missing Base UI/Lucide runtime, or accidental devDependency reliance. | Inspect bundle imports, manifest, installed tree, and rendered consumer. | Current package keeps React in devDependencies and is not distributable. | known |
+| UIF-002/S1 R1/R3 package artifact | Every documented JS, declaration, and CSS export exists in the archive and resolves without repository source. | Local source or Storybook succeeds while the published archive omits files or leaks private paths. | Inspect exact archive and build isolated non-symlink consumer. | Exact 78-file archive passed required-file/private-path checks and fresh consumer typecheck/build. | resolved |
+| UIF-002/S1 R2 runtime dependencies | Consumer supplies one compatible React runtime; all other runtime imports are declared. | Duplicate React, missing Base UI/Lucide runtime, or accidental devDependency reliance. | Inspect bundle imports, manifest, installed tree, and rendered consumer. | React/React DOM are peers and singular at 19.2.8; Base UI/Lucide are runtime dependencies and remain external bare imports. | resolved |
 | UIF-002/S2 R1 token override | Defaults remain safe and later consumer semantic values override predictably. | CSS order/specificity prevents identity override or global package CSS overwrites the app. | Default/custom computed-style assertions and rendered inspection. | Current tokens are override-oriented but not package-proven. | known |
 | UIF-002/S2 R2 public hooks | Every materially styled root and portal region has a stable documented hook without exposing CSS Module hashes. | Components have inconsistent class/style support; portals escape ancestor-scoped overrides. | Public-hook inventory, contract tests, portal fixture, Storybook regression. | Current workbench/editor surfaces have slots; several primitives do not. | known |
 | UIF-002/S2 R3 wrapper boundary | Feature code can depend on app wrappers and locally replace one implementation. | Direct package imports spread through features or package props absorb domain concerns. | Representative wrapper and replacement test/docs; review public prop additions. | Pending implementation. | known |
@@ -148,9 +152,9 @@ The package export, declaration, dependency, CSS, and slot surfaces cross the li
 
 | Origin Condition | Domain Result / Invariant | Adapter / Transport Mapping | Client Behavior / Retryability | Exact Proof | Status |
 |---|---|---|---|---|---|
-| Documented JavaScript import | Public export resolves to compiled ESM and matching declarations. | `package.json` exports plus archive paths | Consumer typecheck/build succeeds; private path fails. | Exact package-contract and consumer test pending. | pending |
-| Documented CSS import | Export resolves to intended complete or lower-level style layer. | CSS export map and archive contents | Consumer controls when global/reset styles load and can override later semantic values. | CSS import/build/computed-style proof pending. | pending |
-| React component runtime | React identity comes from consumer; other runtime imports are declared. | Peer/runtime dependency metadata and externalized bundle imports | Consumer renders without duplicate React or unresolved module. | Dependency-tree and rendered consumer proof pending. | pending |
+| Documented JavaScript import | Public export resolves to compiled ESM and matching declarations. | `package.json` exports plus archive paths | Consumer typecheck/build succeeds; private path fails. | Exact archive consumer typecheck/build passed; private import rejected. | verified |
+| Documented CSS import | Export resolves to intended complete or lower-level style layer. | CSS export map and archive contents | Consumer controls when global/reset styles load and can override later semantic values. | Complete/lower-level imports resolve and production-build; computed-style override proof remains in S2. | partially verified |
+| React component runtime | React identity comes from consumer; other runtime imports are declared. | Peer/runtime dependency metadata and externalized bundle imports | Consumer renders without duplicate React or unresolved module. | Dependency tree reports one React/React DOM runtime; built imports and manifest agree. | verified |
 | Public override hook | Semantic token, root prop, named slot, or composition API reaches only the documented region. | Type declaration plus rendered class/data/custom-property output | App wrapper styles default, portal, and structural states without private selectors. | Hook inventory and consumer proof pending. | pending |
 
 ## Stateful Transition Matrix
@@ -169,8 +173,8 @@ Not applicable: this Change distributes presentational components and callbacks 
 
 | Evidence Obligation | Required Setup / Safety Boundary | Needed For | Current Readiness | Result / Resolution |
 |---|---|---|---|---|
-| Exact package archive and contents | Local Node 26/npm 11; clean temporary destination; no credentials required | UIF-002/S1, S3 | ready | Run during Apply from exact candidate. |
-| Isolated React/Vite consumer | Temporary non-workspace install from archive; React 19/Vite 8; browser runtime | UIF-002/S1-S2 | ready | Build and browser evidence pending. |
+| Exact package archive and contents | Local Node 26/npm 11; clean temporary destination; no credentials required | UIF-002/S1, S3 | ready | 78-file exact archive verified locally; rerun on final committed candidate. |
+| Isolated React/Vite consumer | Temporary non-workspace install from archive; React 19/Vite 8; browser runtime | UIF-002/S1-S2 | ready | Fresh install, typecheck, and production build passed; browser evidence remains for S2. |
 | Storybook default/override rendering | Existing Storybook and browser/accessibility tooling | UIF-001 parity and UIF-002/S2 | ready | Final evidence pending. |
 | Public npm publication | Confirmed `@taylorhuston` scope ownership, npm authentication, explicit publish authorization, final version/candidate | UIF-002/S3/R3 release operation | pending | Not required for implementation handoff; required before actual publish. |
 
@@ -208,7 +212,7 @@ Not applicable: this Change distributes presentational components and callbacks 
 
 ## Blockers / Open Questions
 
-- Prerequisite: close `2026-07-17-scaffold-component-pattern-catalog` before promotion.
+- Prerequisite resolved: `2026-07-17-scaffold-component-pattern-catalog` is closed and committed.
 - Publication-only: confirm `@taylorhuston` npm scope ownership and authenticate the release environment.
 
 ## Review Handoff Candidate
