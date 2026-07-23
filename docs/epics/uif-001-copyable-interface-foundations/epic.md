@@ -74,7 +74,7 @@ The system SHALL provide the documented semantic token roles and default scales 
 
 ###### Scenario R1-S1: Use Default Foundation
 
-- WHEN a developer loads `src/index.css`
+- WHEN a developer loads `@taylorhuston/ui-foundations/styles.css`
 - THEN the documented surface, text, border, action, identity, information, state, focus, selection, spacing, radius, control, motion, and typography roles are available.
 
 ###### Scenario R1-S2: Override Product Identity
@@ -284,7 +284,7 @@ The system SHALL provide Tabs, Checkbox, and Switch references with labeled, con
 
 #### Verification Gaps
 
-- Base UI API stability and copied-source ergonomics still need proof from real consuming applications.
+- Base UI API stability and package API/adoption ergonomics still need proof from real consuming applications.
 - Axe's optional `region` best-practice rule flags Tooltip and Menu portals outside the isolated Storybook story landmark; WCAG-tagged checks pass, and consuming applications own final page landmarks.
 
 #### Story Notes

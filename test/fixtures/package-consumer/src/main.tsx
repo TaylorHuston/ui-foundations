@@ -1,37 +1,43 @@
-import '@taylorhuston/ui-foundations/fonts.css'
-import '@taylorhuston/ui-foundations/tokens.css'
-import '@taylorhuston/ui-foundations/global.css'
-import '@taylorhuston/ui-foundations/primitives.css'
 import '@taylorhuston/ui-foundations/styles.css'
 import '@taylorhuston/ui-foundations/components.css'
 import './theme.css'
 
 import { StrictMode, type ComponentProps } from 'react'
 import { createRoot } from 'react-dom/client'
+import type { ButtonProps as PublicButtonProps } from '@taylorhuston/ui-foundations/components'
+import { WorkbenchShell, type WorkbenchShellProps } from '@taylorhuston/ui-foundations/patterns'
+import {
+  themeProfiles,
+  type ThemeProfileId,
+} from '@taylorhuston/ui-foundations/theme-profiles'
 import {
   Button,
   Dialog,
   InlineNotice,
   TextField,
-  themeProfiles,
 } from '@taylorhuston/ui-foundations'
-import { WorkbenchShell } from '@taylorhuston/ui-foundations/patterns'
 
-function AppButton({ className, ...props }: ComponentProps<typeof Button>) {
+type AppButtonProps = ComponentProps<typeof Button> & PublicButtonProps
+
+function AppButton({ className, ...props }: AppButtonProps) {
   return <Button className={['app-button', className].filter(Boolean).join(' ')} {...props} />
 }
 
 function App() {
+  const identityProfile: ThemeProfileId = themeProfiles[0].id
+  const contentAnchor: WorkbenchShellProps['contentAnchor'] = 'viewport'
+
   return (
     <WorkbenchShell
       className="consumer-shell"
+      contentAnchor={contentAnchor}
       context={<aside><strong>Context</strong><p>Application-owned content</p></aside>}
       main={(
         <main className="consumer-main">
           <header>
             <p>Installed package fixture</p>
             <h1>Shared defaults with local identity</h1>
-            <span>{themeProfiles.length} identity profiles available.</span>
+            <span>{themeProfiles.length} identity profiles available; default is {identityProfile}.</span>
           </header>
           <div className="comparison">
             <section className="example">

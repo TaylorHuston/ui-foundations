@@ -8,6 +8,14 @@ The package does not own application data, routing, authorization, persistence, 
 
 Registry publication is not active yet. Until an authorized release exists, validate consumers against an exact local archive produced by `npm pack`; do not link or import repository source.
 
+```sh
+# From the UI Foundations repository:
+npm pack --pack-destination /tmp
+
+# From the consuming application:
+npm install /tmp/taylorhuston-ui-foundations-0.1.0.tgz
+```
+
 ```tsx
 import '@taylorhuston/ui-foundations/styles.css'
 import '@taylorhuston/ui-foundations/components.css'

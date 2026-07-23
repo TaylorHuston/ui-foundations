@@ -34,15 +34,11 @@ function packageRecordFrom(output) {
   return Object.values(parsed)[0]
 }
 
-function collectVersions(node, packageName, versions = new Set()) {
-  const dependency = node?.dependencies?.[packageName]
-  if (dependency?.version) versions.add(dependency.version)
-
-  for (const child of Object.values(node?.dependencies ?? {})) {
-    collectVersions(child, packageName, versions)
-  }
-
-  return versions
+function collectPhysicalPackagePaths(output, packageName) {
+  return output
+    .split(/\r?\n/)
+    .filter(Boolean)
+    .filter((path) => path.replaceAll('\\', '/').endsWith(`/node_modules/${packageName}`))
 }
 
 const packOutput = run('npm', [
@@ -85,6 +81,11 @@ for (const { path } of packageRecord.files) {
   }
 }
 
+const packedReadme = await readFile(join(repositoryRoot, 'README.md'), 'utf8')
+if (packedReadme.includes('](./docs/')) {
+  throw new Error('Packed README contains a relative link to documentation that is not shipped')
+}
+
 await cp(fixtureRoot, consumerRoot, { recursive: true })
 const archivePath = join(packRoot, packageRecord.filename)
 run('npm', [
@@ -116,15 +117,49 @@ if (privateImportProbe.trim()) {
   throw new Error('Private import probe produced unexpected output')
 }
 
-const dependencyTree = JSON.parse(run('npm', ['ls', '--all', '--json', 'react', 'react-dom'], {
-  cwd: consumerRoot,
-}))
-const reactVersions = collectVersions(dependencyTree, 'react')
-const reactDomVersions = collectVersions(dependencyTree, 'react-dom')
+const publicImportProbe = run(process.execPath, [
+  '--input-type=module',
+  '--eval',
+  `
+    for (const specifier of [
+      '@taylorhuston/ui-foundations',
+      '@taylorhuston/ui-foundations/components',
+      '@taylorhuston/ui-foundations/patterns',
+      '@taylorhuston/ui-foundations/theme-profiles',
+    ]) {
+      const imported = await import(specifier)
+      if (Object.keys(imported).length === 0) {
+        throw new Error(\`Public JavaScript export resolved without exports: \${specifier}\`)
+      }
+    }
 
-if (reactVersions.size !== 1 || reactDomVersions.size !== 1) {
+    for (const specifier of [
+      '@taylorhuston/ui-foundations/styles.css',
+      '@taylorhuston/ui-foundations/components.css',
+      '@taylorhuston/ui-foundations/fonts.css',
+      '@taylorhuston/ui-foundations/global.css',
+      '@taylorhuston/ui-foundations/primitives.css',
+      '@taylorhuston/ui-foundations/tokens.css',
+      '@taylorhuston/ui-foundations/package.json',
+    ]) {
+      import.meta.resolve(specifier)
+    }
+  `,
+], { cwd: consumerRoot })
+
+if (publicImportProbe.trim()) {
+  throw new Error('Public import probe produced unexpected output')
+}
+
+const physicalDependencyPaths = run('npm', ['ls', '--parseable', '--all', 'react', 'react-dom'], {
+  cwd: consumerRoot,
+})
+const reactPaths = collectPhysicalPackagePaths(physicalDependencyPaths, 'react')
+const reactDomPaths = collectPhysicalPackagePaths(physicalDependencyPaths, 'react-dom')
+
+if (reactPaths.length !== 1 || reactDomPaths.length !== 1) {
   throw new Error(
-    `Expected one React runtime, found react=${[...reactVersions].join(',')} react-dom=${[...reactDomVersions].join(',')}`,
+    `Expected one physical React runtime, found react=${reactPaths.length} react-dom=${reactDomPaths.length}`,
   )
 }
 
@@ -133,6 +168,38 @@ const installedManifestPath = join(
   'package.json',
 )
 const installedManifest = JSON.parse(await readFile(installedManifestPath, 'utf8'))
+const reactVersion = JSON.parse(await readFile(join(reactPaths[0], 'package.json'), 'utf8')).version
+const reactDomVersion = JSON.parse(await readFile(join(reactDomPaths[0], 'package.json'), 'utf8')).version
+
+const expectedExports = {
+  '.': {
+    types: './dist/types/index.d.ts',
+    import: './dist/index.js',
+  },
+  './components': {
+    types: './dist/types/components/index.d.ts',
+    import: './dist/components.js',
+  },
+  './patterns': {
+    types: './dist/types/patterns/index.d.ts',
+    import: './dist/patterns.js',
+  },
+  './theme-profiles': {
+    types: './dist/types/theme-profiles.d.ts',
+    import: './dist/theme-profiles.js',
+  },
+  './styles.css': './dist/foundation.css',
+  './components.css': './dist/components.css',
+  './fonts.css': './dist/fonts.css',
+  './global.css': './dist/global.css',
+  './primitives.css': './dist/primitives.css',
+  './tokens.css': './dist/tokens.css',
+  './package.json': './package.json',
+}
+
+if (JSON.stringify(installedManifest.exports) !== JSON.stringify(expectedExports)) {
+  throw new Error('Installed package export map does not match the supported public contract')
+}
 
 if (installedManifest.private !== true) {
   throw new Error('Registry publication guard is missing; package must remain private until an authorized release')
@@ -144,7 +211,10 @@ process.stdout.write(`${JSON.stringify({
   package: `${installedManifest.name}@${installedManifest.version}`,
   privateImportRejected: true,
   publicationGuarded: true,
-  react: [...reactVersions][0],
-  reactDom: [...reactDomVersions][0],
+  publicExportsResolved: Object.keys(expectedExports).length,
+  react: reactVersion,
+  reactDom: reactDomVersion,
+  reactPhysicalInstallations: reactPaths.length,
+  reactDomPhysicalInstallations: reactDomPaths.length,
   temporaryRoot,
 }, null, 2)}\n`)

@@ -2,11 +2,11 @@
 
 ## Context
 
-UI Foundations 0.1.0 is a public repository but a private npm package. Its manifest exposes CSS source paths only, React references are not package exports, TypeScript is configured for no emit, and application adoption is explicitly copy-owned. The accepted copy-owned ADR, README, UIF-001, and the active component-catalog Change all reinforce that boundary.
+At planning time, UI Foundations 0.1.0 was a public repository but a private npm package. Its manifest exposed CSS source paths only, React references were not package exports, TypeScript was configured for no emit, and application adoption was explicitly copy-owned. The accepted copy-owned ADR, README, UIF-001, and active component-catalog Change reinforced that boundary.
 
-The source has nevertheless developed several package-ready traits: semantic custom properties, TypeScript APIs, CSS Modules, Storybook states, focused tests, stable slots on newer workbench surfaces, and application-neutral callbacks. Current intended consumers—49th Floor, Anthracite, and Lorecraft—use React 19 and Vite 8; two already use Base UI 1.6. The main gaps are compiled distribution, a complete public override contract, dependency/peer ownership, package-candidate verification, and compatibility/release discipline.
+The source had nevertheless developed several package-ready traits: semantic custom properties, TypeScript APIs, CSS Modules, Storybook states, focused tests, stable slots on newer workbench surfaces, and application-neutral callbacks. Current intended consumers—49th Floor, Anthracite, and Lorecraft—use React 19 and Vite 8; two already use Base UI 1.6. This Change implemented the missing compiled distribution, public override contract, dependency/peer ownership, package-candidate verification, and compatibility/release discipline.
 
-The existing `2026-07-17-scaffold-component-pattern-catalog` Change is still `in_progress` and touches UIF-001, README, and the copy-owned ADR. It must complete review, manual disposition, and closeout before this Change is promoted so implementation does not create competing truth over the same surfaces.
+The prerequisite `2026-07-17-scaffold-component-pattern-catalog` Change touched UIF-001, README, and the copy-owned ADR. It was closed before this Change was promoted, preventing competing truth over the same surfaces.
 
 Current documentation confirms that Vite 8 library mode supports single or multiple entry points, dependency externalization, generated CSS naming, and package export maps. Current npm CLI behavior supports archive-content inspection through `npm pack --dry-run --json`; scoped packages require public access configuration, and actual publication requires registry authentication and a separately authorized release action.
 
@@ -66,15 +66,15 @@ As an application developer, I want to install and import UI Foundations as a ve
 
 ##### Implemented By
 
-Not implemented yet.
+Implemented. The canonical map is maintained in `docs/epics/uif-002-library-distribution-and-overrides/epic.md#implemented-by`.
 
 ##### Verified By
 
-Not verified yet.
+Verified. The canonical map is maintained in `docs/epics/uif-002-library-distribution-and-overrides/epic.md#verified-by`.
 
 ##### Verification Gaps
 
-- All UIF-002/S1 Scenarios remain unverified until the packed artifact succeeds in an isolated consumer.
+- No open S1 verification gaps; the exact packed artifact succeeds in an isolated consumer.
 
 #### Story S2: Override Foundations Without Patching Internals
 
@@ -86,15 +86,15 @@ As an application developer, I want supported override seams around imported fou
 
 ##### Implemented By
 
-Not implemented yet.
+Implemented. The canonical map is maintained in `docs/epics/uif-002-library-distribution-and-overrides/epic.md#implemented-by-1`.
 
 ##### Verified By
 
-Not verified yet.
+Verified. The canonical map is maintained in `docs/epics/uif-002-library-distribution-and-overrides/epic.md#verified-by-1`.
 
 ##### Verification Gaps
 
-- All UIF-002/S2 Scenarios remain unverified until the isolated consumer proves default, themed, normal component, workbench, and portaled override cases.
+- No open S2 verification gaps; the isolated consumer proves default, themed, normal component, workbench, and portaled override cases.
 
 #### Story S3: Prepare And Upgrade A Library Release
 
@@ -106,15 +106,15 @@ As a library maintainer, I want an inspectable and versioned release contract, s
 
 ##### Implemented By
 
-Not implemented yet.
+Implemented. The canonical map is maintained in `docs/epics/uif-002-library-distribution-and-overrides/epic.md#implemented-by-2`.
 
 ##### Verified By
 
-Not verified yet.
+Verified. The canonical map is maintained in `docs/epics/uif-002-library-distribution-and-overrides/epic.md#verified-by-2`.
 
 ##### Verification Gaps
 
-- All UIF-002/S3 Scenarios remain unverified; actual registry publication is not authorized by this plan.
+- No open S3 implementation verification gaps. Actual registry publication remains a separate, unauthorized release action.
 
 ### Update Epic: UIF-001 Copyable Interface Foundations
 
@@ -131,8 +131,8 @@ Not verified yet.
 
 - Earlier wording superseded: UIF-001 Outcome and S1-S4 narratives that prohibit runtime package ownership.
 - Story states and evidence: current implemented/verified states remain unless package-hook work changes behavior; existing maps must be augmented only where implementation actually changes ownership or proof.
-- Closed or active artifacts: the active component-catalog Change must close before promotion; closed Changes remain historical but must not be presented as current distribution authority.
-- Manual confirmation: the existing catalog Change's pending manual status must be resolved independently before this Change begins.
+- Closed or active artifacts: the component-catalog Change closed before promotion; closed Changes remain historical and are not current distribution authority.
+- Manual confirmation: the component-catalog Change was closed after its committed implementation and verification were confirmed.
 
 ## Epic File Rules
 
