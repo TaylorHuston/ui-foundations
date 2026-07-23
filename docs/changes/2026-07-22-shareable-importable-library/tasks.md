@@ -5,10 +5,10 @@ status: in_review
 
 ## Resume Here
 
-- Last completed action: reconciled reverse traceability and evidence truth, then transitioned the fully committed Change to `in_review`
-- Next action: run independent `sdd-review` against current branch HEAD and `develop@b11e74c`, then resolve any findings
-- Active branch/ref: `change/shareable-importable-library` current HEAD; immutable implementation candidate `37424a0`
-- Expected dirty files: none after the status/handoff commit
+- Last completed action: completed independent `sdd-review`, remediated all required findings, and reran package, accessibility, rendered UI, SDD, and aggregate evidence
+- Next action: collect the pending user walkthrough on `Foundations/Library Overrides`; merge/close only after user acceptance and explicit authorization
+- Active branch/ref: `change/shareable-importable-library` current HEAD; reviewed implementation candidate `4cbc923`
+- Expected dirty files: none after the review-ledger commit
 - Known blockers: npm scope ownership/authentication remains pending for actual publication but does not block local package implementation and verification
 
 ## Task Checklist
@@ -76,8 +76,8 @@ status: in_review
 ### 6. Review And Closeout
 
 - [x] 6.1 Update release communication with install, CSS, wrapper, override, dependency, versioning, and migration consequences.
-- [ ] 6.2 Run independent `sdd-review` against the exact source and target commits.
-- [ ] 6.3 Resolve review findings and rerun affected package, consumer, behavior, accessibility, and visual evidence.
+- [x] 6.2 Run independent `sdd-review` against the exact source and target commits.
+- [x] 6.3 Resolve review findings and rerun affected package, consumer, behavior, accessibility, and visual evidence.
 - [ ] 6.4 Record manual UI confirmation as `pending user`, `user confirmed`, or `accepted gap` after the final default/override walkthrough.
 - [x] 6.5 Confirm the new ADR is Accepted or remains Proposed with an explicit blocker; never leave both ADRs Accepted as competing current rules.
 - [x] 6.6 Confirm the exact intended implementation is committed and every required candidate/integration gate applies to that commit.
@@ -95,6 +95,7 @@ status: in_review
 | 2026-07-22 | UIF-002/S2 override and wrapper contract | main; `sdd-apply`, `tdd`, `building-components`, `vercel-composition-patterns` | typed root hooks, named slots, portal hooks, package consumer, Storybook comparison, adoption guide | Defaults remain intact; consumer identity, workbench geometry, wrapper replacement, and every overlay surface use bounded public hooks | `c271a1d` |
 | 2026-07-22 | UIF-002/S3 release candidate and policy | main; `sdd-apply`, Vite/npm primary docs | package guard, README, AGENTS, CHANGELOG, compatibility guidance, both ADRs, UIF-001/UIF-002 | Candidate remains private and inspectable; upgrade policy is explicit; package ADR accepted and copy-only ADR superseded | `c271a1d` |
 | 2026-07-22 | Package contract hardening | main plus fresh-context Apply audits | release verifier, clean consumer, packed README link, adoption/design/Epic truth | All 11 exports resolve, each typed subpath compiles, React/React DOM have one physical installation each, CSS modes are exclusive, and packed documentation links remain usable | `37424a0` |
+| 2026-07-22 | Independent review remediation | main plus three fresh-context review passes | exact export/dependency checks, temporary cleanup, canonical consumer landmarks/status/navigation, UIF-002 evidence and current-state truth | All required findings resolved; no security finding; package and rendered examples now pass deterministic and accessibility reruns | `4cbc923` |
 
 ## Verification Ledger
 
@@ -112,6 +113,8 @@ status: in_review
 | 2026-07-22 | Axe WCAG-tagged scan of `Foundations/Library Overrides` | accessibility | Custom identity retains required control/text contrast and semantic structure. | Red-to-green: detected 4.32:1 custom action contrast, darkened the Juniper action scale, then passed with 24 rules, zero violations, zero incomplete checks. |
 | 2026-07-22 | Exact packed consumer browser inspection | rendered package UI | The non-symlink archive renders Foundation default, product override, symmetric WorkbenchShell, app wrapper, and portaled Dialog from published files only. | Passed at 1440x900 and 390x844; console clean. |
 | 2026-07-22 | `npm run check:all` on `37424a0` | committed aggregate candidate | CSS policy, typecheck, 34 focused tests, library/declaration build, 80-file exact archive, 11 public exports, isolated consumer, one physical React/React DOM install, and static Storybook build pass together. | Passed; 5 test files / 34 tests. Storybook reported only its non-blocking large-chunk warning. |
+| 2026-07-22 | Independent `sdd-review` remediation and rerender | failure-seeking review plus rendered accessibility | Nested landmarks, broken anchors, silent save feedback, forbidden dialog shadow, package export/dependency under-proof, stale truth, and temp retention are corrected. | Passed after remediation: Storybook 0 violations / 28 passes; exact packed consumer 0 violations / 33 passes at desktop and mobile; clean console and no overflow. |
+| 2026-07-22 | `npm run check:all` on `4cbc923` | committed aggregate review candidate | CSS policy, typecheck, 34 focused tests, two exact package-contract tests, library/declaration build, 80-file archive, 11 exports, isolated consumer, dependency ownership/externalization, and static Storybook pass together. | Passed; 5 Vitest files / 34 tests plus 2 Node package tests. Storybook reported only its non-blocking large-chunk warning. |
 | 2026-07-22 | Scoped SDD validation and reverse-traceability audit | artifact and changed-file inventory | UIF-002 has no missing implementation/verification references or unowned changed source; UIF-001 and Change structure remain valid. | Passed. Six clean-consumer fixture files are supporting evidence behind `npm run check:package`; UIF-001's new package files are UIF-002-owned. The UIF-001 `.storybook/main.ts` finding is a dot-normalization false positive for an existing valid anchor. |
 
 ## Manual Feedback
@@ -182,7 +185,7 @@ Not applicable: this Change distributes presentational components and callbacks 
 
 | Evidence Obligation | Required Setup / Safety Boundary | Needed For | Current Readiness | Result / Resolution |
 |---|---|---|---|---|
-| Exact package archive and contents | Local Node 26/npm 11; clean temporary destination; no credentials required | UIF-002/S1, S3 | ready | 80-file archive and all 11 public exports verified on committed candidate `37424a0`. |
+| Exact package archive and contents | Local Node 26/npm 11; clean temporary destination; no credentials required | UIF-002/S1, S3 | ready | 80-file archive and all 11 public exports verified on committed review candidate `4cbc923`; temporary consumers clean up by default. |
 | Isolated React/Vite consumer | Temporary non-workspace install from archive; React 19/Vite 8; browser runtime | UIF-002/S1-S2 | ready | Fresh install, typecheck, production build, and desktop/mobile browser inspection passed. |
 | Storybook default/override rendering | Existing Storybook and browser/accessibility tooling | UIF-001 parity and UIF-002/S2 | ready | Storybook and packed consumer passed desktop/mobile inspection with clean consoles. |
 | Public npm publication | Confirmed `@taylorhuston` scope ownership, npm authentication, explicit publish authorization, final version/candidate | UIF-002/S3/R3 release operation | pending | Not required for implementation handoff; required before actual publish. |
@@ -192,12 +195,12 @@ Not applicable: this Change distributes presentational components and callbacks 
 - Project-defined aggregate command or authoritative constituent source: extend `npm run check:all` so the aggregate includes CSS checks, typecheck, focused tests, library build, package contract/pack consumer check, and static Storybook build.
 - Aggregate gate required before `in_review`: yes.
 - Trigger or project-policy reason: public package exports, dependency contract, generated distribution, and all existing UI components create cross-capability integration risk.
-- Exact committed source candidate: `37424a0c610d9bc5a0902882e124add909881e74`.
+- Exact committed source candidate: `4cbc9230e25b6e75ab234e4e665a83313471bc29`.
 - Freshness and cache treatment: rebuild `dist`, create a fresh archive, install into a fresh isolated consumer, and run all aggregate constituents without reusing workspace links or stale package output.
-- Aggregate result and meaningful execution/count evidence: passed on `37424a0`; 5 test files / 34 tests, 80 packed files, 11 public exports, one physical React and React DOM installation, isolated typecheck/build, and static Storybook build.
-- Post-gate evidence-record-only changes and affected checks rerun: this tasks/Epic traceability reconciliation does not affect package output or runtime behavior; scoped SDD validation is rerun after its commit.
+- Aggregate result and meaningful execution/count evidence: passed on `4cbc923`; 5 Vitest files / 34 tests plus 2 Node package tests, 80 packed files, 11 public exports, one physical React and React DOM installation, isolated typecheck/build, and static Storybook build.
+- Post-gate changes and affected checks rerun: the final test-harness and review-ledger adjustment is followed by the package-aware aggregate and scoped SDD validation on its commit.
 - Prospective integration gate required: yes; run the package-aware aggregate against the exact `change/*` plus `develop` integration tree before merge when it differs from source.
-- Current target and prospective integration tree/ref: `develop@b11e74c0c3031dac533bcb8d91dd6cb4ca4fe2d9`; source `37424a0c610d9bc5a0902882e124add909881e74`.
+- Current target and prospective integration tree/ref: `develop@b11e74c0c3031dac533bcb8d91dd6cb4ca4fe2d9`; source behavior tree `4cbc9230e25b6e75ab234e4e665a83313471bc29` plus the review-ledger commit.
 - Integration-candidate result or reason source proof is reusable: `develop` is the exact merge base and an ancestor of source, so the prospective fast-forward integration tree equals the tested source tree.
 - Remote CI role: corroborating unless repository release policy later makes a check required.
 
@@ -227,23 +230,23 @@ Not applicable: this Change distributes presentational components and callbacks 
 ## Review Handoff Candidate
 
 - Integration target / merge base: `develop@b11e74c0c3031dac533bcb8d91dd6cb4ca4fe2d9`.
-- Candidate source commit: current branch HEAD; implementation tree proven at `37424a0c610d9bc5a0902882e124add909881e74` with evidence-only reconciliation afterward.
+- Candidate source commit: current branch HEAD; implementation tree proven at `4cbc9230e25b6e75ab234e4e665a83313471bc29` with final review-ledger/test-harness reconciliation afterward.
 - Source differs from target when implementation changed: yes.
 - Intended implementation fully committed: yes; only evidence-ledger reconciliation follows.
 - Unrelated dirty state preserved: yes; repository started clean and no unrelated files were changed.
 - Commit-sensitive generated-contract / diff / integration checks: clean package rebuild, archive contents, exports/declarations, consumer install/build, bundle externalization, prospective integration aggregate.
-- Verification Scope Decision and aggregate candidate evidence: current; aggregate passed on `37424a0`.
-- Post-gate evidence-only changes classified and affected checks rerun: tasks/Epic traceability only; scoped SDD validation required after commit.
+- Verification Scope Decision and aggregate candidate evidence: current; aggregate passed on `4cbc923` and is rerun after the final review-ledger/test-harness commit.
+- Post-gate changes classified and affected checks rerun: review ledger plus retention-mode test-harness correction; package aggregate and scoped SDD validation required after commit.
 - Prospective integration tree and required gate evidence: source proof reusable because target is the exact source ancestor and the fast-forward tree is identical.
 - Required risk, fan-out, environment, or verification rows still pending or blocked: publication-only scope/auth/explicit authority remains, and does not block review.
 - Pattern parity, boundary contract, and stateful transition matrices reconciled or not applicable with reason: parity and boundary verified; stateful not applicable.
 - Capability authority, content-budget/provenance conservation, and filesystem mutation-order proof reconciled or not applicable: capability/content/filesystem mutation boundaries not applicable; package publication authority is governed by UIF-002/S3/R3.
 - Evidence claims falsified against exact tests, assertions, routes, or observations: Apply-side fresh-context audits found and resolved export, React-singularity, CSS-mode, packed-doc-link, and stale-ledger overclaims.
-- Fresh-context failure-seeking passes completed: three independent Apply-side audits completed; independent `sdd-review` remains next.
+- Fresh-context failure-seeking passes completed: three independent Apply-side audits and three independent Review-side passes completed; all required findings were remediated.
 
 ## Closeout
 
-- Change status: `in_review`; ready for independent `sdd-review`.
+- Change status: `in_review`; independent review is ready with manual UI confirmation pending user.
 - Epic files updated: UIF-002 implemented/verified; UIF-001 adoption truth reconciled.
 - Story labels/references and Requirement/Scenario IDs current: yes.
 - Implemented By maps current: yes; UIF-001 owns behavior and UIF-002 owns package/override/release surfaces.
@@ -254,9 +257,9 @@ Not applicable: this Change distributes presentational components and callbacks 
 - README/current-state docs and active/closed Change claims reconciled: yes.
 - ADR status: runtime-library ADR Accepted; copy-owned ADR Superseded.
 - Release communication current: yes.
-- `sdd-review` verdict: not started.
-- Review record: none.
-- `review.md` findings resolved: not applicable; independent review has not started.
+- `sdd-review` verdict: ready; manual UI confirmation remains pending user.
+- Review record: this task ledger records the consolidated findings, remediation commit, and fresh verification.
+- `review.md` findings resolved: all required findings were resolved in-review, so no unresolved `review.md` remains.
 - Planning updates resolved: yes; operational publish confirmation remains explicit.
 - Implementation risk and confirmation rows resolved: yes; registry publication remains a separate authorization.
 - Pattern parity, boundary contract, and stateful transition rows resolved: yes / yes / not applicable.
@@ -264,11 +267,11 @@ Not applicable: this Change distributes presentational components and callbacks 
 - Evidence-claim integrity checked: yes through fresh-context Apply audits and exact reruns.
 - Decision fan-out reconciled: yes.
 - Verification environment obligations resolved: local package/render environments passed; publication environment intentionally pending.
-- Verification Scope Decision current and required candidate gates passed: yes on `37424a0`.
-- Immutable review handoff candidate: `37424a0c610d9bc5a0902882e124add909881e74` plus evidence-only handoff metadata.
+- Verification Scope Decision current and required candidate gates passed: yes on `4cbc923`, with the affected aggregate rerun after the final review-ledger/test-harness commit.
+- Immutable review handoff candidate: current branch HEAD after the review-ledger commit; reviewed behavior tree `4cbc9230e25b6e75ab234e4e665a83313471bc29`.
 - Tested integration candidate matches actual integrated tree, or rerun recorded: yes; prospective fast-forward tree equals tested source.
 - Manual UI confirmation status: pending user.
 - Rendered UI verification status: representative default/override and portaled Dialog passed desktop/mobile; complete overlay hooks pass automated proof, with individual Sheet/Menu/Tooltip and unchanged editor surfaces honestly not re-inspected.
 - PR / merge state: not started.
 - Deferred scope accepted: yes.
-- Change moved to `docs/changes/closed/`: no; active implementation awaits independent review and user-directed closeout.
+- Change moved to `docs/changes/closed/`: no; active implementation awaits user walkthrough acceptance and user-directed integration/closeout.

@@ -23,7 +23,9 @@ test("verifies the exact packed package contract in an isolated consumer", () =>
   });
 
   assert.equal(result.status, 0, result.stderr || result.stdout);
-  assert.deepEqual(verifierTemporaryRoots(), temporaryRootsBefore);
+  if (process.env.UI_FOUNDATIONS_KEEP_PACKAGE_TEMP !== "1") {
+    assert.deepEqual(verifierTemporaryRoots(), temporaryRootsBefore);
+  }
   process.stdout.write(result.stdout);
 });
 
@@ -33,6 +35,7 @@ test("rejects a packed artifact with a missing exported target", () => {
     encoding: "utf8",
     env: {
       ...process.env,
+      UI_FOUNDATIONS_KEEP_PACKAGE_TEMP: "0",
       UI_FOUNDATIONS_VERIFY_INJECT_MISSING_EXPORT: "dist/fonts.css",
     },
   });
