@@ -1,3 +1,7 @@
+.portal {
+  display: contents;
+}
+
 .backdrop {
   position: fixed;
   inset: 0;
@@ -17,7 +21,7 @@
 .popup {
   display: grid;
   gap: var(--space-4);
-  inline-size: min(100%, 480px);
+  inline-size: min(100%, var(--dialog-inline-size, 480px));
   max-block-size: min(720px, calc(100vh - var(--space-8)));
   overflow: auto;
   padding: var(--space-6);

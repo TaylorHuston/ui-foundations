@@ -1,10 +1,10 @@
 # ADR: Use A Versioned Runtime Library With App-Owned Wrappers
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-07-22
 - Related change: `docs/changes/2026-07-22-shareable-importable-library/`
 - Related Epics / Stories: `UIF-001/S1-S4`, `UIF-002/S1-S3`
-- Supersedes on acceptance: `docs/adrs/2026-07-17-copy-owned-reference-components.md`
+- Supersedes: `docs/adrs/2026-07-17-copy-owned-reference-components.md`
 
 ## Context
 
@@ -44,7 +44,7 @@ Public registry publication remains a separately authorized release action. Pack
 
 - Positive: shared behavior and accessibility fixes become available through ordinary dependency upgrades while app-specific wrappers preserve local product ownership.
 - Negative: UI Foundations must maintain public exports, dependency ranges, CSS/slot compatibility, package builds, release notes, and clean-consumer verification.
-- Follow-up: accept this ADR only when the package contract is implemented and verified; then mark the copy-owned ADR Superseded and migrate applications through separate Changes.
+- Follow-up: migrate applications through separate Changes and publish only through a separately authorized release action.
 
 ## Validation
 

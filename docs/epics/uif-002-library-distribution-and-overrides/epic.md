@@ -1,7 +1,7 @@
 ---
 schema: sdd-epic-v2
 id: UIF-002
-status: draft
+status: active
 created: 2026-07-22
 modified: 2026-07-22
 last_verified:
@@ -51,8 +51,8 @@ UI Foundations will provide a versioned React package that applications can inst
 | Story | Implementation | Verification | Capability | Last Verified | Notes |
 |---|---|---|---|---|---|
 | S1 | implemented | verified | Install and import the versioned library. | 2026-07-22 | Exact packed-artifact verification; public registry publication remains separately authorized. |
-| S2 | not implemented | unverified | Override foundations without patching package internals. |  | App-owned wrappers are the required consumer seam. |
-| S3 | not implemented | unverified | Inspect, version, and upgrade a release candidate. |  | Pre-1.0 compatibility changes require explicit release communication. |
+| S2 | implemented | verified | Override foundations without patching package internals. | 2026-07-22 | App-owned wrappers are the required consumer seam. |
+| S3 | implemented | verified | Inspect, version, and upgrade a release candidate. | 2026-07-22 | Publication remains blocked pending explicit release authority. |
 
 ## Stories
 
@@ -138,11 +138,11 @@ None.
 
 ### Story S2: Override Foundations Without Patching Internals
 
-Implementation: not implemented
-Verification: unverified
+Implementation: implemented
+Verification: verified
 Created: 2026-07-22
 Modified: 2026-07-22
-Last verified:
+Last verified: 2026-07-22
 
 As an application developer, I want supported override seams around imported foundations, so that my application can retain its identity and product-specific behavior without forking the package.
 
@@ -194,29 +194,31 @@ The system SHALL document and support thin application wrappers as the boundary 
 
 | Requirement / Scenario | Location / Anchor | Kind | Responsibility |
 |---|---|---|---|
-| S2/R1 | Not implemented yet. | primary | Documented semantic token and custom-property override contract after implementation. |
-| S2/R2 | Not implemented yet. | primary | Root and named-slot hook contract across component and portal surfaces after implementation. |
-| S2/R3 | Not implemented yet. | support | Consumer wrapper guidance and representative package-consumer fixture after implementation. |
+| S2/R1 | `src/styles/tokens.css#:root` | primary | Define semantic theme values that consumers can override after loading defaults. |
+| S2/R1 | `docs/library-adoption.md#Override Product Identity` | support | Document scoped identity overrides and stable semantic meaning. |
+| S2/R2 | `src/components/types.ts#FoundationStyle` | primary | Type root style objects, including semantic custom properties. |
+| S2/R2-S1 | `src/components/TextField/TextField.tsx#TextField`; `src/patterns/WorkbenchShell/WorkbenchShell.tsx#WorkbenchShell` | primary | Expose representative root styling props and stable named component/pattern slots. |
+| S2/R2-S2 | `src/components/Dialog/Dialog.tsx#Dialog`; `src/components/Sheet/Sheet.tsx#Sheet`; `src/components/Menu/Menu.tsx#Menu`; `src/components/Tooltip/Tooltip.tsx#Tooltip` | primary | Expose portal and surface class/style hooks plus stable overlay slots. |
+| S2/R3 | `docs/library-adoption.md#App-Owned Wrappers` | primary | Define local defaults, product ownership, and deliberate replacement at the application wrapper boundary. |
+| S2/R3 | `test/fixtures/package-consumer/src/main.tsx#AppButton` | support | Compile a representative app-owned wrapper against only the packed public API. |
 
 #### Implementation Gaps
 
-- `S2/R1`: Not implemented yet.
-- `S2/R2`: Not implemented yet.
-- `S2/R3`: Not implemented yet.
+None.
 
 #### Verified By
 
 | Requirement / Scenario | Evidence | Proves | Status |
 |---|---|---|---|
+| S2/R1-S1, S2/R1-S2 | Browser inspection of `Foundations/Library Overrides` at `1440x900` and `390x844` | Foundation defaults remain intact while a scoped Juniper identity changes only documented action, accent, field, and notice regions without overflow. | Passing 2026-07-22 |
+| S2/R2-S1 | `src/components/override-contract.test.tsx#exposes stable root and named slot hooks without generated selectors`; `src/components/override-contract.test.tsx#preserves field control props while exposing a separate field root hook` | Root classes, typed custom properties, control props, and named slots reach intended public regions. | Passing 2026-07-22 |
+| S2/R2-S1 | `src/patterns/workbench-patterns.test.tsx#applies public root styles and stable named slots across workbench patterns` | Workbench, editor, file-browser, and empty-state roots and slots accept app-owned overrides. | Passing 2026-07-22 |
+| S2/R2-S2 | `src/components/override-contract.test.tsx#reaches every portaled overlay surface through explicit public hooks` | Dialog, Sheet, Menu, and Tooltip portal/surface hooks render on the portaled DOM. | Passing 2026-07-22 |
+| S2/R3-S1, S2/R3-S2 | `src/components/override-contract.test.tsx#keeps product defaults and deliberate replacement behind an app-owned wrapper` | Product defaults remain local and the wrapper can swap to a local implementation without changing feature use or package source. | Passing 2026-07-22 |
 
 #### Verification Gaps
 
-- `S2/R1-S1`: Not verified yet.
-- `S2/R1-S2`: Not verified yet.
-- `S2/R2-S1`: Not verified yet.
-- `S2/R2-S2`: Not verified yet.
-- `S2/R3-S1`: Not verified yet.
-- `S2/R3-S2`: Not verified yet.
+None.
 
 #### Story Notes
 
@@ -225,11 +227,11 @@ The system SHALL document and support thin application wrappers as the boundary 
 
 ### Story S3: Prepare And Upgrade A Library Release
 
-Implementation: not implemented
-Verification: unverified
+Implementation: implemented
+Verification: verified
 Created: 2026-07-22
 Modified: 2026-07-22
-Last verified:
+Last verified: 2026-07-22
 
 As a library maintainer, I want an inspectable and versioned release contract, so that consuming applications can choose when and how to upgrade.
 
@@ -273,31 +275,33 @@ The system SHALL keep public registry publication separate from ordinary impleme
 
 | Requirement / Scenario | Location / Anchor | Kind | Responsibility |
 |---|---|---|---|
-| S3/R1 | Not implemented yet. | primary | Package archive inspection and clean-consumer release gate after implementation. |
-| S3/R2 | Not implemented yet. | primary | Version and changelog compatibility policy after implementation. |
-| S3/R3 | Not implemented yet. | configuration | Guarded publication workflow and repository release guidance after implementation. |
+| S3/R1 | `scripts/verify-package.mjs#requiredFiles` | primary | Inspect the exact archive, reject private paths, install it in a clean consumer, and fail on missing contract artifacts. |
+| S3/R1 | `package.json#check:package` | configuration | Bind a clean library build and exact archive verification into one deterministic candidate command. |
+| S3/R2 | `docs/library-adoption.md#Compatibility` | primary | Define pre-1.0 compatibility and deliberate consumer upgrade policy. |
+| S3/R2 | `CHANGELOG.md#Unreleased` | support | Record consumer-visible package, dependency, hook, and adoption changes. |
+| S3/R3 | `package.json#private` | primary | Block registry publication while implementation and scope/auth/release authority remain separate. |
+| S3/R3 | `scripts/verify-package.mjs#installedManifest` | support | Fail the release-candidate gate if the publication guard is removed prematurely. |
 
 #### Implementation Gaps
 
-- `S3/R1`: Not implemented yet.
-- `S3/R2`: Not implemented yet.
-- `S3/R3`: Not implemented yet.
+None.
 
 #### Verified By
 
 | Requirement / Scenario | Evidence | Proves | Status |
 |---|---|---|---|
+| S3/R1-S1 | `npm run check:package` | A fresh candidate reports 80 intended files, resolves every public surface in a clean consumer, and rejects private repository paths. | Passing 2026-07-22 |
+| S3/R1-S2 | `npm run check:package` plus recorded red phase for missing `CHANGELOG.md` | The candidate gate fails when a required package artifact is absent and passes only after the public contract is complete. | Passing 2026-07-22 |
+| S3/R2-S1 | `CHANGELOG.md` and `docs/library-adoption.md` source inspection | Consumer-visible changes, pre-1.0 compatibility, and deliberate upgrade ownership are explicit. | Passing 2026-07-22 |
+| S3/R3-S1 | `npm run check:package` and `package.json` source inspection | The exact local candidate retains `private: true`; no registry publication occurred or can occur through the ordinary Apply command. | Passing 2026-07-22 |
 
 #### Verification Gaps
 
-- `S3/R1-S1`: Not verified yet.
-- `S3/R1-S2`: Not verified yet.
-- `S3/R2-S1`: Not verified yet.
-- `S3/R3-S1`: Not verified yet.
+None.
 
 #### Story Notes
 
-- `npm pack --dry-run --json` is the planned archive-content baseline; actual publication is not authorized by `/sdd-apply` or by this Change plan.
+- `npm pack --dry-run --json` is the archive-content baseline; actual publication is not authorized by `/sdd-apply` or by this Change plan.
 
 ## Cross-Story Concerns
 

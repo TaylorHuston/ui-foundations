@@ -1,6 +1,7 @@
 import { FileText, Folder, FolderOpen, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { TreeView, type TreeViewItem } from '../../components/TreeView/TreeView'
+import type { FoundationStyle } from '../../components/types'
 import styles from './FileBrowser.module.css'
 
 export interface FileBrowserItem {
@@ -11,6 +12,7 @@ export interface FileBrowserItem {
 }
 
 export interface FileTreeProps {
+  className?: string
   defaultExpandedIds?: string[]
   defaultSelectedId?: string
   expandedIds?: string[]
@@ -19,6 +21,7 @@ export interface FileTreeProps {
   onExpandedIdsChange?: (expandedIds: string[]) => void
   onSelect?: (item: FileBrowserItem) => void
   selectedId?: string
+  style?: FoundationStyle
 }
 
 export interface FileBrowserProps extends FileTreeProps {
@@ -39,6 +42,7 @@ function normalizeTree(items: FileBrowserItem[]): TreeViewItem[] {
 }
 
 export function FileTree({
+  className,
   defaultExpandedIds,
   defaultSelectedId,
   expandedIds,
@@ -47,12 +51,14 @@ export function FileTree({
   onExpandedIdsChange,
   onSelect,
   selectedId,
+  style,
 }: FileTreeProps) {
   const normalizedItems = useMemo(() => normalizeTree(items), [items])
   const itemById = useMemo(() => new Map(flattenItems(items).map((item) => [item.id, item])), [items])
 
   return (
     <TreeView
+      className={className}
       defaultExpandedIds={defaultExpandedIds}
       defaultSelectedId={defaultSelectedId}
       expandedIds={expandedIds}
@@ -69,11 +75,13 @@ export function FileTree({
           : <Folder aria-hidden size={16} strokeWidth={1.75} />
         : <FileText aria-hidden size={16} strokeWidth={1.75} />}
       selectedId={selectedId}
+      style={style}
     />
   )
 }
 
 export function FileBrowser({
+  className,
   defaultExpandedIds,
   defaultSelectedId,
   emptyMessage = 'No files found.',
@@ -84,6 +92,7 @@ export function FileBrowser({
   onSelect,
   searchable = false,
   selectedId,
+  style,
 }: FileBrowserProps) {
   const [internalSelectedId, setInternalSelectedId] = useState(defaultSelectedId)
   const [query, setQuery] = useState('')
@@ -101,9 +110,14 @@ export function FileBrowser({
   }
 
   return (
-    <nav aria-label={label} className={styles.browser} data-slot="file-browser">
+    <nav
+      aria-label={label}
+      className={[styles.browser, className].filter(Boolean).join(' ')}
+      data-slot="file-browser"
+      style={style}
+    >
       {searchable ? (
-        <label className={styles.search}>
+        <label className={styles.search} data-slot="file-browser-search">
           <Search aria-hidden size={16} />
           <span className="visually-hidden">Search files</span>
           <input
@@ -117,11 +131,12 @@ export function FileBrowser({
       ) : null}
       {isSearching ? (
         matches.length ? (
-          <div aria-label="Search results" className={styles.results} role="listbox">
+          <div aria-label="Search results" className={styles.results} data-slot="file-browser-results" role="listbox">
             {matches.map((item) => (
               <button
                 aria-selected={activeSelectedId === item.id}
                 className={styles.result}
+                data-slot="file-browser-result"
                 data-selected={activeSelectedId === item.id || undefined}
                 key={item.id}
                 onClick={() => handleSelect(item)}

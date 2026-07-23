@@ -134,11 +134,16 @@ const installedManifestPath = join(
 )
 const installedManifest = JSON.parse(await readFile(installedManifestPath, 'utf8'))
 
+if (installedManifest.private !== true) {
+  throw new Error('Registry publication guard is missing; package must remain private until an authorized release')
+}
+
 process.stdout.write(`${JSON.stringify({
   archive: packageRecord.filename,
   files: packageRecord.files.length,
   package: `${installedManifest.name}@${installedManifest.version}`,
   privateImportRejected: true,
+  publicationGuarded: true,
   react: [...reactVersions][0],
   reactDom: [...reactDomVersions][0],
   temporaryRoot,
