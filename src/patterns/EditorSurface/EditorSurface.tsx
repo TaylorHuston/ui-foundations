@@ -1,7 +1,8 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import type { FoundationStyle } from '../../components/types'
 import styles from './EditorSurface.module.css'
 
-export interface EditorSurfaceStyle extends CSSProperties {
+export interface EditorSurfaceStyle extends FoundationStyle {
   '--editor-content-width'?: string
   '--editor-text-inset'?: string
 }

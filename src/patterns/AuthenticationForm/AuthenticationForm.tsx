@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { Button } from '../../components/Button/Button'
 import { TextField } from '../../components/TextField/TextField'
+import type { FoundationStyle } from '../../components/types'
 import styles from './AuthenticationForm.module.css'
 
 export type AuthenticationMode = 'sign-in' | 'sign-up'
@@ -12,13 +13,22 @@ export interface AuthenticationValues {
 }
 
 export interface AuthenticationFormProps {
+  className?: string
   mode: AuthenticationMode
   pending?: boolean
   error?: string
   onSubmit: (values: AuthenticationValues) => void | Promise<void>
+  style?: FoundationStyle
 }
 
-export function AuthenticationForm({ error, mode, onSubmit, pending = false }: AuthenticationFormProps) {
+export function AuthenticationForm({
+  className,
+  error,
+  mode,
+  onSubmit,
+  pending = false,
+  style,
+}: AuthenticationFormProps) {
   const [passwordMismatch, setPasswordMismatch] = useState(false)
   const isSignUp = mode === 'sign-up'
 
@@ -47,8 +57,13 @@ export function AuthenticationForm({ error, mode, onSubmit, pending = false }: A
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <header className={styles.header}>
+    <form
+      className={[styles.form, className].filter(Boolean).join(' ')}
+      data-slot="authentication-form"
+      onSubmit={handleSubmit}
+      style={style}
+    >
+      <header className={styles.header} data-slot="authentication-form-header">
         <h1>{isSignUp ? 'Create account' : 'Sign in'}</h1>
         <p>{isSignUp ? 'Create your credentials to continue.' : 'Use your account credentials to continue.'}</p>
       </header>
@@ -73,7 +88,7 @@ export function AuthenticationForm({ error, mode, onSubmit, pending = false }: A
         />
       ) : null}
 
-      {error ? <p className={styles.formError} role="alert">{error}</p> : null}
+      {error ? <p className={styles.formError} data-slot="authentication-form-error" role="alert">{error}</p> : null}
       <Button pending={pending} pendingLabel={isSignUp ? 'Creating account...' : 'Signing in...'} type="submit">
         {isSignUp ? 'Create account' : 'Sign in'}
       </Button>

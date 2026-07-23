@@ -1,9 +1,10 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import type { FoundationStyle } from '../../components/types'
 import styles from './WorkbenchShell.module.css'
 
 export type WorkbenchContentAnchor = 'viewport' | 'available'
 
-export interface WorkbenchShellStyle extends CSSProperties {
+export interface WorkbenchShellStyle extends FoundationStyle {
   '--workbench-content-width'?: string
   '--workbench-context-width'?: string
   '--workbench-navigation-width'?: string

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { CSSProperties, KeyboardEvent, ReactNode } from 'react'
+import type { KeyboardEvent, ReactNode } from 'react'
+import type { FoundationStyle } from '../types'
 import styles from './TreeView.module.css'
 
 export interface TreeViewItem {
@@ -25,6 +26,7 @@ export interface TreeViewProps {
   onSelect?: (item: TreeViewItem) => void
   renderIcon?: (item: TreeViewItem, state: TreeViewItemState) => ReactNode
   selectedId?: string
+  style?: FoundationStyle
 }
 
 interface VisibleItem {
@@ -54,6 +56,7 @@ export function TreeView({
   onSelect,
   renderIcon,
   selectedId,
+  style,
 }: TreeViewProps) {
   const [internalExpandedIds, setInternalExpandedIds] = useState(() => new Set(defaultExpandedIds))
   const [internalSelectedId, setInternalSelectedId] = useState(defaultSelectedId)
@@ -128,6 +131,7 @@ export function TreeView({
       className={[styles.tree, className].filter(Boolean).join(' ')}
       data-slot="tree-view"
       role="tree"
+      style={style}
     >
       {visibleItems.map((visibleItem) => {
         const { item, level, position, setSize } = visibleItem
@@ -158,7 +162,7 @@ export function TreeView({
                 else itemRefs.current.delete(item.id)
               }}
               role="treeitem"
-              style={{ '--tree-level': level - 1 } as CSSProperties}
+              style={{ '--tree-level': level - 1 } as FoundationStyle}
               tabIndex={focusId === item.id ? 0 : -1}
               type="button"
             >

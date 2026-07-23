@@ -1,18 +1,19 @@
 # UI Foundations
 
-UI Foundations is a pre-release, copyable CSS and React reference system for me to use across my applications. It captures recurring interface decisions without introducing a utility framework, mandatory brand identity, or shared runtime dependency. And, most important, NO TAILWIND FILLED HTML.
+UI Foundations is a pre-release, versioned CSS and React library for consistent application interfaces. It captures recurring interface decisions without introducing a utility framework, mandatory brand identity, or application architecture. And, most important, NO TAILWIND FILLED HTML.
 
-Current public baseline: **0.1.0**. See the [changelog](./CHANGELOG.md) for release notes.
+Current public baseline: **0.2.0**. See the [changelog](./CHANGELOG.md) for release notes.
 
 ## Adoption Model
 
-1. Inspect the reference in Storybook.
-2. Copy only the CSS or React source that helps the application.
-3. Adapt tokens and behavior to the product while retaining the semantic vocabulary where it still fits.
-4. Let the application own and test its adopted copy.
-5. Promote improvements back only after real application use proves they are broadly useful.
+1. Inspect defaults and supported override seams in Storybook.
+2. Install a pinned package version and import only the required JavaScript and CSS entry points.
+3. Put shared components behind thin app-owned wrappers.
+4. Override product identity through semantic tokens, root styling props, stable named slots, and portal hooks.
+5. Keep data, routing, authorization, persistence, editor engines, responsive orchestration, and deliberate replacement application-owned.
+6. Upgrade deliberately after reviewing release notes and consumer verification.
 
-Applications do not import this repository as a component package and do not receive automatic updates.
+See [Library Adoption](https://github.com/TaylorHuston/ui-foundations/blob/main/docs/library-adoption.md) for imports, wrappers, CSS layering, override hooks, and the pre-1.0 compatibility policy. Registry publication is not active yet and remains a separately authorized release action.
 
 ## Reference Lifecycle
 
@@ -20,11 +21,11 @@ Use this lifecycle for components and patterns that may be useful across applica
 
 1. **Candidate:** identify a broadly reusable presentation or interaction pattern. Product- or domain-specific components normally remain in their owning application.
 2. **Storybook prototype:** make the candidate inspectable across representative states, responsive constraints, keyboard behavior, and accessibility needs.
-3. **App-owned adoption:** copy and adapt the useful source into an application. The application owns its API, styling, tests, and later divergence.
+3. **App-owned adoption:** import the useful package surface behind a local wrapper. The application owns product defaults, integration, tests, and later divergence.
 4. **Real-application validation:** evaluate the pattern in an actual workflow rather than treating an isolated story as proof of generality.
 5. **Standardized reference:** promote the durable improvement here only when consumer evidence shows it is broadly useful.
 
-Standardized means recommended and copyable, not mandatory or automatically synchronized. A Foundation candidate may be developed before application adoption when multiple consumers are plausible, but it must not block application work unless an accepted Change explicitly requires it.
+Standardized means supported and versioned, not mandatory or automatically upgraded. A Foundation candidate may be developed before application adoption when multiple consumers are plausible, but it must not block application work unless an accepted Change explicitly requires it.
 
 ## Included References
 
@@ -34,7 +35,7 @@ Standardized means recommended and copyable, not mandatory or automatically sync
 - Storybook stories for foundations, control states, behavior-heavy primitives, authentication, and workbench patterns.
 - A cross-app Storybook comparison hub for application-owned workbench stories.
 
-The React APIs are pre-release references, not a compatibility promise. Native HTML is preferred when sufficient. Behavior-heavy references use Base UI for focus, overlay, selection, and keyboard mechanics. An application copying those references must install a compatible `@base-ui/react` version; references using Lucide icons may keep `lucide-react` or replace the icons locally.
+The React APIs are pre-release compatibility surfaces governed by the documented pre-1.0 policy. Native HTML is preferred when sufficient. Behavior-heavy components use Base UI for focus, overlay, selection, and keyboard mechanics. React and React DOM are consumer-owned peer dependencies; Base UI and Lucide are package runtime dependencies.
 
 ## Structure
 
@@ -76,7 +77,7 @@ stories/
   Foundations.stories.tsx
 ```
 
-Each React reference is colocated with its CSS Module. Behavior components and workbench patterns have grouped Storybook catalogs and focused interaction tests. The patterns own presentation structure only: applications still own data, routing, persistence, authorization, editor engines, and product-specific responsive navigation.
+Each React component is colocated with its CSS Module. Behavior components and workbench patterns have grouped Storybook catalogs and focused interaction tests. The patterns own presentation structure only: applications still own data, routing, persistence, authorization, editor engines, and product-specific responsive navigation.
 
 ## Editor Work Surface
 
@@ -92,7 +93,7 @@ CodeMirror or another editor engine, Markdown parsing and decoration, exact-sour
 
 The rail and navigation share the same semantic surface while retaining a thin divider between their interaction zones. Stable `data-slot` attributes identify the shell, rail, navigation, main work surface, readable main content, and context region for app-owned styling and inspection.
 
-Navigation and context visibility are controlled by the application. The default `viewport` content anchor prevents the readable work surface from shifting when either sidebar collapses; use `available` when the work surface should instead consume all open space. Widths remain copy-friendly CSS custom properties: `--workbench-rail-width`, `--workbench-navigation-width`, `--workbench-context-width`, and `--workbench-content-width`.
+Navigation and context visibility are controlled by the application. The default `viewport` content anchor prevents the readable work surface from shifting when either sidebar collapses; use `available` when the work surface should instead consume all open space. Widths remain supported CSS custom properties: `--workbench-rail-width`, `--workbench-navigation-width`, `--workbench-context-width`, and `--workbench-content-width`.
 
 Below the desktop breakpoint, persistent navigation and context regions are hidden so the application can present those same destinations in its own labeled Sheet or drawer. The rail remains available and the central region avoids horizontal page overflow.
 
@@ -107,11 +108,12 @@ Below the desktop breakpoint, persistent navigation and context regions are hidd
 ```bash
 npm install
 npm run check
+npm run check:package
 npm run check:all
 npm run storybook
 ```
 
-`npm run check` verifies the CSS inventory, import order, semantic token contract, the absence of project-owned `primary`, `secondary`, or `accent` aliases, and the no-Tailwind boundary. `npm run check:all` also typechecks, runs focused component tests, and builds Storybook.
+`npm run check` verifies the CSS inventory, import order, semantic token contract, the absence of project-owned `primary`, `secondary`, or `accent` aliases, and the no-Tailwind boundary. `npm run check:package` builds declarations and public JavaScript/CSS entry points, inspects the exact archive, installs it into a clean non-symlink consumer, rejects private imports, checks for one React runtime, then typechecks and production-builds the consumer. `npm run check:all` runs those gates together with focused tests and a static Storybook build.
 
 ## Identity Profiles
 
@@ -143,7 +145,7 @@ npm run storybook
 
 Open `http://127.0.0.1:6008`. Dashboard defaults to port `6006`, Coordinator to `6007`, and 49th Floor to `6009`; `DASHBOARD_STORYBOOK_URL`, `COORDINATOR_STORYBOOK_URL`, and `FORTY_NINTH_FLOOR_STORYBOOK_URL` can override those sources. The hub composes all three catalogs through Storybook references. With all app catalogs running, `npm run compare:capture` generates the ignored `comparison-report/index.html` review artifact, including the shared `Navigation detail` row.
 
-Comparison detects drift; it does not make this repository the runtime owner of application components.
+Comparison detects drift; the package shares generic presentation and accessibility behavior without owning application behavior.
 
 ## Design Tools
 

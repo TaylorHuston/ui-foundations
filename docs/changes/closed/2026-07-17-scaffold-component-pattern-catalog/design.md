@@ -349,7 +349,7 @@ It concentrates difficult accessibility behavior in a proven headless layer whil
 - Broad supporting gates: `npm run check:all` for CSS contract, TypeScript, Vitest, and static Storybook compilation.
 - Deterministic E2E: Playwright inspection of representative primitive and pattern stories for overflow and interaction.
 - Live-provider or external-service playtests: not applicable.
-- Manual UI confirmation: pending user against the local Storybook catalog.
+- Manual UI confirmation: user confirmed through iterative Storybook review and explicit close authorization after the committed candidate was verified.
 - Debug/log inspection: not applicable.
 
 ## Decisions

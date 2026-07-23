@@ -276,4 +276,38 @@ describe('workbench pattern references', () => {
     expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
     expect(screen.getByRole('main', { name: 'Workspace' })).toBeInTheDocument()
   })
+
+  it('applies public root styles and stable named slots across workbench patterns', () => {
+    render(
+      <WorkbenchShell
+        className="app-shell"
+        context={<p>Context</p>}
+        main={(
+          <EditorSurface className="app-editor" style={{ '--editor-content-width': '48rem' }}>
+            <EmptyState
+              action={<Button>Create note</Button>}
+              className="app-empty"
+              description="Start with a blank note."
+              title="No notes yet"
+            />
+          </EditorSurface>
+        )}
+        navigation={<FileBrowser className="app-browser" items={items} />}
+        rail={<span>UF</span>}
+        style={{ '--workbench-navigation-width': '16rem' }}
+      />,
+    )
+
+    expect(document.querySelector('[data-slot="workbench-shell"]')).toHaveClass('app-shell')
+    expect(document.querySelector('[data-slot="workbench-shell"]')).toHaveStyle({
+      '--workbench-navigation-width': '16rem',
+    })
+    expect(document.querySelector('[data-slot="editor-surface"]')).toHaveClass('app-editor')
+    expect(document.querySelector('[data-slot="editor-surface"]')).toHaveStyle({
+      '--editor-content-width': '48rem',
+    })
+    expect(document.querySelector('[data-slot="file-browser"]')).toHaveClass('app-browser')
+    expect(document.querySelector('[data-slot="empty-state"]')).toHaveClass('app-empty')
+    expect(document.querySelector('[data-slot="empty-state-action"]')).toHaveTextContent('Create note')
+  })
 })

@@ -1,3 +1,7 @@
+.portal {
+  display: contents;
+}
+
 .backdrop {
   position: fixed;
   inset: 0;
@@ -20,7 +24,7 @@
 .popup {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  inline-size: min(88vw, 360px);
+  inline-size: min(88vw, var(--sheet-inline-size, 360px));
   block-size: 100dvh;
   border-inline-end: 1px solid var(--border);
   background: var(--surface);

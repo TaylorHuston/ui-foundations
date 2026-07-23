@@ -1,6 +1,6 @@
 # ADR: Use Copy-Owned Reference Components
 
-- Status: Accepted
+- Status: Superseded by `docs/adrs/2026-07-22-use-versioned-runtime-library-with-app-wrappers.md`
 - Date: 2026-07-17
 - Related change: `docs/changes/2026-07-17-copyable-react-foundations/`
 - Related Epics / Stories: `UIF-001/S1`, `UIF-001/S2`, `UIF-001/S3`, `UIF-001/S4`

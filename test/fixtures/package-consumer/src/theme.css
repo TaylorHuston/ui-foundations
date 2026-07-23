@@ -1,0 +1,114 @@
+.consumer-shell {
+  --workbench-content-width: 64rem;
+  --workbench-navigation-width: 13rem;
+  --workbench-rail-width: 3.5rem;
+}
+
+.consumer-shell [data-slot='workbench-rail'] {
+  display: grid;
+  place-items: start center;
+  padding-block-start: 1rem;
+  color: var(--action-text);
+  font-weight: 800;
+}
+
+.consumer-main {
+  display: grid;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.consumer-main h1,
+.consumer-main h2,
+.consumer-main p,
+.consumer-main span {
+  margin: 0;
+}
+
+.consumer-main header {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.consumer-main header p {
+  color: var(--action-text);
+  font-size: var(--font-size-label);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.consumer-main header span {
+  color: var(--text-secondary);
+}
+
+.comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.example {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+}
+
+.product-identity {
+  --identity: #173b2c;
+  --identity-foreground: #f1fff8;
+  --action: #207a4d;
+  --action-hover: #1b6b43;
+  --action-active: #165839;
+  --action-text: #78d8a5;
+  --focus-ring: #69d39a;
+  --surface: #17201c;
+  --surface-raised: #223029;
+  --border: #35483e;
+  --control-boundary: #65786e;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.app-button {
+  min-inline-size: 8.5rem;
+}
+
+.app-field [data-slot='text-field-control'] {
+  border-color: var(--action);
+}
+
+.app-notice {
+  border-color: color-mix(in srgb, var(--action) 55%, var(--border));
+}
+
+.app-portal {
+  --action: #207a4d;
+  --action-hover: #1b6b43;
+  --action-active: #165839;
+  --surface: #17241f;
+  --surface-raised: #22332b;
+  --border: #40584b;
+}
+
+.app-dialog {
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 880px) {
+  .consumer-main {
+    padding: 1rem;
+  }
+
+  .comparison {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from 'react'
 import { Button, type ButtonSize } from '../Button/Button'
+import type { FoundationStyle } from '../types'
 import styles from './SegmentedControl.module.css'
 
 export interface SegmentedControlOption<Value extends string> {
@@ -9,11 +10,12 @@ export interface SegmentedControlOption<Value extends string> {
 }
 
 export interface SegmentedControlProps<Value extends string>
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'style'> {
   label: string
   onValueChange: (value: Value) => void
   options: readonly SegmentedControlOption<Value>[]
   size?: ButtonSize
+  style?: FoundationStyle
   value: Value
 }
 

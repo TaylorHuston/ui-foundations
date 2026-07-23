@@ -1,3 +1,7 @@
+.portal {
+  display: contents;
+}
+
 .positioner {
   z-index: 40;
 }

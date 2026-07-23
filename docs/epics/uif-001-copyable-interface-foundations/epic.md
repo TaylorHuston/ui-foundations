@@ -3,8 +3,8 @@ schema: sdd-epic-v2
 id: UIF-001
 status: active
 created: 2026-07-17
-modified: 2026-07-22
-last_verified: 2026-07-22
+modified: 2026-07-23
+last_verified: 2026-07-23
 stories:
   - S1
   - S2
@@ -12,18 +12,18 @@ stories:
   - S4
 ---
 
-# UIF-001 Copyable Interface Foundations
+# UIF-001 Interface Foundations
 
 ## Product Context
 
 - Related docs: `README.md`, `spaces/shared/visual-style-guide.md`, `spaces/shared/development/styling.md`
-- Related ADRs: `docs/adrs/2026-07-17-copy-owned-reference-components.md`
+- Related ADRs: `docs/adrs/2026-07-22-use-versioned-runtime-library-with-app-wrappers.md`
 
 UI Foundations reduces repeated interface decisions across React applications while preserving application ownership and independent releases.
 
 ## Outcome
 
-Application developers can inspect and copy a coherent CSS baseline and tested React references, then adapt them without taking a runtime dependency on UI Foundations.
+Application developers can use a coherent CSS baseline and tested React components through versioned package imports, then adapt product identity behind application-owned wrappers.
 
 ## Current Scope
 
@@ -39,7 +39,7 @@ Application developers can inspect and copy a coherent CSS baseline and tested R
 
 - Resizable panes, drag and drop, virtualization, editor engines, Markdown projection, autosave, source fidelity, and revision handling.
 - Light-mode implementation and dual-theme component verification.
-- CLI copying, synchronization, publishing, application migrations, and product-specific integrations.
+- Automatic synchronization or upgrades, application migrations, registry publication, and product-specific integrations.
 
 ## Candidate Stories
 
@@ -49,14 +49,14 @@ Application developers can inspect and copy a coherent CSS baseline and tested R
 
 | Story | Implementation | Verification | Capability | Last Verified | Notes |
 |---|---|---|---|---|---|
-| S1 | implemented | verified | Adopt a copyable CSS foundation. | 2026-07-17 | Canonical contract is enforced by `scripts/check.mjs`. |
-| S2 | implemented | verified | Copy accessible React references. | 2026-07-22 | Native controls, authentication, and feedback references. |
-| S3 | implemented | verified | Copy behavior-heavy primitives. | 2026-07-22 | Base UI-backed overlay and selection references remain experimental. |
+| S1 | implemented | verified | Adopt the CSS foundation. | 2026-07-17 | Canonical contract is enforced by `scripts/check.mjs`. |
+| S2 | implemented | verified | Use accessible React components. | 2026-07-22 | Native controls, authentication, and feedback components. |
+| S3 | implemented | verified | Use behavior-heavy primitives. | 2026-07-22 | Base UI-backed overlay and selection components remain pre-1.0. |
 | S4 | implemented | verified | Compose familiar workbench patterns. | 2026-07-22 | Editor engines, optional side regions, responsive navigation, and persistence remain application-controlled. |
 
 ## Stories
 
-### Story S1: Adopt A Copyable CSS Foundation
+### Story S1: Adopt The CSS Foundation
 
 Implementation: implemented
 Verification: verified
@@ -74,7 +74,7 @@ The system SHALL provide the documented semantic token roles and default scales 
 
 ###### Scenario R1-S1: Use Default Foundation
 
-- WHEN a developer loads `src/index.css`
+- WHEN a developer loads `@taylorhuston/ui-foundations/styles.css`
 - THEN the documented surface, text, border, action, identity, information, state, focus, selection, spacing, radius, control, motion, and typography roles are available.
 
 ###### Scenario R1-S2: Override Product Identity
@@ -120,7 +120,7 @@ The system SHALL provide inspectable global defaults for reset, typography, sele
 
 - Compatibility aliases in `tokens.css` are temporary migration aids, not additions to the canonical vocabulary.
 
-### Story S2: Copy Accessible React References
+### Story S2: Use Accessible React Components
 
 Implementation: implemented
 Verification: verified
@@ -128,7 +128,7 @@ Created: 2026-07-17
 Modified: 2026-07-22
 Last verified: 2026-07-22
 
-As an application developer, I want tested React reference components, so that I can adopt consistent controls and forms while retaining application ownership.
+As an application developer, I want tested React components, so that I can adopt consistent controls and forms while retaining application ownership.
 
 #### Requirements And Scenarios
 
@@ -219,7 +219,7 @@ The system SHALL provide OperationStatus and InlineNotice references that separa
 - Native browser validation handles required and email constraints; the pattern owns password-match validation and delegates valid values.
 - Provider integration is intentionally application-owned and not verified here.
 
-### Story S3: Copy Behavior-Heavy Primitives
+### Story S3: Use Behavior-Heavy Primitives
 
 Implementation: implemented
 Verification: verified
@@ -284,12 +284,12 @@ The system SHALL provide Tabs, Checkbox, and Switch references with labeled, con
 
 #### Verification Gaps
 
-- Base UI API stability and copied-source ergonomics still need proof from real consuming applications.
+- Base UI API stability and package API/adoption ergonomics still need proof from real consuming applications.
 - Axe's optional `region` best-practice rule flags Tooltip and Menu portals outside the isolated Storybook story landmark; WCAG-tagged checks pass, and consuming applications own final page landmarks.
 
 #### Story Notes
 
-- These APIs are experimental wrappers around Base UI 1.6 behavior, not compatibility promises.
+- These APIs are pre-1.0 wrappers around Base UI 1.6 behavior and follow the library compatibility policy.
 - Trigger labels name Menu surfaces; the wrapper does not add a competing menu label.
 
 ### Story S4: Compose Familiar Workbench Patterns
@@ -300,7 +300,7 @@ Created: 2026-07-17
 Modified: 2026-07-22
 Last verified: 2026-07-22
 
-As an application developer, I want copyable workbench patterns, so that recurring navigation and editing layouts begin from consistent, adaptable structures.
+As an application developer, I want reusable workbench patterns, so that recurring navigation and editing layouts begin from consistent, adaptable structures.
 
 #### Requirements And Scenarios
 
@@ -468,8 +468,8 @@ The system SHALL provide a compact NavigationRail with named link and button des
 
 - React references consume the same semantic tokens enforced by S1.
 - S3 provides the behavior layer composed by S4 ConfirmationDialog.
-- S4 patterns preserve the application boundaries established by the copy-owned reference ADR.
-- Applications own copied source and its future verification.
+- S4 patterns preserve the application boundaries established by the versioned-library and app-wrapper ADR.
+- Applications own wrappers, integration, product behavior, and deliberate replacement.
 
 ## Open Decisions
 
@@ -481,4 +481,4 @@ The system SHALL provide a compact NavigationRail with named link and button des
 
 ## Completion Criteria
 
-This Epic is healthy when its implemented references remain mapped to current source and scenario evidence, deferred scope remains explicit, and documentation does not imply runtime package ownership.
+This Epic is healthy when its implemented foundations remain mapped to current source and scenario evidence, deferred scope remains explicit, and documentation keeps product behavior application-owned.
