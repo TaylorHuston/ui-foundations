@@ -75,6 +75,12 @@ function buildDeclarations() {
     },
   )
 
+  if (declarationResult.error) {
+    throw new Error('Type declaration build could not start', {
+      cause: declarationResult.error,
+    })
+  }
+
   if (declarationResult.status !== 0) {
     throw new Error(`Type declaration build failed with exit code ${declarationResult.status}`)
   }

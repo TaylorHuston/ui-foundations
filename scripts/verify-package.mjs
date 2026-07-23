@@ -47,6 +47,12 @@ function run(command, args, options = {}) {
     ...options,
   });
 
+  if (result.error) {
+    throw new Error(`${command} ${args.join(" ")} could not start`, {
+      cause: result.error,
+    });
+  }
+
   if (result.status !== 0) {
     process.stderr.write(result.stdout ?? "");
     process.stderr.write(result.stderr ?? "");
