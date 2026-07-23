@@ -109,6 +109,7 @@ The system SHALL expose documented opt-in CSS entry points for the complete foun
 | S1/R1 | `scripts/build-library.mjs#buildJavaScript` | primary | Build the compiled ESM entry points. |
 | S1/R1 | `scripts/build-library.mjs#buildDeclarations`; `tsconfig.build.json#compilerOptions` | support | Generate public TypeScript declarations. |
 | S1/R1 | `package.json#exports` | configuration | Define the explicit public export map. |
+| S1/R1 | `src/index.ts#export`; `src/components/index.ts#export`; `src/patterns/index.ts#export`; `src/theme-profiles.ts#themeProfiles` | primary | Define the supported root and subpath JavaScript/type surfaces. |
 | S1/R2 | `scripts/build-library.mjs#external` | primary | Keep React and all package runtime imports external to the bundle. |
 | S1/R2 | `package.json#peerDependencies`; `package.json#dependencies` | configuration | Keep React consumer-owned while declaring every other exported runtime dependency. |
 | S1/R3 | `scripts/build-library.mjs#buildStyles` | primary | Build the complete foundation and supported opt-in CSS layers. |
@@ -197,10 +198,13 @@ The system SHALL document and support thin application wrappers as the boundary 
 | S2/R1 | `src/styles/tokens.css#:root` | primary | Define semantic theme values that consumers can override after loading defaults. |
 | S2/R1 | `docs/library-adoption.md#Override Product Identity` | support | Document scoped identity overrides and stable semantic meaning. |
 | S2/R2 | `src/components/types.ts#FoundationStyle` | primary | Type root style objects, including semantic custom properties. |
-| S2/R2-S1 | `src/components/TextField/TextField.tsx#TextField`; `src/patterns/WorkbenchShell/WorkbenchShell.tsx#WorkbenchShell` | primary | Expose representative root styling props and stable named component/pattern slots. |
+| S2/R2-S1 | `src/components/Button/Button.tsx#Button`; `src/components/Checkbox/Checkbox.tsx#Checkbox`; `src/components/IconButton/IconButton.tsx#IconButton`; `src/components/InlineNotice/InlineNotice.tsx#InlineNotice`; `src/components/OperationStatus/OperationStatus.tsx#OperationStatus`; `src/components/SegmentedControl/SegmentedControl.tsx#SegmentedControl`; `src/components/Switch/Switch.tsx#Switch`; `src/components/Tabs/Tabs.tsx#Tabs`; `src/components/TextField/TextField.tsx#TextField`; `src/components/Textarea/Textarea.tsx#Textarea`; `src/components/TreeView/TreeView.tsx#TreeView` | primary | Expose typed root styling props and stable named slots across public controls and feedback components. |
+| S2/R2-S1 | `src/patterns/AuthenticationForm/AuthenticationForm.tsx#AuthenticationForm`; `src/patterns/ConfirmationDialog/ConfirmationDialog.tsx#ConfirmationDialog`; `src/patterns/DocumentHeader/DocumentHeader.tsx#DocumentHeader`; `src/patterns/EditorSurface/EditorSurface.tsx#EditorSurface`; `src/patterns/EditorToolbar/EditorToolbar.tsx#EditorToolbar`; `src/patterns/EmptyState/EmptyState.tsx#EmptyState`; `src/patterns/FileBrowser/FileBrowser.tsx#FileBrowser`; `src/patterns/NavigationRail/NavigationRail.tsx#NavigationRail`; `src/patterns/ThreePaneShell/ThreePaneShell.tsx#ThreePaneShell`; `src/patterns/WorkbenchShell/WorkbenchShell.tsx#WorkbenchShell` | primary | Expose typed root styling props and stable named slots across public patterns. |
 | S2/R2-S2 | `src/components/Dialog/Dialog.tsx#Dialog`; `src/components/Sheet/Sheet.tsx#Sheet`; `src/components/Menu/Menu.tsx#Menu`; `src/components/Tooltip/Tooltip.tsx#Tooltip` | primary | Expose portal and surface class/style hooks plus stable overlay slots. |
+| S2/R2-S2 | `src/components/Dialog/Dialog.module.css#portal`; `src/components/Sheet/Sheet.module.css#portal`; `src/components/Menu/Menu.module.css#portal`; `src/components/Tooltip/Tooltip.module.css#portal` | support | Carry inherited custom properties through portal hosts and expose supported surface geometry variables. |
 | S2/R3 | `docs/library-adoption.md#App-Owned Wrappers` | primary | Define local defaults, product ownership, and deliberate replacement at the application wrapper boundary. |
 | S2/R3 | `test/fixtures/package-consumer/src/main.tsx#AppButton` | support | Compile a representative app-owned wrapper against only the packed public API. |
+| S2/R1-R3 | `stories/LibraryOverrides.stories.tsx#DefaultAndProductIdentity`; `stories/LibraryOverrides.stories.module.css#.page` | support | Provide inspectable default and application-owned identity, wrapper, workbench, and portal states. |
 
 #### Implementation Gaps
 
