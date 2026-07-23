@@ -2,7 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-07-22
-- Related change: `docs/changes/2026-07-22-shareable-importable-library/`
+- Related change: `docs/changes/closed/2026-07-22-shareable-importable-library/`
 - Related Epics / Stories: `UIF-001/S1-S4`, `UIF-002/S1-S3`
 - Supersedes: `docs/adrs/2026-07-17-copy-owned-reference-components.md`
 

@@ -5,10 +5,10 @@ status: in_review
 
 ## Resume Here
 
-- Last completed action: user confirmed the manual UI walkthrough and authorized local merge-and-close
-- Next action: fast-forward the reviewed branch into `develop`, reconcile the integrated closeout record, and run `sdd change close`
-- Active branch/ref: `change/shareable-importable-library` current HEAD; reviewed implementation candidate `4cbc923`
-- Expected dirty files: none after the review-ledger commit
+- Last completed action: fast-forwarded the approved source branch into local `develop` at `e355d55`
+- Next action: close this Change with `sdd change close`, validate the moved record, and commit the closeout on `develop`
+- Active branch/ref: `develop@e355d55c0994ab65bf487dcb3144dea8c5fea3dd`; integrated source `change/shareable-importable-library@e355d55c0994ab65bf487dcb3144dea8c5fea3dd`
+- Expected dirty files: only the reconciled closeout record and SDD-managed active-to-closed move
 - Known blockers: npm scope ownership/authentication remains pending for actual publication but does not block local package implementation and verification
 
 ## Task Checklist
@@ -82,7 +82,7 @@ status: in_review
 - [x] 6.5 Confirm the new ADR is Accepted or remains Proposed with an explicit blocker; never leave both ADRs Accepted as competing current rules.
 - [x] 6.6 Confirm the exact intended implementation is committed and every required candidate/integration gate applies to that commit.
 - [x] 6.7 Keep Change status and Resume Here aligned through `planned -> in_progress -> in_review`; close only with `sdd change close`.
-- [ ] 6.8 Merge to `develop` only after ready review and user authorization; use `/sdd-release` for the version/release PR to `main`.
+- [x] 6.8 Merge to `develop` only after ready review and user authorization; use `/sdd-release` for the version/release PR to `main`.
 - [ ] 6.9 Treat actual npm publication as a separate explicitly authorized action after release-candidate proof, scope ownership, authentication, and final version confirmation.
 
 ## Implementation Ledger
@@ -96,6 +96,7 @@ status: in_review
 | 2026-07-22 | UIF-002/S3 release candidate and policy | main; `sdd-apply`, Vite/npm primary docs | package guard, README, AGENTS, CHANGELOG, compatibility guidance, both ADRs, UIF-001/UIF-002 | Candidate remains private and inspectable; upgrade policy is explicit; package ADR accepted and copy-only ADR superseded | `c271a1d` |
 | 2026-07-22 | Package contract hardening | main plus fresh-context Apply audits | release verifier, clean consumer, packed README link, adoption/design/Epic truth | All 11 exports resolve, each typed subpath compiles, React/React DOM have one physical installation each, CSS modes are exclusive, and packed documentation links remain usable | `37424a0` |
 | 2026-07-22 | Independent review remediation | main plus three fresh-context review passes | exact export/dependency checks, temporary cleanup, canonical consumer landmarks/status/navigation, UIF-002 evidence and current-state truth | All required findings resolved; no security finding; package and rendered examples now pass deterministic and accessibility reruns | `4cbc923` |
+| 2026-07-23 | Manual acceptance and local integration | main; user-authorized merge-and-close | review ledger, manual confirmation, `change/shareable-importable-library` into `develop` | User confirmed the walkthrough; local fast-forward completed with the integrated tree identical to the approved source | `e355d55` |
 
 ## Verification Ledger
 
@@ -231,7 +232,7 @@ Not applicable: this Change distributes presentational components and callbacks 
 ## Review Handoff Candidate
 
 - Integration target / merge base: `develop@b11e74c0c3031dac533bcb8d91dd6cb4ca4fe2d9`.
-- Candidate source commit: current branch HEAD; implementation tree proven at `4cbc9230e25b6e75ab234e4e665a83313471bc29` with final review-ledger/test-harness reconciliation afterward.
+- Candidate source commit: `change/shareable-importable-library@e355d55c0994ab65bf487dcb3144dea8c5fea3dd`; implementation tree proven at `4cbc9230e25b6e75ab234e4e665a83313471bc29` with evidence-only review and acceptance commits afterward.
 - Source differs from target when implementation changed: yes.
 - Intended implementation fully committed: yes; only evidence-ledger reconciliation follows.
 - Unrelated dirty state preserved: yes; repository started clean and no unrelated files were changed.
@@ -269,10 +270,10 @@ Not applicable: this Change distributes presentational components and callbacks 
 - Decision fan-out reconciled: yes.
 - Verification environment obligations resolved: local package/render environments passed; publication environment intentionally pending.
 - Verification Scope Decision current and required candidate gates passed: yes on `4cbc923`, with the affected aggregate rerun after the final review-ledger/test-harness commit.
-- Immutable review handoff candidate: current branch HEAD after the review-ledger commit; reviewed behavior tree `4cbc9230e25b6e75ab234e4e665a83313471bc29`.
-- Tested integration candidate matches actual integrated tree, or rerun recorded: yes; prospective fast-forward tree equals tested source.
+- Immutable review handoff candidate: `ca5819f3bf59f8f5fa3cbc3657177c0e1757aaff`; reviewed behavior tree `4cbc9230e25b6e75ab234e4e665a83313471bc29`; later commit `e355d55c0994ab65bf487dcb3144dea8c5fea3dd` records manual acceptance only.
+- Tested integration candidate matches actual integrated tree, or rerun recorded: yes; local `develop@e355d55c0994ab65bf487dcb3144dea8c5fea3dd` exactly matches the approved source branch tree.
 - Manual UI confirmation status: user confirmed.
 - Rendered UI verification status: representative default/override and portaled Dialog passed desktop/mobile; complete overlay hooks pass automated proof, with individual Sheet/Menu/Tooltip and unchanged editor surfaces honestly not re-inspected.
-- PR / merge state: local fast-forward to `develop` authorized; not yet performed. No PR or push is required for this integration path.
+- PR / merge state: local fast-forward to `develop` completed at `e355d55c0994ab65bf487dcb3144dea8c5fea3dd`; no PR, push, or publication was performed.
 - Deferred scope accepted: yes.
-- Change moved to `docs/changes/closed/`: no; local integration and SDD closeout are now authorized.
+- Change moved to `docs/changes/closed/`: yes through the authorized `sdd change close` operation recorded by this closeout commit.
