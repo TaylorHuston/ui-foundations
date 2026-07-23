@@ -3,8 +3,8 @@ schema: sdd-epic-v2
 id: UIF-001
 status: active
 created: 2026-07-17
-modified: 2026-07-22
-last_verified: 2026-07-22
+modified: 2026-07-23
+last_verified: 2026-07-23
 stories:
   - S1
   - S2

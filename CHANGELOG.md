@@ -6,6 +6,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-23
+
 ### Added
 
 - An installable `@taylorhuston/ui-foundations` package candidate with explicit component, pattern, theme-profile, declaration, and CSS-layer exports.
