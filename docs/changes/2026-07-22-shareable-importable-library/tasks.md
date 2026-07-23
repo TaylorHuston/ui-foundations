@@ -1,14 +1,14 @@
 ---
-status: in_progress
+status: in_review
 ---
 # Tasks: Shareable Importable Library
 
 ## Resume Here
 
-- Last completed action: hardened and passed the package-aware aggregate on the committed implementation candidate, including all 11 public exports and physical React-runtime singularity
-- Next action: finish reverse-traceability and evidence-ledger reconciliation, transition to `in_review`, then run independent `sdd-review`
-- Active branch/ref: `change/shareable-importable-library@37424a0`
-- Expected dirty files: this evidence ledger and Epic traceability only until the final handoff commit
+- Last completed action: reconciled reverse traceability and evidence truth, then transitioned the fully committed Change to `in_review`
+- Next action: run independent `sdd-review` against current branch HEAD and `develop@b11e74c`, then resolve any findings
+- Active branch/ref: `change/shareable-importable-library` current HEAD; immutable implementation candidate `37424a0`
+- Expected dirty files: none after the status/handoff commit
 - Known blockers: npm scope ownership/authentication remains pending for actual publication but does not block local package implementation and verification
 
 ## Task Checklist
@@ -81,7 +81,7 @@ status: in_progress
 - [ ] 6.4 Record manual UI confirmation as `pending user`, `user confirmed`, or `accepted gap` after the final default/override walkthrough.
 - [x] 6.5 Confirm the new ADR is Accepted or remains Proposed with an explicit blocker; never leave both ADRs Accepted as competing current rules.
 - [x] 6.6 Confirm the exact intended implementation is committed and every required candidate/integration gate applies to that commit.
-- [ ] 6.7 Keep Change status and Resume Here aligned through `planned -> in_progress -> in_review`; close only with `sdd change close`.
+- [x] 6.7 Keep Change status and Resume Here aligned through `planned -> in_progress -> in_review`; close only with `sdd change close`.
 - [ ] 6.8 Merge to `develop` only after ready review and user authorization; use `/sdd-release` for the version/release PR to `main`.
 - [ ] 6.9 Treat actual npm publication as a separate explicitly authorized action after release-candidate proof, scope ownership, authentication, and final version confirmation.
 
@@ -227,7 +227,7 @@ Not applicable: this Change distributes presentational components and callbacks 
 ## Review Handoff Candidate
 
 - Integration target / merge base: `develop@b11e74c0c3031dac533bcb8d91dd6cb4ca4fe2d9`.
-- Candidate source commit: `37424a0c610d9bc5a0902882e124add909881e74`.
+- Candidate source commit: current branch HEAD; implementation tree proven at `37424a0c610d9bc5a0902882e124add909881e74` with evidence-only reconciliation afterward.
 - Source differs from target when implementation changed: yes.
 - Intended implementation fully committed: yes; only evidence-ledger reconciliation follows.
 - Unrelated dirty state preserved: yes; repository started clean and no unrelated files were changed.
@@ -243,7 +243,7 @@ Not applicable: this Change distributes presentational components and callbacks 
 
 ## Closeout
 
-- Change status: `in_progress`; ready to transition to `in_review` after final traceability/validation commit.
+- Change status: `in_review`; ready for independent `sdd-review`.
 - Epic files updated: UIF-002 implemented/verified; UIF-001 adoption truth reconciled.
 - Story labels/references and Requirement/Scenario IDs current: yes.
 - Implemented By maps current: yes; UIF-001 owns behavior and UIF-002 owns package/override/release surfaces.
