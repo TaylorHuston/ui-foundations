@@ -6,7 +6,7 @@ status: in_progress
 ## Resume Here
 
 - Last completed action: promoted the planned Change, created `change/consumer-adoption-pattern` from `develop@e4bcbff`, and added the bounded archive-identity and remote-proof support.
-- Next action: commit the reconciled bounded phase, run `npm run check:package` once against that exact commit with a retained archive, and record the immutable candidate identity. Do not create remote state.
+- Next action: stop at the verified local candidate. Obtain separate authorization before any tag, GitHub Release, asset upload, or remote-asset verification.
 - Active branch/ref: `change/consumer-adoption-pattern` from `develop@e4bcbff`.
 - Expected dirty files: Proposed archive-distribution ADR, active Change artifacts, UIF-002, package verifier/tests, release-asset verifier, and minimal archive-contract documentation.
 - Known blockers: no v0.2.0 tag/GitHub Release/asset exists; remote creation/upload requires separate explicit authorization. Final S4 consumer-evidence claims also depend on the coordinated Anthracite implementation and review candidate.
@@ -17,7 +17,7 @@ status: in_progress
 - [x] Add a retained exact-archive record (filename, npm integrity, SHA-256) to the existing package verification path.
 - [x] Add a release-scoped verifier that requires an HTTPS asset URL, compares its downloaded bytes, installs the URL in a clean consumer, builds it, and checks lockfile integrity.
 - [x] Reconcile UIF-002/S3-S4 and minimal release/adoption documentation without claiming a real consumer or available remote asset.
-- [ ] Commit and run the exact local release candidate gate; record its commit, filename, and checksum.
+- [x] Commit and run the exact local release candidate gate; record its commit, filename, and checksum.
 - [ ] Under separate authorization only: create the tag/release/asset, then run the remote-asset proof.
 
 ## Task Checklist
@@ -88,14 +88,15 @@ status: in_progress
 | Date | Slice | Agent / Guidance | Files / Areas | Result | Commit / Ref |
 |---|---|---|---|---|---|
 | 2026-07-23 | Planning and distribution decision | `sdd-change`, `sdd-adr`, building-components guidance | private Change; Proposed ADR | Planned; implementation not started | `develop@e4bcbff` baseline |
-| 2026-07-24 | Bounded local archive contract | `sdd-apply`, TDD guidance | package verifier, release-asset verifier, package contract tests, UIF-002/S3-S4, README/adoption/changelog, Proposed ADR | Added retained candidate identity plus release-scoped byte/URL/lockfile proof; no component API, publication guard, export, or peer ownership change. | commit pending |
+| 2026-07-24 | Bounded local archive contract | `sdd-apply`, TDD guidance | package verifier, release-asset verifier, package contract tests, UIF-002/S3-S4, README/adoption/changelog, Proposed ADR | Added retained candidate identity plus release-scoped byte/URL/lockfile proof; no component API, publication guard, export, or peer ownership change. | `23b01e8930f18080c1cf66351feeb46f21e96b13` |
 
 ## Verification Ledger
 
 | Date | Check | Evidence Type | What It Proves | Result |
 |---|---|---|---|---|
 | 2026-07-23 | Current package/release/consumer inspection | planning evidence | Package has an 80-file verified tarball path, ignored `dist`, no tag/release asset, explicit exports, and a compatible first consumer; direct Git install is not the verified artifact path. | Planning evidence only |
-| 2026-07-24 | `node --test test/package-contract.node.mjs` | focused automated | Four package-contract tests: existing exact archive/consumer proof and missing-export rejection, plus retained candidate identity and explicit remote-proof input guard. | passed (4/4); exact committed candidate gate pending |
+| 2026-07-24 | `node --test test/package-contract.node.mjs` | focused automated | Four package-contract tests: existing exact archive/consumer proof and missing-export rejection, plus retained candidate identity and explicit remote-proof input guard. | passed (4/4) |
+| 2026-07-24 | `npm run check:package` then `UI_FOUNDATIONS_PACKAGE_OUTPUT_DIRECTORY=<candidate-directory> node scripts/verify-package.mjs` | exact committed package candidate | Commit `23b01e8930f18080c1cf66351feeb46f21e96b13` built, packed, inspected, installed in a clean consumer, typechecked, and production-built. Archive: `taylorhuston-ui-foundations-0.2.0.tgz`; SHA-256: `5b6bd77d0c47a4f4f3a15a79aededcf7108e95c3413c1e2bde5e1d95dcbc5d9b`. | passed; retained candidate is local-only |
 
 ## Manual Feedback
 
@@ -120,7 +121,7 @@ status: in_progress
 
 | Requirement / Surface | End-State Invariant | Risk / Failure Mode | Check Or Confirmation Needed | Evidence / Finding | Status |
 |---|---|---|---|---|---|
-| UIF-002/S4 R2 release archive | Release asset is byte-identical to the exact candidate and consumers pin integrity. | Rebuild drift, asset replacement, missing asset, local path, or mutable fallback. | Candidate digest, upload/download byte comparison, clean URL install, lock inspection, failure probe. | Candidate-record and remote-proof paths added; run on committed candidate and later authorized asset. | partial |
+| UIF-002/S4 R2 release archive | Release asset is byte-identical to the exact candidate and consumers pin integrity. | Rebuild drift, asset replacement, missing asset, local path, or mutable fallback. | Candidate digest, upload/download byte comparison, clean URL install, lock inspection, failure probe. | Exact local candidate `23b01e8` retained with SHA-256 `5b6bd77d…dcbc5d9b`; remote proof remains authorization-blocked. | partial |
 | UIF-002/S4 R1 classification | Guide preserves stronger application behavior and names deliberate divergence. | Mechanical replace-all recipe or Anthracite overfitting. | Classification review against actual consumer mappings and product ownership. | Pending consumer implementation. | known |
 | UIF-002/S4 R3 wrapper/public contract | Consumers need only documented exports/tokens/slots/portal hooks/composition and local wrappers. | Direct imports spread, generated selectors, deep DOM dependence, or product props enter package. | Import/selector inventory, wrapper replacement proof, public API review, rendered portal/identity evidence. | Pending. | known |
 | UIF-002/S4 R4 evidence | Reusable claim links exact reviewed consumer behavior and rendered evidence. | Trusting broad commands, stale screenshots, private planning, or mutable branch links. | Inspect exact tests/assertions, commits, screenshots/runtime, docs, and public links. | Pending Anthracite handoff. | known |
@@ -202,8 +203,8 @@ Not applicable to this repository's new behavior: the Change documents and verif
 
 ## Review Handoff Candidate
 
-- Integration target / merge base: exact `develop` commit at implementation start.
-- Candidate source commit: pending implementation.
+- Integration target / merge base: `develop@e4bcbff`.
+- Candidate source commit: `23b01e8930f18080c1cf66351feeb46f21e96b13`.
 - Source differs from target when implementation changed: expected yes.
 - Intended implementation fully committed: required before handoff.
 - Unrelated dirty state preserved: repository was clean at planning baseline; recheck before promotion and each commit.
@@ -219,7 +220,7 @@ Not applicable to this repository's new behavior: the Change documents and verif
 
 ## Closeout
 
-- Change status: in_progress in the active repository Change; bounded first phase is awaiting its exact committed candidate.
+- Change status: in_progress in the active repository Change; bounded first phase stopped at the verified local candidate.
 - Epic files updated: UIF-002 now contains reconciled S3 and partial S4; UIF-001 remains unchanged because no package defect was found.
 - Story labels/references and Requirement/Scenario IDs current: planned S4/R1-R4 and scenarios are coherent.
 - Implemented By maps current: S4 implementation pending.
@@ -241,7 +242,7 @@ Not applicable to this repository's new behavior: the Change documents and verif
 - Decision fan-out reconciled: pending implementation.
 - Verification environment obligations resolved: local ready; remote/consumer pending.
 - Verification Scope Decision current and required candidate gates passed: decision current; gates pending.
-- Immutable review handoff candidate: pending.
+- Immutable review handoff candidate: local package candidate `23b01e8930f18080c1cf66351feeb46f21e96b13`; broader Change review remains blocked on remote asset and Anthracite evidence.
 - Tested integration candidate matches actual integrated tree, or rerun recorded: pending.
 - Manual UI confirmation status: pending user.
 - Rendered UI verification status: pending.
