@@ -6,15 +6,31 @@ The package does not own application data, routing, authorization, persistence, 
 
 ## Install And Import
 
-Registry publication is not active yet. Until an authorized release exists, validate consumers against an exact local archive produced by `npm pack`; do not link or import repository source.
+Registry publication is not active. A local `npm pack` archive is only a maintainer verification input; it is not a portable consumer dependency. Do not link or import repository source.
+
+## Pre-Registry Release Archives
+
+After a separately authorized GitHub Release attaches the exact verified archive, consumers install the immutable versioned asset URL and commit their lockfile. No release asset exists until that authorization and upload complete.
 
 ```sh
-# From the UI Foundations repository:
-npm pack --pack-destination /tmp
-
-# From the consuming application:
-npm install /tmp/taylorhuston-ui-foundations-0.2.0.tgz
+npm install "https://github.com/TaylorHuston/ui-foundations/releases/download/v0.2.0/taylorhuston-ui-foundations-0.2.0.tgz"
+# Commit the resulting package-lock.json (or equivalent lockfile) with its recorded integrity.
 ```
+
+Never substitute a branch URL, workspace link, local path, or source-build fallback for the release asset. If the asset is missing or its bytes do not match the candidate checksum, stop the adoption rather than selecting another source.
+
+Maintainers retain one candidate while running the existing package gate, then verify a later asset without rebuilding it:
+
+```sh
+UI_FOUNDATIONS_PACKAGE_OUTPUT_DIRECTORY=/private/tmp/ui-foundations-candidate \
+  npm run check:package
+
+UI_FOUNDATIONS_CANDIDATE_ARCHIVE=/private/tmp/ui-foundations-candidate/taylorhuston-ui-foundations-0.2.0.tgz \
+UI_FOUNDATIONS_RELEASE_ASSET_URL="https://github.com/TaylorHuston/ui-foundations/releases/download/v0.2.0/taylorhuston-ui-foundations-0.2.0.tgz" \
+  node scripts/verify-release-asset.mjs
+```
+
+The second command downloads the asset, requires byte-identical SHA-256 values, installs the URL into a clean consumer, runs its typecheck and production build, and requires the generated `package-lock.json` to retain the URL plus SHA-512 integrity. It is release-scoped proof, not a normal local aggregate check.
 
 ```tsx
 import '@taylorhuston/ui-foundations/styles.css'

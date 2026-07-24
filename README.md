@@ -7,13 +7,13 @@ Current public baseline: **0.2.0**. See the [changelog](./CHANGELOG.md) for rele
 ## Adoption Model
 
 1. Inspect defaults and supported override seams in Storybook.
-2. Install a pinned package version and import only the required JavaScript and CSS entry points.
+2. After a separately authorized release, install the pinned immutable archive URL and import only the required JavaScript and CSS entry points.
 3. Put shared components behind thin app-owned wrappers.
 4. Override product identity through semantic tokens, root styling props, stable named slots, and portal hooks.
 5. Keep data, routing, authorization, persistence, editor engines, responsive orchestration, and deliberate replacement application-owned.
 6. Upgrade deliberately after reviewing release notes and consumer verification.
 
-See [Library Adoption](https://github.com/TaylorHuston/ui-foundations/blob/main/docs/library-adoption.md) for imports, wrappers, CSS layering, override hooks, and the pre-1.0 compatibility policy. Registry publication is not active yet and remains a separately authorized release action.
+See [Library Adoption](https://github.com/TaylorHuston/ui-foundations/blob/main/docs/library-adoption.md) for archive installation, lockfile integrity, wrappers, CSS layering, override hooks, and the pre-1.0 compatibility policy. Registry publication is not active, and tag/release/asset creation remains separately authorized.
 
 ## Reference Lifecycle
 
@@ -113,7 +113,7 @@ npm run check:all
 npm run storybook
 ```
 
-`npm run check` verifies the CSS inventory, import order, semantic token contract, the absence of project-owned `primary`, `secondary`, or `accent` aliases, and the no-Tailwind boundary. `npm run check:package` builds declarations and public JavaScript/CSS entry points, inspects the exact archive, installs it into a clean non-symlink consumer, rejects private imports, checks for one React runtime, then typechecks and production-builds the consumer. `npm run check:all` runs those gates together with focused tests and a static Storybook build.
+`npm run check` verifies the CSS inventory, import order, semantic token contract, the absence of project-owned `primary`, `secondary`, or `accent` aliases, and the no-Tailwind boundary. `npm run check:package` builds declarations and public JavaScript/CSS entry points, inspects one exact archive, records its checksum when retained, installs it into a clean non-symlink consumer, rejects private imports, checks for one React runtime, then typechecks and production-builds the consumer. The release-scoped verifier later compares an uploaded HTTPS asset to those exact bytes and installs its URL in a fresh consumer; it is not run until remote creation is separately authorized. `npm run check:all` runs those gates together with focused tests and a static Storybook build.
 
 ## Identity Profiles
 

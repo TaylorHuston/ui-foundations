@@ -6,6 +6,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- A pre-registry archive handoff contract: the exact `npm pack` candidate can be retained with npm integrity and SHA-256 identity, and a separately authorized HTTPS release asset can later be compared byte-for-byte and installed by URL in a clean locked consumer.
+
+### Changed
+
+- Adoption guidance now requires an immutable GitHub Release asset URL and lockfile integrity after release authorization; local paths, workspace links, branch URLs, and source-build fallbacks are not consumer distribution paths.
+
 ## [0.2.0] - 2026-07-23
 
 ### Added

@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { cp, mkdir, mkdtemp, readFile, realpath, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -7,7 +8,10 @@ import { spawnSync } from "node:child_process";
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const fixtureRoot = resolve(repositoryRoot, "test/fixtures/package-consumer");
 const temporaryRoot = await mkdtemp(join(tmpdir(), "ui-foundations-package-"));
-const packRoot = join(temporaryRoot, "pack");
+const requestedPackRoot = process.env.UI_FOUNDATIONS_PACKAGE_OUTPUT_DIRECTORY;
+const packRoot = requestedPackRoot
+  ? resolve(requestedPackRoot)
+  : join(temporaryRoot, "pack");
 const consumerRoot = join(temporaryRoot, "consumer");
 const retainTemporaryRoot =
   process.env.UI_FOUNDATIONS_KEEP_PACKAGE_TEMP === "1";
@@ -166,6 +170,9 @@ async function verifyPackage() {
 
   await cp(fixtureRoot, consumerRoot, { recursive: true });
   const archivePath = join(packRoot, packageRecord.filename);
+  const archiveSha256 = createHash("sha256")
+    .update(await readFile(archivePath))
+    .digest("hex");
   run(
     "npm",
     [
@@ -332,6 +339,10 @@ async function verifyPackage() {
     `${JSON.stringify(
       {
         archive: packageRecord.filename,
+        archiveIntegrity: packageRecord.integrity,
+        archivePath: requestedPackRoot ? archivePath : undefined,
+        archiveRetained: Boolean(requestedPackRoot),
+        archiveSha256,
         files: packageRecord.files.length,
         package: `${installedManifest.name}@${installedManifest.version}`,
         privateImportRejected: true,

@@ -3,12 +3,13 @@ schema: sdd-epic-v2
 id: UIF-002
 status: active
 created: 2026-07-22
-modified: 2026-07-22
-last_verified: 2026-07-22
+modified: 2026-07-24
+last_verified: 2026-07-24
 stories:
   - S1
   - S2
   - S3
+  - S4
 ---
 
 # UIF-002 Library Distribution And Overrides
@@ -16,7 +17,7 @@ stories:
 ## Product Context
 
 - Related docs: `README.md`, `CHANGELOG.md`
-- Related ADRs: `docs/adrs/2026-07-22-use-versioned-runtime-library-with-app-wrappers.md`
+- Related ADRs: `docs/adrs/2026-07-22-use-versioned-runtime-library-with-app-wrappers.md`, `docs/adrs/2026-07-23-distribute-pre-registry-releases-as-verified-archives.md`
 
 UI Foundations owns executable styles, tested React components, compositional patterns, and a versioned package contract. Consumers can import those foundations while preserving each application's product identity, domain behavior, and release independence.
 
@@ -30,7 +31,7 @@ UI Foundations provides a versioned React package that applications can install,
 - Explicit public entry points for React APIs and opt-in CSS layers.
 - A supported override contract based on semantic custom properties, root classes and styles, stable named slots, and app-owned wrapper components.
 - Package-content, clean-consumer, public-contract, compatibility, and release-candidate verification.
-- Versioning and release communication sufficient for applications to upgrade deliberately.
+- Versioning, release communication, and a pre-registry archive handoff contract sufficient for applications to upgrade deliberately.
 
 ## Deferred Scope
 
@@ -42,9 +43,7 @@ UI Foundations provides a versioned React package that applications can install,
 
 ## Candidate Stories
 
-| Candidate | Status | Story Shape | Acceptance Signals |
-|---|---|---|---|
-| `consumer-migration-guide` | deferred | As an application maintainer, I want a repeatable migration guide, so that copied components can be replaced incrementally. | At least one real consumer completes a separate package-adoption Change and exposes broadly reusable migration steps. |
+None. The former `consumer-migration-guide` candidate is now `S4`.
 
 ## Story Index
 
@@ -52,7 +51,8 @@ UI Foundations provides a versioned React package that applications can install,
 |---|---|---|---|---|---|
 | S1 | implemented | verified | Install and import the versioned library. | 2026-07-22 | Exact packed-artifact verification; public registry publication remains separately authorized. |
 | S2 | implemented | verified | Override foundations without patching package internals. | 2026-07-22 | App-owned wrappers are the required consumer seam. |
-| S3 | implemented | verified | Inspect, version, and upgrade a release candidate. | 2026-07-22 | Publication remains blocked pending explicit release authority. |
+| S3 | implemented | verified | Inspect, version, and upgrade a release candidate. | 2026-07-24 | Registry publication and remote release creation remain separately authorized. |
+| S4 | partial | partial | Adopt the library in an existing application. | 2026-07-24 | Local candidate identity and later remote-asset proof are ready; real-consumer evidence remains pending. |
 
 ## Stories
 
@@ -234,8 +234,8 @@ None.
 Implementation: implemented
 Verification: verified
 Created: 2026-07-22
-Modified: 2026-07-22
-Last verified: 2026-07-22
+Modified: 2026-07-24
+Last verified: 2026-07-24
 
 As a library maintainer, I want an inspectable and versioned release contract, so that consuming applications can choose when and how to upgrade.
 
@@ -297,7 +297,7 @@ None.
 | S3/R1-S1 | Automated test `test/package-contract.node.mjs#verifies the exact packed package contract in an isolated consumer` | A fresh candidate reports the intended files, resolves every public surface in a clean consumer, and rejects private repository paths. | Passing 2026-07-22 |
 | S3/R1-S2 | Automated test `test/package-contract.node.mjs#rejects a packed artifact with a missing exported target` | The candidate gate fails when an exported target is absent and passes only after the public contract is complete. | Passing 2026-07-22 |
 | S3/R2-S1 | `CHANGELOG.md#Unreleased`; `docs/library-adoption.md#Compatibility` | Consumer-visible changes, pre-1.0 compatibility, and deliberate upgrade ownership are explicit. | Passing 2026-07-22 |
-| S3/R3-S1 | Automated test `test/package-contract.node.mjs#verifies the exact packed package contract in an isolated consumer` | The exact local candidate retains `private: true`; no registry publication occurred or can occur through the ordinary Apply command. | Passing 2026-07-22 |
+| S3/R3-S1 | Automated test `test/package-contract.node.mjs#verifies the exact packed package contract in an isolated consumer` | The exact local candidate retains `private: true`; no registry publication occurred or can occur through the ordinary Apply command. | Passing 2026-07-24 |
 
 #### Verification Gaps
 
@@ -305,7 +305,112 @@ None.
 
 #### Story Notes
 
-- `npm pack --dry-run --json` is the archive-content baseline; actual publication is not authorized by `/sdd-apply` or by this Change plan.
+- `npm pack --dry-run --json` is the archive-content baseline; actual tag, release, asset-upload, and registry publication actions are not authorized by `/sdd-apply` or by this Change plan.
+
+### Story S4: Adopt The Library In An Existing Application
+
+Implementation: partial
+Verification: partial
+Created: 2026-07-23
+Modified: 2026-07-24
+Last verified: 2026-07-24
+
+As an application maintainer, I want a repeatable migration path into UI Foundations, so that I can inherit shared interface behavior without losing my application's identity, product behavior, or release independence.
+
+#### Requirements And Scenarios
+
+##### Requirement R1: Classify The Existing Application Surface
+
+The system SHALL provide an adoption process that classifies each materially affected component or pattern before replacement and keeps application-specific behavior with the consuming application.
+
+###### Scenario R1-S1: Map A Supported Surface
+
+- WHEN a maintainer inventories an existing application's controls, patterns, state ownership, responsive behavior, and styling
+- THEN each material surface is classified as an existing application component, adopted reference, application-specific component, reference candidate, or deliberate divergence
+- AND adopted surfaces identify the documented package export and app-owned wrapper boundary they will use.
+
+###### Scenario R1-S2: Preserve A Stronger Application Contract
+
+- WHEN a Foundation component or pattern is less capable than the application's accepted behavior
+- THEN the application keeps or replaces the implementation locally without private package imports or patches
+- AND the migration records the deliberate divergence instead of weakening product behavior for visual uniformity.
+
+##### Requirement R2: Acquire A Portable Pinned Package
+
+The system SHALL provide a pre-registry package archive whose exact verified bytes can be installed from a versioned release location without repository source access.
+
+###### Scenario R2-S1: Install The Verified Release Asset
+
+- WHEN an application installs the documented GitHub Release archive URL
+- THEN its package manager resolves the same public exports, declarations, CSS, and runtime dependency contract as the verified candidate
+- AND the committed lockfile records integrity so the application remains on those bytes until a deliberate upgrade.
+
+###### Scenario R2-S2: Reject Missing Or Changed Distribution
+
+- WHEN the release asset is unavailable, its bytes change, or a consumer attempts an undeclared source import
+- THEN installation or contract verification fails before the application build is accepted
+- AND no mutable branch, workspace link, or source-build fallback silently substitutes another package.
+
+##### Requirement R3: Preserve Application Ownership Through Migration
+
+The system SHALL guide applications to import supported surfaces behind local wrappers and customize them only through documented semantic, slot, portal, and composition contracts.
+
+###### Scenario R3-S1: Apply Local Identity And Defaults
+
+- WHEN a consuming application loads Foundation CSS and then applies its semantic identity and wrapper defaults
+- THEN default and portaled components use the application's intended identity without generated selectors or product configuration entering the package
+- AND feature code depends on the local boundary that can later replace the shared implementation.
+
+###### Scenario R3-S2: Keep Product State In The Application
+
+- WHEN an adopted component participates in routing, data, authorization, persistence, editing, asynchronous recovery, or responsive navigation
+- THEN the consuming application continues to own those decisions and passes only presentational state or callbacks through its wrapper or composition
+- AND the package does not become the only implementation of a product rule.
+
+##### Requirement R4: Prove And Record Consumer Parity
+
+The system SHALL require focused, aggregate, rendered, and application-owned evidence proportional to migrated surfaces before the consumer is presented as a reusable example.
+
+###### Scenario R4-S1: Complete A Real Consumer Migration
+
+- WHEN an application finishes a migration slice
+- THEN its behavior, accessibility, responsive, production-build, dependency, and visual checks show that accepted user paths remain intact
+- AND the reusable guide records only broadly applicable lessons with an immutable public consumer reference.
+
+###### Scenario R4-S2: Upgrade Deliberately
+
+- WHEN a consumer considers a later Foundation version
+- THEN it reviews release notes and reruns the affected package, behavior, accessibility, responsive, production-build, and rendered checks before changing the pin
+- AND no Foundation release updates the application automatically.
+
+#### Implemented By
+
+| Requirement / Scenario | Location / Anchor | Kind | Responsibility |
+|---|---|---|---|
+| S4/R2 | `scripts/verify-package.mjs#archiveSha256` | primary | Retain one checked archive on request and report its filename, npm integrity, and SHA-256 identity. |
+| S4/R2 | `scripts/verify-release-asset.mjs#candidateSha256` | primary | Compare a later HTTPS release asset byte-for-byte with the retained candidate, install its URL in a clean consumer, and require lockfile integrity. |
+| S4/R2 | `docs/library-adoption.md#Pre-Registry Release Archives` | support | Document the archive-only consumer contract without claiming an available release asset. |
+
+#### Implementation Gaps
+
+- `S4/R1-S1`, `S4/R1-S2`, `S4/R2-S1`, `S4/R3-S1`, `S4/R3-S2`, `S4/R4-S1`, and `S4/R4-S2`: Anthracite's coordinated adoption and immutable consumer evidence are pending.
+- `S4/R2-S2`: remote asset availability and byte-drift rejection cannot be exercised until an explicitly authorized GitHub Release asset exists.
+
+#### Verified By
+
+| Requirement / Scenario | Evidence | Proves | Status |
+|---|---|---|---|
+| S4/R2 candidate preparation | Automated test `test/package-contract.node.mjs#retains and identifies an exact release-candidate archive on request` | A package archive that passed the existing isolated-consumer contract can be retained with its filename, npm SHA-512 integrity, and SHA-256 checksum. | Passing 2026-07-24 |
+| S4/R2 release-proof guard | Automated test `test/package-contract.node.mjs#requires explicit candidate and HTTPS release asset inputs` | Remote-asset proof cannot silently fall back to a local path or an insecure/unconfigured source. | Passing 2026-07-24 |
+
+#### Verification Gaps
+
+- `S4/R2-S1`, `S4/R2-S2`: no GitHub Release asset exists yet, so byte-identity, URL installation, and lockfile-integrity proof remain blocked on separate authorization.
+- `S4/R1-S1`, `S4/R1-S2`, `S4/R3-S1`, `S4/R3-S2`, `S4/R4-S1`, and `S4/R4-S2`: final Anthracite implementation and independent review evidence are pending.
+
+#### Story Notes
+
+- The current phase establishes only the pre-registry archive contract. It does not present Anthracite or another application as a completed consumer.
 
 ## Cross-Story Concerns
 
