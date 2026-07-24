@@ -8,6 +8,24 @@ AnthraciteMD is a compatible React 19/Vite 8 application with substantial UI and
 
 The two Changes are coordinated but retain ownership. UI Foundations prepares and verifies the distributable archive contract and owns reusable documentation/Epic truth. Anthracite owns its dependency, wrappers, product migrations, application tests, and release. This Change remains open until final Anthracite evidence can be inspected and distilled without copying private planning or product-specific implementation into generic guidance.
 
+## Replan: Consumer-Proven Editor Work-Surface Correction
+
+AnthraciteMD's adopted editor exposed two compatible, repeated-consumer needs: document identity should initiate its controlled inline rename directly, and Source/Rendered belongs in the toolbar's trailing/top-right command group rather than an isolated center region. The existing UIF `DocumentHeader.rename` callback contract already carries application-owned draft, pending, validation, and persistence policy; the correction changes its shared entry affordance, not product authority. `EditorToolbar` already owns a controlled mode-switch composition; the correction standardizes its placement and ordering with status/trailing actions.
+
+This is an in-scope refinement of UIF-002/S4's evidence-driven public correction clause and requires UIF-001/S4 behavior reconciliation. It does not change the immutable v0.2.0 archive, grant UIF authority over app rename/mode state, or copy Anthracite implementation into the package.
+
+### UIF-001/S4/R2 Planned Behavior Delta
+
+- **Mode control:** when `EditorToolbar` receives its supported `mode` and `onModeChange` pair without an explicit replacement `center`, its Source/Rendered switch SHALL render first in the right-aligned trailing group, followed by routine status and caller-supplied trailing actions. A typed opt-in center placement preserves deliberate legacy composition during the pre-1.0 transition. On constrained widths the group SHALL wrap or stack without overlap, while retaining labeled, keyboard-operable Source/Rendered controls.
+- **Rename trigger:** when `DocumentHeader` receives `rename`, its visible title SHALL be an accessible button that calls `rename.onStart`; no duplicate idle Rename action is rendered. When `rename` is absent, the title remains a heading without interactive affordance. On entering controlled editing, focus SHALL move to the labeled filename input; Enter submits only the rename form, Escape cancels, and visible Save name/Cancel, pending, validation error, and read-only presentation remain semantically intact.
+- **Consumer boundary:** UIF does not infer whether renaming is permitted, mutate the draft, validate, persist, navigate, retry, or choose a source/rendered mode. Consumers retain every callback and decide whether to use the canonical placement or explicit supported override.
+
+### Options Considered
+
+1. **Refine existing controlled patterns with a typed placement option — selected.** Reuse `DocumentHeader.rename`; replace only its idle trigger and focus behavior. Make trailing placement canonical for the existing internal toolbar mode switch and retain an explicit center opt-in. This establishes one inspectable multi-consumer default without absorbing application authority.
+2. **Require each consumer to place an exported mode switch through arbitrary slots — rejected.** It preserves flexibility but leaves repeated placement, ordering, and constrained-layout accessibility divergent rather than standardizing the requested common behavior.
+3. **Create a new editor-header composite or rename state manager — rejected.** It would duplicate existing pattern composition and risk pulling rename policy, editor state, or persistence into the library.
+
 ## Goals / Non-Goals
 
 **Goals:**
@@ -17,6 +35,7 @@ The two Changes are coordinated but retain ownership. UI Foundations prepares an
 - Make app-owned wrappers, identity overrides, deliberate divergence, parity evidence, and pinned upgrades concrete through real consumer evidence.
 - Promote UIF-002's migration-guide candidate into durable Story truth with observable archive, migration, and evidence behavior.
 - Identify missing package seams or component corrections only when Anthracite demonstrates broad value.
+- Standardize title-initiated controlled rename and trailing/top-right editor mode presentation with keyboard, focus, pending, error, and constrained-layout evidence.
 - Keep future apps independently releasable and free to reject unsuitable package surfaces.
 
 **Non-Goals:**
@@ -25,6 +44,7 @@ The two Changes are coordinated but retain ownership. UI Foundations prepares an
 - Publish to npm, migrate another app, automate upgrades, generate codemods, or mandate UI Foundations for every platform.
 - Track `dist` in Git, build package source during consumer installation, or instruct consumers to use local paths/workspace links.
 - Redesign Foundation visuals or expand public APIs speculatively.
+- Make title click the only rename path, hide application read-only context, move rename persistence or validation into UIF, or require any consumer to replace its current wrapper before a deliberate upgrade.
 - Treat one consumer as proof that every component or pattern is stable for 1.0.
 
 ## Planning Interview / Story Refinement
@@ -143,18 +163,23 @@ Not verified yet.
 ### Update Epic: UIF-001 Interface Foundations
 
 - Target Epic: `docs/epics/uif-001-copyable-interface-foundations/epic.md`
-- Change Type: conditional evidence-driven reconciliation only.
+- Change Type: consumer-proven behavior correction to existing S4/R2.
 
 #### Story Changes
 
-- Added: none.
-- Modified: only Requirements, implementation ownership, or evidence genuinely changed by a broadly reusable correction discovered in Anthracite.
-- Removed: none.
+- Added: none; both paths refine one existing editor-work-surface Story.
+- Modified: S4/R2-S1 specifies the library-owned mode control in the trailing/top-right toolbar group with a documented relationship to status and additional trailing actions. S4/R2-S2 specifies that a supplied controlled rename makes the visible title an accessible edit trigger, while edit mode retains labeled input, visible Save name/Cancel actions, pending behavior, and error semantics.
+- Removed: the separate default Rename action from the shared header presentation; consumers that omit `rename` retain a noninteractive title.
+
+#### Planned Requirements And Scenarios
+
+- `S4/R2-S1` gains default trailing mode placement, explicit center opt-in, status/action ordering, and constrained-width behavior. Its focused proof must cover callback delegation, DOM/visual ordering, keyboard selection, explicit-center compatibility, and no narrow overlap.
+- `S4/R2-S2` gains title-button rename initiation, focus movement to the filename input, form-scoped Enter, Escape cancel, and static-title behavior when no rename control exists. Its focused proof must cover pointer and keyboard activation, pending/error/read-only states, and application-owned callbacks.
 
 #### Supersedes / Reconciles
 
-- Keep UIF-001 authoritative for component/pattern behavior and UIF-002 authoritative for package/adoption behavior.
-- Do not add consumer chronology as component behavior truth.
+- Keep UIF-001 authoritative for this shared component/pattern behavior and UIF-002 authoritative for archive adoption and consumer evidence.
+- Record Anthracite as evidence only; do not add product copy, routing, persistence, or application chronology to UIF-001.
 
 ## Epic File Rules
 
@@ -225,13 +250,13 @@ The canonical guide will separate five decisions:
 
 Use Anthracite as evidence, not source to copy. The guide may name representative mappings such as package TreeView plus app-owned server search, package Sheet/Dialog plus app-owned responsive orchestration, or shared editor chrome plus app-owned CodeMirror/autosave. It must avoid Anthracite domain details that do not generalize.
 
-If the consumer exposes a missing generic hook or bug, first determine whether it belongs in UI Foundations or in the app wrapper. Expand public APIs only after broad-value evidence, with focused tests, Storybook states, changelog communication, and UIF-001 reconciliation.
+If the consumer exposes a missing generic hook or bug, first determine whether it belongs in UI Foundations or in the app wrapper. Here, confirmed multiple-consumer need makes both visible editor-work-surface interactions Foundation-owned; implementation must preserve existing controlled callbacks and use focused tests, Storybook states, changelog communication, UIF-001 reconciliation, and consumer upgrade evidence.
 
 ## Experience Design
 
 - Applicability: no new visual direction; component-contract and consumer-rendering evidence are required.
 - Confirmed direction: Foundation defaults remain neutral and applications preserve their own identity through supported seams.
-- User confirmation: UI Foundations is a customizable base and the pattern should guide future apps without homogenizing them.
+- User confirmation: UI Foundations is a customizable base and the pattern should guide future apps without homogenizing them; confirmed multiple consumers need title-initiated rename and a trailing/top-right Source/Rendered control.
 - Reference artifacts: Foundation Library Overrides/Workbench stories and final Anthracite Storybook/application evidence.
 
 ### User Flow And Information Architecture
@@ -250,7 +275,7 @@ No new Foundation responsive behavior is planned. The guide requires each consum
 |---|---|---|---|---|
 | Release-asset consumer fixture | adopted reference | current exact package fixture extended to remote archive proof | default and custom identity, normal component, shell, portaled overlay, clean build | Keep fixture generic and deterministic. |
 | Anthracite wrappers and product compositions | existing application component | coordinated Anthracite Change | representative default/error/pending/selected/responsive states | Link immutable evidence; do not move source into this repo. |
-| Missing generic seam found by consumer | reference candidate | application evidence plus current public contract | default and override, behavior/accessibility, portal/responsive as applicable | Promote only after broad-value review and UIF-001 reconciliation. |
+| Consumer-proven editor-work-surface correction | UIF-001/S4 refinement | `DocumentHeader.rename` and `EditorToolbar` public patterns | idle title trigger, keyboard trigger, editing/pending/error, Source/Rendered, status/action ordering, narrow width | Standardize interaction/presentation only; retain consumer callbacks and all product state. |
 | Product-specific search/editor/Assistant/plugin behavior | deliberate divergence | consuming application | application-owned evidence | Document classification, not package configuration. |
 
 ### Accessibility And Interaction

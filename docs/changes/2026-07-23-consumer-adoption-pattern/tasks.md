@@ -5,11 +5,11 @@ status: in_progress
 
 ## Resume Here
 
-- Last completed action: promoted the planned Change, created `change/consumer-adoption-pattern` from `develop@e4bcbff`, and added the bounded archive-identity and remote-proof support.
-- Next action: stop at the verified local candidate. Obtain separate authorization before any tag, GitHub Release, asset upload, or remote-asset verification.
+- Last completed action: Discovery confirmed the approved replan is coherent: `DocumentHeader.rename` already owns controlled edit callbacks, while `EditorToolbar` owns the internal mode switch and named trailing/status regions. Required independent opinions completed 2/2; no source behavior has changed yet.
+- Next action: implement UIF-001/S4/R2-S2 first: accessible title-initiated controlled rename with focus and keyboard behavior, then reconcile its Story/test/storybook evidence before the toolbar placement phase.
 - Active branch/ref: `change/consumer-adoption-pattern` from `develop@e4bcbff`.
-- Expected dirty files: Proposed archive-distribution ADR, active Change artifacts, UIF-002, package verifier/tests, release-asset verifier, and minimal archive-contract documentation.
-- Known blockers: no v0.2.0 tag/GitHub Release/asset exists; remote creation/upload requires separate explicit authorization. Final S4 consumer-evidence claims also depend on the coordinated Anthracite implementation and review candidate.
+- Expected dirty files: active Change artifacts plus the current UIF-001/S4/R2 implementation/test/story/README/changelog surfaces; preserve unrelated files.
+- Known blockers: no v0.2.0 tag/GitHub Release/asset exists; remote creation/upload requires separate explicit authorization. Consumer upgrade proof waits for a later verified correction release, but it does not block UIF source/test/story implementation.
 
 ## Bounded Phase 1: Local Candidate Preparation
 
@@ -39,7 +39,7 @@ status: in_progress
 - [ ] 2.1 Add UIF-002/S4 to frontmatter, scope, Story Index, embedded Stories, cross-Story concerns, and completion criteria; remove the promoted candidate row.
 - [ ] 2.2 Refine UIF-002/S3 only for verified pre-registry release-asset behavior and retain separate publication authority.
 - [ ] 2.3 Replace every S4 implementation/verification gap only after exact owning source and evidence exist.
-- [ ] 2.4 Update UIF-001 only when Anthracite demonstrates a real broadly reusable component/pattern correction.
+- [ ] 2.4 Reconcile UIF-001/S4/R2 with the consumer-proven title-initiated rename and trailing/top-right mode-control contract; independently map implementation and verification after source exists.
 - [ ] 2.5 Preserve one authoritative implementation and verification map per Story and reconcile README/adoption/current-state wording.
 
 ### 3. Architecture Decisions
@@ -59,6 +59,7 @@ status: in_progress
   - [ ] R2: portable release archive, URL/integrity pin, and fail-closed distribution contract.
   - [ ] R3: wrappers, semantic/slot/portal/composition customization, and application-state ownership.
   - [ ] R4: real-consumer evidence, immutable public reference, and deliberate upgrade checklist.
+  - [ ] UIF-001/S4/R2: title-initiated controlled rename plus trailing/top-right mode control, preserving app-owned callbacks, pending/error/read-only behavior, and narrow accessibility.
 - [ ] 4.3 Inspect the coordinated Anthracite migration for broadly reusable lessons or missing seams; keep product-specific code local.
 - [ ] 4.4 Add the smallest proven package correction when needed, with UIF-001 reconciliation, focused tests, Storybook states, and changelog communication.
 - [ ] 4.5 Reconcile README, adoption guide, AGENTS/release rules, CHANGELOG, UIF-001/UIF-002, ADR, and Change ledgers.
@@ -69,7 +70,8 @@ status: in_progress
 - [ ] 5.1 Inspect every focused package/archive/consumer test before mapping S4 Scenarios.
 - [ ] 5.2 Run the existing exact package archive and isolated-consumer gate on the exact committed candidate.
 - [ ] 5.3 Under separate release authorization, compare downloaded release-asset bytes with the verified candidate and install the asset URL in a clean consumer.
-- [ ] 5.4 Inspect Anthracite's lockfile/dependency tree, wrapper boundary, tests, Storybook, production build/E2E, desktop/narrow rendering, console/network, and review evidence.
+- [ ] 5.4 Inspect Anthracite's lockfile/dependency tree, wrapper boundary, tests, Storybook, production build/E2E, desktop/narrow rendering, console/network, and review evidence after it deliberately upgrades to the correction release.
+- [ ] 5.4a Add Foundation unit, Storybook interaction/accessibility, and rendered desktop/narrow proof for title trigger, keyboard activation, edit/pending/error/recovery, mode placement, status/action ordering, and constrained layouts.
 - [ ] 5.5 Prove missing/changed asset or private import fails without mutable/source fallback.
 - [ ] 5.6 Run `npm run check:all`, scoped validation, reverse traceability, and any prospective integration gate on exact committed candidates.
 - [ ] 5.7 Update UIF-002 Verified By with exact evidence and retain any external-availability or later-consumer gaps honestly.
@@ -104,18 +106,20 @@ status: in_progress
 |---|---|---|---|---|
 | 2026-07-23 | Codify the reusable pattern as part of moving Anthracite to UI Foundations. | product/architecture direction | Promoted migration-guide candidate in planned UIF-002/S4 and coordinated Changes. | resolved in planning |
 | 2026-07-23 | Use a pinned GitHub/archive dependency instead of npm for now. | distribution decision | Selected exact GitHub Release asset plus lock integrity and separate release authority. | resolved in planning |
+| 2026-07-24 | Multiple consumers need title-initiated inline rename and a trailing/top-right Source/Rendered control. | reusable interaction/contract change | Reopened the active Change for a UIF-001/S4/R2 correction. Preserve application rename/mode state, persistence, validation, policy, and responsive ownership; do not mutate `v0.2.0`. | planned |
 
 ## Planning Updates
 
 | Date | Discovery | Classification | Planning Updates | Next Apply Starting Point |
 |---|---|---|---|---|
 | 2026-07-23 | The package archive is verified locally but no registry, tag, release, or portable asset exists; `dist` is ignored. | technical constraint | Added R2, Proposed archive ADR, byte-identity/integrity proof, and release-only remote mutation gate. | Build/identify one exact candidate before requesting release-asset authorization. |
-
+| 2026-07-24 | Anthracite feedback and confirmed multiple consumers establish shared editor-work-surface behavior beyond an app-local layout decision. | in-scope refinement / public interaction contract | Returned the Change to `proposed`; proposal/design/tasks now plan UIF-001/S4/R2 refinement for title-triggered controlled rename and trailing/top-right mode control. Required independent opinions (`qwen`, `ornith`) completed after the primary draft. Accepted: same-Story refinement, keyboard/focus/constrained evidence, clear release communication, and typed center opt-in. Rejected: a new state manager, arbitrary consumer slot-only placement, blur submission, and consumer source changes; the existing callbacks stay authoritative. | Discovery complete; implement UIF-001/S4/R2-S2 title rename first, then UIF-001/S4/R2-S1 toolbar placement. |
 ## Design Updates
 
 | Date | Feedback / Discovery | Classification | Reference / Target | Preserve / Change / Non-Goals | Artifact Updates | Next Apply Starting Point |
 |---|---|---|---|---|---|---|
 | 2026-07-23 | Anthracite is visually aligned but behaviorally richer than generic examples. | experience refinement | Foundation Library Overrides/Workbench and Anthracite Storybook | Preserve neutral defaults and app identity; codify selective adoption/divergence; no Foundation redesign. | design.md and S4 behavior | Use final consumer evidence, not source copying, to refine guide. |
+| 2026-07-24 | User confirmed multiple consumers need title-initiated rename and trailing/top-right Source/Rendered placement. | shared interaction revision | `DocumentHeader.rename` and `EditorToolbar` | Replace the duplicate idle Rename action with a keyboard-accessible title trigger; make trailing mode placement canonical with explicit center opt-in; preserve visible edit actions and all app-owned state/policy. | proposal.md, design.md, tasks.md; UIF-001 deferred to Apply | Implement and verify the UIF-only correction before consumer upgrades. |
 
 ## Implementation Risk And Confirmation Matrix
 
@@ -125,6 +129,7 @@ status: in_progress
 | UIF-002/S4 R1 classification | Guide preserves stronger application behavior and names deliberate divergence. | Mechanical replace-all recipe or Anthracite overfitting. | Classification review against actual consumer mappings and product ownership. | Pending consumer implementation. | known |
 | UIF-002/S4 R3 wrapper/public contract | Consumers need only documented exports/tokens/slots/portal hooks/composition and local wrappers. | Direct imports spread, generated selectors, deep DOM dependence, or product props enter package. | Import/selector inventory, wrapper replacement proof, public API review, rendered portal/identity evidence. | Pending. | known |
 | UIF-002/S4 R4 evidence | Reusable claim links exact reviewed consumer behavior and rendered evidence. | Trusting broad commands, stale screenshots, private planning, or mutable branch links. | Inspect exact tests/assertions, commits, screenshots/runtime, docs, and public links. | Pending Anthracite handoff. | known |
+| UIF-001/S4 editor correction | Visible title starts controlled rename; Source/Rendered appears in the trailing/top-right group without displacing status/actions or absorbing product policy. | Mouse-only title trigger, focus loss, hidden save/cancel/error state, action-order collision, narrow overflow, or application state entering UIF. | Focused behavioral tests, Storybook interaction/axe, desktop/narrow rendered inspection, public type/API review, and post-release consumer upgrade proof. | Planned from Anthracite evidence; source and UIF-001 maps remain untouched during replan. | planned |
 | Release authority | Ordinary Apply never creates remote tag/release/asset or disables npm guard. | Unauthorized remote mutation/publication. | Manifest guard, command ledger, explicit authorization before remote step. | No remote state created during planning. | proved for planning |
 
 ## Pattern Parity Matrix
@@ -153,6 +158,7 @@ Not applicable to this repository's new behavior: the Change documents and verif
 |---|---|---|---|---|---|
 | 2026-07-23 | Use verified GitHub Release assets before registry publication. | Release identity, digest/integrity, remote authority, docs, S3/S4, and consumer lockfiles become maintained boundaries. | package verifier/release support, README, adoption guide, AGENTS, CHANGELOG, UIF-002, ADR, Anthracite dependency | Candidate record, remote verifier, docs, S3/S4, and Proposed ADR reconciled; remote asset and Anthracite dependency remain open. | partial |
 | 2026-07-23 | Make Anthracite the first evidence source while preserving app ownership. | S4 completion depends on exact external consumer proof and guide must stay generic. | Anthracite Change/commit/review evidence, UIF guide/Epic/tests, component candidates | Planned. | open until consumer handoff |
+| 2026-07-24 | Multiple consumers confirm editor title rename and trailing mode placement are shared. | UIF-001/S4/R2 is refined; package receives a new versioned behavior before consumers deliberately upgrade. | DocumentHeader, EditorToolbar, stories/tests, UIF-001/S4, UIF-002/S4 guide, changelog/release verification, consumer wrappers/evidence | Replan accepted; preserve `v0.2.0` and application authority. | Apply correction, release under separate authority, then gather consumer upgrade evidence |
 
 ## Verification Environment
 
@@ -193,12 +199,14 @@ Not applicable to this repository's new behavior: the Change documents and verif
 |---|---|---|---|---|---|---|---|
 | Foundation Library Overrides | 1440x900 and 390x844 | default/custom identity, action, field, notice, portal dialog | Existing public override contract remains clear, accessible, scoped, and overflow-free. | Foundation Storybook/browser | pending | pending | pending |
 | Generic release-asset consumer | desktop and constrained | default, wrapper, shell, portaled overlay | Remote archive renders the same public contract as local candidate without source access. | clean consumer/browser | pending | pending | pending |
-| Anthracite consumer | 1440x900, intermediate, and 390x844 | setup/auth, workbench/tree/editor, recovery, search, Settings/plugins/Assistant, overlays | App identity and behavior remain local while adopted mechanics work across representative states. | Anthracite Storybook/production browser | pending | pending | pending |
+| Foundation DocumentHeader/EditorToolbar | 1440x900 and 390x844 | idle title trigger, keyboard entry, pending/error edit, Source/Rendered, status/action ordering | Title is interactive only with controlled rename; focus/edit recovery is clear; mode is right-aligned and stays usable without overlap. | Foundation Storybook/browser | planned | planned | planned |
+| Anthracite consumer | 1440x900, intermediate, and 390x844 | setup/auth, workbench/tree/editor, recovery, search, Settings/plugins/Assistant, overlays | App identity and behavior remain local while adopted mechanics work across representative states. | Anthracite Storybook/production browser | pending correction release and upgrade | pending | pending |
 
 ## Blockers / Open Questions
 
 - Execution blocker: exact tag/GitHub Release/asset creation and upload require separate explicit authorization; only then can the release-asset verifier run.
-- Evidence dependency: final S4 R1/R3/R4 claims wait for the coordinated Anthracite implementation and independent review candidate.
+- Evidence dependency: final S4 R1/R3/R4 claims wait for the coordinated Anthracite implementation and independent review candidate after its deliberate correction-release upgrade.
+- Replan completed: required independent opinions satisfied (2/2); no unresolved product, authority, or visual-direction question remains. The correction is planned, not implemented.
 - Bounded-phase next action: create and verify the immutable local candidate from the committed source; no remote action is authorized.
 
 ## Review Handoff Candidate

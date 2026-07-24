@@ -16,6 +16,8 @@ AnthraciteMD is ready to become the first canonical consumer. Its real authentic
 - Require applications to preserve product behavior, identity, API/state ownership, responsive orchestration, and local verification rather than mechanically replacing every component.
 - Add or refine package/release checks needed to prove the uploaded archive is the exact candidate and that a remote-archive consumer installs without repository access.
 - Link the final guide to an immutable AnthraciteMD adoption reference after that Change is implemented and reviewed.
+- Promote AnthraciteMD and confirmed multiple-consumer demand into a UIF-001/S4 correction: when controlled rename is supplied, `DocumentHeader` makes the visible document title the accessible rename entry point instead of adding a separate Rename action; `EditorToolbar` places its owned Source/Rendered switch in the trailing/top-right control group alongside the established status/action ordering.
+- Preserve the application boundary: consumers still supply rename draft, permission/read-only state, validation, persistence callbacks, mode value, and mode callback. The library standardizes only the reusable visible interaction and toolbar composition.
 
 ## Target Repositories
 
@@ -30,7 +32,7 @@ AnthraciteMD is ready to become the first canonical consumer. Its real authentic
 ### Existing Epic Directory Updates
 
 - Update `docs/epics/uif-002-library-distribution-and-overrides/epic.md`.
-- Update `docs/epics/uif-001-copyable-interface-foundations/epic.md` only if real-consumer evidence changes a component/pattern behavior contract or verification gap; do not edit it merely to log adoption chronology.
+- Update `docs/epics/uif-001-copyable-interface-foundations/epic.md` to revise UIF-001/S4/R2's editor-work-surface interaction contract and its implementation/verification maps; this is a consumer-proven behavior correction, not adoption chronology.
 
 ## Epic Story Changes
 
@@ -47,6 +49,8 @@ AnthraciteMD is ready to become the first canonical consumer. Its real authentic
 - Confirmed: app-owned wrappers, semantic overrides, stable public slots/portal hooks, composition, and deliberate replacement remain the consumer boundary.
 - Confirmed: future applications should follow the same decision process, but package adoption remains optional when product/platform needs justify another approach.
 - Confirmed: canonical detail belongs in `docs/library-adoption.md`; workspace shared guidance may continue linking to it rather than duplicating a second migration manual.
+- Confirmed: title-initiated inline rename and trailing/top-right Source/Rendered control are shared editor-work-surface behaviors for multiple consumers, so UIF owns the public presentation and accessibility contract in its next release.
+- Confirmed: the existing immutable `v0.2.0` archive remains unchanged; consumers upgrade only after a subsequent verified UIF release is available.
 - Deferred: migrating other applications, automatic upgrades, codemods, registry publication, signed attestations, package splitting, React Native, non-React clients, and framework-specific adapters.
 - Assumptions: GitHub Releases remain available for public immutable-version assets and consumers use package managers that record archive integrity.
 - User decisions that shaped the Story/Requirement split: codify the reusable pattern; use pinned GitHub/archive distribution instead of npm for now; keep applications customizable and independently owned.
@@ -60,9 +64,9 @@ AnthraciteMD is ready to become the first canonical consumer. Its real authentic
 ## Impact
 
 - Product: application developers gain a proven path for adopting UI Foundations without surrendering product identity or behavior.
-- Code: package/release verification may gain archive identity/checksum or remote-consumer proof; public component APIs change only if consumer evidence demonstrates a missing general seam.
+- Code: package/release verification may gain archive identity/checksum or remote-consumer proof; DocumentHeader and EditorToolbar behavior, stories, tests, and public contract documentation gain the smallest consumer-proven correction without accepting product persistence or editor state.
 - Tests: exact archive/asset identity, clean remote-archive consumption, wrapper and override proof, migration-guide contract checks where practical, and Anthracite consumer evidence.
-- Docs: UIF-002, adoption guide, README, AGENTS/release guidance as needed, changelog, Proposed ADR, and coordinated evidence links.
+- Docs: UIF-001/S4, UIF-002, adoption guide, README, AGENTS/release guidance as needed, changelog, Proposed ADR, and coordinated evidence links.
 - ADRs: propose `docs/adrs/2026-07-23-distribute-pre-registry-releases-as-verified-archives.md`; accept after exact release-asset proof.
 
 ## Release Communication Impact
