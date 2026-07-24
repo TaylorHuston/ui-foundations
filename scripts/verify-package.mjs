@@ -15,7 +15,7 @@ const packRoot = requestedPackRoot
 const consumerRoot = join(temporaryRoot, "consumer");
 const retainTemporaryRoot =
   process.env.UI_FOUNDATIONS_KEEP_PACKAGE_TEMP === "1";
-await mkdir(packRoot);
+await mkdir(packRoot, { recursive: true });
 
 const expectedExports = {
   ".": {

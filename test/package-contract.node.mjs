@@ -31,7 +31,7 @@ test("verifies the exact packed package contract in an isolated consumer", () =>
 
 test("retains and identifies an exact release-candidate archive on request", () => {
   const candidateRoot = mkdtempSync(join(tmpdir(), "ui-foundations-candidate-"));
-  const outputDirectory = join(candidateRoot, "archive");
+  const outputDirectory = candidateRoot;
 
   try {
     const result = spawnSync(process.execPath, ["scripts/verify-package.mjs"], {
