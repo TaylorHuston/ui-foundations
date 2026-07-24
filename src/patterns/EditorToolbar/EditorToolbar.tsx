@@ -4,12 +4,14 @@ import type { FoundationStyle } from '../../components/types'
 import styles from './EditorToolbar.module.css'
 
 export type EditorMode = 'source' | 'rendered'
+export type EditorModePlacement = 'center' | 'trailing'
 
 export interface EditorToolbarProps {
   className?: string
   center?: ReactNode
   leadingActions?: ReactNode
   mode?: EditorMode
+  modePlacement?: EditorModePlacement
   onModeChange?: (mode: EditorMode) => void
   status?: ReactNode
   style?: FoundationStyle
@@ -42,12 +44,15 @@ export function EditorToolbar({
   className,
   leadingActions,
   mode,
+  modePlacement = 'trailing',
   onModeChange,
   status,
   style,
   trailingActions,
 }: EditorToolbarProps) {
-  const modeControl = center ?? (mode && onModeChange ? <EditorModeSwitch mode={mode} onModeChange={onModeChange} /> : null)
+  const modeControl = mode && onModeChange ? <EditorModeSwitch mode={mode} onModeChange={onModeChange} /> : null
+  const centerControl = center ?? (modePlacement === 'center' ? modeControl : null)
+  const trailingModeControl = center ? null : modePlacement === 'trailing' ? modeControl : null
 
   return (
     <div
@@ -58,8 +63,9 @@ export function EditorToolbar({
       style={style}
     >
       <div className={styles.actions} data-slot="editor-toolbar-leading">{leadingActions}</div>
-      <div className={styles.center} data-slot="editor-toolbar-center">{modeControl}</div>
+      <div className={styles.center} data-slot="editor-toolbar-center">{centerControl}</div>
       <div className={styles.trailing} data-slot="editor-toolbar-trailing">
+        {trailingModeControl}
         {status ? <div className={styles.status} data-slot="editor-toolbar-status">{status}</div> : null}
         {trailingActions}
       </div>

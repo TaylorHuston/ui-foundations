@@ -8,10 +8,13 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- `EditorToolbar.modePlacement`, with a trailing Source/Rendered control as the default and an explicit centered legacy-composition option.
+
 - A pre-registry archive handoff contract: the exact `npm pack` candidate can be retained with npm integrity and SHA-256 identity, and a separately authorized HTTPS release asset can later be compared byte-for-byte and installed by URL in a clean locked consumer.
 
 ### Changed
 
+- `DocumentHeader` now uses its visible title as the accessible controlled-rename trigger when `rename` is supplied; the application still owns rename state, validation, and persistence.
 - Adoption guidance now requires an immutable GitHub Release asset URL and lockfile integrity after release authorization; local paths, workspace links, branch URLs, and source-build fallbacks are not consumer distribution paths.
 
 ## [0.2.0] - 2026-07-23

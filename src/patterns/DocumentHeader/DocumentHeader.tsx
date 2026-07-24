@@ -1,4 +1,4 @@
-import { useId, type FormEvent, type ReactNode } from 'react'
+import { useEffect, useId, useRef, type FormEvent, type ReactNode } from 'react'
 import { Button } from '../../components/Button/Button'
 import type { FoundationStyle } from '../../components/types'
 import styles from './DocumentHeader.module.css'
@@ -39,7 +39,15 @@ export function DocumentHeader({
   trailingActions,
 }: DocumentHeaderProps) {
   const generatedId = useId()
+  const input = useRef<HTMLInputElement>(null)
   const inputId = `${generatedId}-filename`
+
+  useEffect(() => {
+    if (rename?.editing) {
+      input.current?.select()
+      if (input.current) input.current.scrollLeft = 0
+    }
+  }, [rename?.editing])
   const errorId = rename?.error ? `${generatedId}-error` : undefined
 
   function submitRename(event: FormEvent<HTMLFormElement>) {
@@ -64,10 +72,18 @@ export function DocumentHeader({
                 aria-describedby={errorId}
                 aria-invalid={rename.error ? true : undefined}
                 autoComplete="off"
+                autoFocus
                 className={styles.input}
                 disabled={rename.pending}
                 id={inputId}
                 onChange={(event) => rename.onChange(event.target.value)}
+                ref={input}
+                onKeyDown={(event) => {
+                  if (event.key === 'Escape') {
+                    event.preventDefault()
+                    rename.onCancel()
+                  }
+                }}
                 value={rename.value}
               />
               <Button pending={rename.pending} pendingLabel="Saving name…" size="toolbar" type="submit">Save name</Button>
@@ -77,8 +93,7 @@ export function DocumentHeader({
           </form>
         ) : (
           <div className={styles.titleRow} data-slot="document-header-title">
-            <h1 title={title}>{title}</h1>
-            {rename ? <Button onClick={rename.onStart} size="toolbar" variant="ghost">Rename</Button> : null}
+            <h1 title={title}>{rename ? <button className={styles.titleButton} onClick={rename.onStart} type="button">{title}</button> : title}</h1>
           </div>
         )}
         {readOnlyReason && !rename?.editing ? <p className={styles.reason} data-slot="document-header-read-only">{readOnlyReason}</p> : null}

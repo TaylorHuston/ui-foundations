@@ -75,7 +75,7 @@ describe('workbench pattern references', () => {
   it('exposes text-first editor modes and delegates controlled changes', () => {
     const onModeChange = vi.fn()
     const onValueChange = vi.fn()
-    render(
+    const { rerender } = render(
       <>
         <EditorToolbar mode="source" onModeChange={onModeChange} status="Saved" />
         <SegmentedControl
@@ -90,6 +90,10 @@ describe('workbench pattern references', () => {
       </>,
     )
 
+    const toolbar = screen.getByRole('toolbar', { name: 'Editor controls' })
+    const modeSwitch = screen.getByRole('group', { name: 'Editor view' })
+    expect(toolbar.querySelector('[data-slot="editor-toolbar-trailing"]')).toContainElement(modeSwitch)
+    expect(toolbar.querySelector('[data-slot="editor-toolbar-center"]')).not.toContainElement(modeSwitch)
     expect(screen.getByRole('button', { name: 'Source' })).toHaveAttribute('aria-pressed', 'true')
     fireEvent.click(screen.getByRole('button', { name: 'Rendered' }))
     expect(onModeChange).toHaveBeenCalledWith('rendered')
@@ -97,9 +101,13 @@ describe('workbench pattern references', () => {
     expect(screen.getByRole('button', { name: 'Comfortable' })).toHaveAttribute('aria-pressed', 'true')
     fireEvent.click(screen.getByRole('button', { name: 'Compact' }))
     expect(onValueChange).not.toHaveBeenCalled()
+
+    rerender(<EditorToolbar mode="source" modePlacement="center" onModeChange={onModeChange} status="Saved" />)
+    const centeredToolbar = screen.getByRole('toolbar', { name: 'Editor controls' })
+    expect(centeredToolbar.querySelector('[data-slot="editor-toolbar-center"]')).toContainElement(screen.getByRole('group', { name: 'Editor view' }))
   })
 
-  it('delegates inline document-name editing through visible actions', () => {
+  it('delegates inline document-name editing through visible actions', async () => {
     const onRename = vi.fn()
 
     function HeaderHarness() {
@@ -122,15 +130,23 @@ describe('workbench pattern references', () => {
     }
 
     const { rerender } = render(<HeaderHarness />)
-    fireEvent.click(screen.getByRole('button', { name: 'Rename' }))
-    const filename = screen.getByRole('textbox', { name: 'Filename' })
+    const renameTitle = screen.getByRole('button', { name: 'Session 12.md' })
+    fireEvent.click(renameTitle)
+    const filename = screen.getByRole('textbox', { name: 'Filename' }) as HTMLInputElement
+    await waitFor(() => expect(filename).toHaveFocus())
+    expect(filename.selectionStart).toBe(0)
+    expect(filename.selectionEnd).toBe(filename.value.length)
+    expect(screen.queryByRole('button', { name: 'Rename' })).not.toBeInTheDocument()
     fireEvent.change(filename, { target: { value: 'Session 13.md' } })
-    fireEvent.click(screen.getByRole('button', { name: 'Save name' }))
+    fireEvent.submit(filename.closest('form')!)
     expect(onRename).toHaveBeenCalledWith('Session 13.md')
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+    fireEvent.keyDown(filename, { key: 'Escape' })
+    expect(await screen.findByRole('button', { name: 'Session 12.md' })).toBeInTheDocument()
 
     rerender(<DocumentHeader readOnlyReason="This document has a protected filename." title="tasks.md" />)
     expect(screen.queryByRole('button', { name: 'Rename' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'tasks.md' })).not.toBeInTheDocument()
     expect(screen.getByText('This document has a protected filename.')).toBeInTheDocument()
   })
 

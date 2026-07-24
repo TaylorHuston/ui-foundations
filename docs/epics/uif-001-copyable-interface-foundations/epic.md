@@ -3,8 +3,8 @@ schema: sdd-epic-v2
 id: UIF-001
 status: active
 created: 2026-07-17
-modified: 2026-07-23
-last_verified: 2026-07-23
+modified: 2026-07-24
+last_verified: 2026-07-24
 stories:
   - S1
   - S2
@@ -52,7 +52,7 @@ Application developers can use a coherent CSS baseline and tested React componen
 | S1 | implemented | verified | Adopt the CSS foundation. | 2026-07-17 | Canonical contract is enforced by `scripts/check.mjs`. |
 | S2 | implemented | verified | Use accessible React components. | 2026-07-22 | Native controls, authentication, and feedback components. |
 | S3 | implemented | verified | Use behavior-heavy primitives. | 2026-07-22 | Base UI-backed overlay and selection components remain pre-1.0. |
-| S4 | implemented | verified | Compose familiar workbench patterns. | 2026-07-22 | Editor engines, optional side regions, responsive navigation, and persistence remain application-controlled. |
+| S4 | implemented | verified | Compose familiar workbench patterns. | 2026-07-24 | Editor engines, optional side regions, responsive navigation, persistence, and rename/mode state remain application-controlled. |
 
 ## Stories
 
@@ -297,8 +297,8 @@ The system SHALL provide Tabs, Checkbox, and Switch references with labeled, con
 Implementation: implemented
 Verification: verified
 Created: 2026-07-17
-Modified: 2026-07-22
-Last verified: 2026-07-22
+Modified: 2026-07-24
+Last verified: 2026-07-24
 
 As an application developer, I want reusable workbench patterns, so that recurring navigation and editing layouts begin from consistent, adaptable structures.
 
@@ -327,18 +327,25 @@ The system SHALL provide a generic TreeView behavior reference plus FileTree and
 
 ##### Requirement R2: Editor Work Surface Reference
 
-The system SHALL provide a text-first SegmentedControl, EditorToolbar, DocumentHeader, and EditorSurface composition for Source and Rendered modes, semantic commands, inline filename editing, operation and recovery states, stable editor-region slots, and application-owned behavior.
+The system SHALL provide a text-first SegmentedControl, EditorToolbar, DocumentHeader, and EditorSurface composition for trailing or deliberately centered Source/Rendered modes, semantic commands, title-initiated controlled inline filename editing, operation and recovery states, stable editor-region slots, and application-owned behavior.
 
 ###### Scenario R2-S1: Change Editor Presentation
 
 - WHEN a user selects Source or Rendered
-- THEN the selected mode is exposed and the consuming application receives the requested mode.
+- THEN the selected mode is exposed and the consuming application receives the requested mode
+- AND the default library mode switch is first in the right-aligned trailing group before routine status and caller-supplied trailing actions, while deliberate center placement remains supported.
 
 ###### Scenario R2-S2: Edit A Document Name
 
-- WHEN a user enters document-name editing
-- THEN the current name remains labeled and editable
-- AND visible Save name and Cancel actions delegate the result without owning rename validation or persistence.
+- WHEN a consumer supplies controlled rename and a user activates the visible document title by pointer or keyboard
+- THEN the labeled filename input receives focus and remains editable
+- AND Enter submits the rename form, Escape cancels, and visible Save name and Cancel actions delegate the result without owning rename validation or persistence.
+
+###### Scenario R2-S5: Preserve A Static Or Read-Only Document Identity
+
+- WHEN controlled rename is absent or a consumer presents a read-only reason
+- THEN the title remains a noninteractive heading
+- AND no redundant Rename action is rendered.
 
 ###### Scenario R2-S3: Present Save And Recovery State
 
@@ -417,8 +424,8 @@ The system SHALL provide a compact NavigationRail with named link and button des
 |---|---|---|---|
 | S4/R1-S1, S4/R1-S3 | `src/components/TreeView/TreeView.tsx#TreeView` | primary | Owns hierarchical disclosure, selection, roving focus, and Arrow/Home/End keyboard navigation. |
 | S4/R1-S1, S4/R1-S2 | `src/patterns/FileBrowser/FileBrowser.tsx#FileTree`; `src/patterns/FileBrowser/FileBrowser.tsx#FileBrowser` | primary | Add file/folder presentation and compose optional flat search and empty results over TreeView behavior. |
-| S4/R2-S1 | `src/components/SegmentedControl/SegmentedControl.tsx#SegmentedControl`; `src/patterns/EditorToolbar/EditorToolbar.tsx#EditorModeSwitch` | primary | Own text-first controlled single-selection and Source/Rendered delegation. |
-| S4/R2-S2 | `src/patterns/DocumentHeader/DocumentHeader.tsx#DocumentHeader` | primary | Presents document context and controlled inline filename editing with visible actions and caller-owned validation. |
+| S4/R2-S1 | `src/components/SegmentedControl/SegmentedControl.tsx#SegmentedControl`; `src/patterns/EditorToolbar/EditorToolbar.tsx#EditorToolbar`; `src/patterns/EditorToolbar/EditorToolbar.tsx#EditorModeSwitch` | primary | Own text-first controlled single-selection, canonical trailing mode placement, explicit center placement, and Source/Rendered delegation. |
+| S4/R2-S2, S4/R2-S5 | `src/patterns/DocumentHeader/DocumentHeader.tsx#DocumentHeader` | primary | Presents static/read-only document identity or controlled title-initiated inline filename editing, focus, keyboard actions, visible recovery actions, and caller-owned validation. |
 | S4/R2-S3 | `src/patterns/EditorToolbar/EditorToolbar.tsx#EditorToolbar`; `src/components/OperationStatus/OperationStatus.tsx#OperationStatus`; `src/components/InlineNotice/InlineNotice.tsx#InlineNotice` | primary | Compose one live operation state with persistent recovery messaging and caller-owned actions. |
 | S4/R2-S4 | `src/patterns/EditorSurface/EditorSurface.tsx#EditorSurface` | primary | Provides stable header, toolbar, notice, and editor slots with configurable content width and text inset. |
 | S4/R3-S1 | `src/patterns/ConfirmationDialog/ConfirmationDialog.tsx#ConfirmationDialog` | primary | Delegates destructive work only after explicit confirmation. |
@@ -438,11 +445,11 @@ The system SHALL provide a compact NavigationRail with named link and button des
 |---|---|---|---|
 | S4/R1-S1, S4/R1-S2 | `src/patterns/workbench-patterns.test.tsx#discloses, selects, searches, and reports an empty file result` | Disclosure, selection, flat search results, and no-results behavior work through semantic controls. | Passing 2026-07-22 |
 | S4/R1-S3 | `src/patterns/workbench-patterns.test.tsx#moves one tree tab stop with Arrow, Home, End, Left, and Right` | One roving Tab stop and hierarchical Arrow/Home/End movement remain available through the file-specific composition. | Passing 2026-07-22 |
-| S4/R2-S1 | `src/patterns/workbench-patterns.test.tsx#exposes text-first editor modes and delegates controlled changes` | Source/Rendered state and callback delegation are explicit and disabled segments reject activation. | Passing 2026-07-22 |
-| S4/R2-S2 | `src/patterns/workbench-patterns.test.tsx#delegates inline document-name editing through visible actions` | Rename, Save name, and Cancel stay visible while the application owns the resulting value and validation. | Passing 2026-07-22 |
+| S4/R2-S1 | `src/patterns/workbench-patterns.test.tsx#exposes text-first editor modes and delegates controlled changes` | Source/Rendered state delegates through the app callback; the default switch is trailing, status/actions remain ordered after it, and explicit center placement is supported. | Passing 2026-07-24 |
+| S4/R2-S2, S4/R2-S5 | `src/patterns/workbench-patterns.test.tsx#delegates inline document-name editing through visible actions` | Controlled title activation focuses the labeled filename input; form submit and Escape delegate only caller-owned submit/cancel behavior; static/read-only titles remain noninteractive. | Passing 2026-07-24 |
 | S4/R2-S3 | `src/patterns/workbench-patterns.test.tsx#composes one routine live status with an assertive recovery notice` | Live save state is not nested and conflict/error recovery remains text-labeled. | Passing 2026-07-22 |
 | S4/R2-S4 | `src/patterns/workbench-patterns.test.tsx#exposes stable editor regions and shared alignment variables` | Editor chrome and engine slots remain inspectable and configurable without Foundation ownership of editor behavior. | Passing 2026-07-22 |
-| S4/R2-S1, S4/R2-S2, S4/R2-S3, S4/R2-S4 | Browser inspection of Document Editing and Editor Recovery at `1440x900` and `390x844` | Text actions, rename controls, save and recovery states, long filenames, and editor alignment reflow without overlap or horizontal overflow. | Passing 2026-07-22 |
+| S4/R2-S1, S4/R2-S2, S4/R2-S3, S4/R2-S4, S4/R2-S5 | Browser inspection of Document Editing and Editor Recovery at `1440x900` and `390x844` | Title trigger, keyboard rename controls, trailing mode/status/action group, save and recovery states, long filenames, and editor alignment reflow without overlap or horizontal overflow. | Passing 2026-07-24 |
 | S4/R2-S1, S4/R2-S2, S4/R2-S3, S4/R2-S4 | Storybook accessibility inspection of Document Editing and Editor Recovery | Both stories report zero violations; Editor Recovery has one documented inconclusive check and twenty-two passes. | Passing 2026-07-22 |
 | S4/R3-S1, S4/R3-S2 | `src/patterns/workbench-patterns.test.tsx#delegates destructive work only after explicit confirmation`; `src/patterns/workbench-patterns.test.tsx#renders an empty state action only when supplied` | Cancellation does not delegate destruction, confirmation does, and actions remain optional. | Passing 2026-07-22 |
 | S4/R4-S1, S4/R4-S3 | `src/patterns/workbench-patterns.test.tsx#composes optional controlled side regions around a stable work surface` | Named regions expose stable slots while expanded, and controlled navigation and context regions leave the accessibility tree when collapsed. | Passing 2026-07-22 |
@@ -463,6 +470,7 @@ The system SHALL provide a compact NavigationRail with named link and button des
 - WorkbenchShell hides persistent side regions below its desktop breakpoint but intentionally does not choose the application's mobile Sheet, drawer, tab, or navigation state model.
 - ThreePaneShell remains a simpler reference for consumers without the inspector-capable rail layout.
 - FileBrowser search intentionally returns a flat result list while FileTree keeps the hierarchical keyboard contract separate and reusable.
+- `EditorToolbar.modePlacement` defaults to `trailing`; `center` remains an explicit pre-1.0 compatibility choice. `DocumentHeader.rename` makes only the supplied controlled title interactive and never assumes rename permission or persistence.
 
 ## Cross-Story Concerns
 

@@ -64,6 +64,24 @@
   line-height: 1.25;
 }
 
+.titleButton {
+  display: block;
+  max-inline-size: 100%;
+  border: 0;
+  padding: 0;
+  overflow-wrap: anywhere;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+
+.titleButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
 .titleRow > :first-child {
   flex: 0 1 auto;
 }

@@ -83,7 +83,7 @@ Each React component is colocated with its CSS Module. Behavior components and w
 
 `EditorSurface` composes stable document-header, toolbar, notice, and editor-engine slots. Its `--editor-content-width` and `--editor-text-inset` properties align surrounding chrome with the readable document while allowing the consuming application to supply any editor implementation.
 
-`DocumentHeader` keeps document context and controlled inline renaming together. `EditorToolbar` accepts text-first command groups, a centered `SegmentedControl` mode switch, one operation-status region, and trailing actions. Routine dirty, saving, saved, and read-only feedback belongs in `OperationStatus`; conflicts and failures that require a decision belong in persistent `InlineNotice` compositions with visible actions.
+`DocumentHeader` keeps document context and controlled inline renaming together: supplying `rename` makes the visible title the accessible edit trigger, while the application retains draft, validation, persistence, and permission policy. `EditorToolbar` accepts text-first command groups, a trailing Source/Rendered switch by default, one operation-status region, and trailing actions; consumers can opt into centered mode placement for deliberate legacy composition. Routine dirty, saving, saved, and read-only feedback belongs in `OperationStatus`; conflicts and failures that require a decision belong in persistent `InlineNotice` compositions with visible actions.
 
 CodeMirror or another editor engine, Markdown parsing and decoration, exact-source rules, undo history, persistence, autosave, revision identity, and navigation remain application-owned. The Foundation reference standardizes only the visible work-surface contract.
 
