@@ -2,7 +2,7 @@
 
 UI Foundations is a pre-release, versioned CSS and React library for consistent application interfaces. It captures recurring interface decisions without introducing a utility framework, mandatory brand identity, or application architecture. And, most important, NO TAILWIND FILLED HTML.
 
-Current public baseline: **0.3.0**. See the [changelog](./CHANGELOG.md) for release notes.
+Current public baseline: **0.3.1**. See the [changelog](./CHANGELOG.md) for release notes.
 
 ## Adoption Model
 

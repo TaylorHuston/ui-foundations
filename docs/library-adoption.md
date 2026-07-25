@@ -13,7 +13,7 @@ Registry publication is not active. A local `npm pack` archive is only a maintai
 After a separately authorized GitHub Release attaches the exact verified archive, consumers install the immutable versioned asset URL and commit their lockfile. No release asset exists until that authorization and upload complete.
 
 ```sh
-npm install "https://github.com/TaylorHuston/ui-foundations/releases/download/v0.3.0/taylorhuston-ui-foundations-0.3.0.tgz"
+npm install "https://github.com/TaylorHuston/ui-foundations/releases/download/v0.3.1/taylorhuston-ui-foundations-0.3.1.tgz"
 # Commit the resulting package-lock.json (or equivalent lockfile) with its recorded integrity.
 ```
 
@@ -25,8 +25,8 @@ Maintainers retain one candidate while running the existing package gate, then v
 UI_FOUNDATIONS_PACKAGE_OUTPUT_DIRECTORY=/private/tmp/ui-foundations-candidate \
   npm run check:package
 
-UI_FOUNDATIONS_CANDIDATE_ARCHIVE=/private/tmp/ui-foundations-candidate/taylorhuston-ui-foundations-0.3.0.tgz \
-UI_FOUNDATIONS_RELEASE_ASSET_URL="https://github.com/TaylorHuston/ui-foundations/releases/download/v0.3.0/taylorhuston-ui-foundations-0.3.0.tgz" \
+UI_FOUNDATIONS_CANDIDATE_ARCHIVE=/private/tmp/ui-foundations-candidate/taylorhuston-ui-foundations-0.3.1.tgz \
+UI_FOUNDATIONS_RELEASE_ASSET_URL="https://github.com/TaylorHuston/ui-foundations/releases/download/v0.3.1/taylorhuston-ui-foundations-0.3.1.tgz" \
   node scripts/verify-release-asset.mjs
 ```
 

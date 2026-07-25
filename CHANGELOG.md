@@ -6,6 +6,12 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-07-24
+
+### Fixed
+
+- `DocumentHeader` retains the original final extension while a controlled consumer clears and replaces the editable basename.
+
 ## [0.3.0] - 2026-07-24
 
 ### Added

@@ -52,16 +52,22 @@ export function DocumentHeader({
 }: DocumentHeaderProps) {
   const generatedId = useId()
   const input = useRef<HTMLInputElement>(null)
+  const extensionRef = useRef('')
   const inputId = `${generatedId}-filename`
-  const { extension, name } = splitFilename(rename?.value ?? title)
+  const filenameParts = splitFilename(rename?.value ?? title)
+  const extension = rename?.editing ? extensionRef.current || filenameParts.extension : filenameParts.extension
+  const name = extension && rename?.value?.endsWith(extension)
+    ? rename.value.slice(0, -extension.length)
+    : filenameParts.name
   const extensionId = extension ? `${generatedId}-extension` : undefined
 
   useEffect(() => {
     if (rename?.editing) {
+      extensionRef.current = filenameParts.extension
       input.current?.select()
       if (input.current) input.current.scrollLeft = 0
     }
-  }, [rename?.editing])
+  }, [filenameParts.extension, rename?.editing])
   const errorId = rename?.error ? `${generatedId}-error` : undefined
   const inputDescription = [extensionId, errorId].filter(Boolean).join(' ') || undefined
 
