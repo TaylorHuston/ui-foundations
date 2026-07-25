@@ -5,11 +5,11 @@ status: in_progress
 
 ## Resume Here
 
-- Last completed action: committed UIF-001/S4/R2 correction `d3f5e9ca1f1ef63ed58a4e5d2e9a46a8be8608c9`; fresh `npm run check:all` passes (34 tests, package consumer, Storybook build), as do scoped validation and prospective integration-tree creation. The resulting local pack has different bytes but still declares immutable released version `0.2.0`, so it is evidence only, not a releasable archive.
-- Next action: user must approve the next version increment before a new exact archive can be retained/released and consumers can upgrade; no tag, release, asset upload, or publication is authorized.
+- Last completed action: prepared the `0.3.0` release source `4d2f41a`; `npm run check:all` passes (34 tests, package consumer, Storybook build), and retained candidate `taylorhuston-ui-foundations-0.3.0.tgz` has SHA-256 `8e550ee8be295184afec67d8a9fd884640b7968b1e287bb2f9b92104b5b10d7b` and npm integrity `sha512-XYAdK9Mv1QWk6Tq7IYYyvJiIe6bUvSblVZahHQZvQJPIZ+aMrsdSKukWbCijNDIuU+EaNbMiZbATJTxgKIVueQ==`.
+- Next action: create the explicitly authorized `v0.3.0` GitHub Release from the retained archive, verify the uploaded URL byte-for-byte, then upgrade AnthraciteMD through its app-owned wrapper.
 - Active branch/ref: `change/consumer-adoption-pattern` from `develop@e4bcbff`.
-- Expected dirty files: active Change artifacts plus the current UIF-001/S4/R2 implementation/test/story/README/changelog surfaces; preserve unrelated files.
-- Known blockers: no v0.2.0 tag/GitHub Release/asset exists; remote creation/upload requires separate explicit authorization. Consumer upgrade proof waits for a later verified correction release, but it does not block UIF source/test/story implementation.
+- Expected dirty files: only this evidence reconciliation until committed; preserve unrelated files.
+- Known blockers: none for the authorized UIF release; Anthracite independent review and its manual confirmation remain required before application integration/closeout.
 
 ## Bounded Phase 1: Local Candidate Preparation
 
@@ -91,7 +91,7 @@ status: in_progress
 |---|---|---|---|---|---|
 | 2026-07-23 | Planning and distribution decision | `sdd-change`, `sdd-adr`, building-components guidance | private Change; Proposed ADR | Planned; implementation not started | `develop@e4bcbff` baseline |
 | 2026-07-24 | Bounded local archive contract | `sdd-apply`, TDD guidance | package verifier, release-asset verifier, package contract tests, UIF-002/S3-S4, README/adoption/changelog, Proposed ADR | Added retained candidate identity plus release-scoped byte/URL/lockfile proof; no component API, publication guard, export, or peer ownership change. | `23b01e8930f18080c1cf66351feeb46f21e96b13` |
-| 2026-07-24 | UIF-001/S4/R2 shared editor-work-surface correction | TDD, user screenshot, direct Storybook browser inspection | `DocumentHeader`, `EditorToolbar`, workbench tests/story, UIF-001, README, changelog | Replaced the duplicate Rename action with accessible controlled-title activation, focus/selection and Escape cancel; defaulted mode control to the trailing group with explicit `center` placement. Consumer state, policy, validation, and persistence remain external. | `d3f5e9ca1f1ef63ed58a4e5d2e9a46a8be8608c9` |
+| 2026-07-24 | UIF-001/S4/R2 shared editor-work-surface correction | TDD, user screenshot, direct Storybook browser inspection | `DocumentHeader`, `EditorToolbar`, workbench tests/story, UIF-001, README, changelog | Replaced the duplicate Rename action with accessible controlled-title activation, focus/selection and Escape cancel; the basename is editable while the final extension is preserved. The Markdown reference composes transparent Source/Rendered, autosave, and labeled overflow controls in the header, without Markdown-formatting or dedicated document Save now actions. Consumer state, policy, validation, and persistence remain external. | `d7533da3a41a055f90d3f5b2304619c7192db142` |
 
 ## Verification Ledger
 
@@ -110,7 +110,7 @@ status: in_progress
 | 2026-07-23 | Codify the reusable pattern as part of moving Anthracite to UI Foundations. | product/architecture direction | Promoted migration-guide candidate in planned UIF-002/S4 and coordinated Changes. | resolved in planning |
 | 2026-07-23 | Use a pinned GitHub/archive dependency instead of npm for now. | distribution decision | Selected exact GitHub Release asset plus lock integrity and separate release authority. | resolved in planning |
 | 2026-07-24 | Multiple consumers need title-initiated inline rename and a trailing/top-right Source/Rendered control. | reusable interaction/contract change | Reopened the active Change for a UIF-001/S4/R2 correction. Preserve application rename/mode state, persistence, validation, policy, and responsive ownership; do not mutate `v0.2.0`. | UIF implementation complete; next-version release/consumer upgrade pending |
-| 2026-07-24 | UIF source correction completed. | implementation outcome | Focused, aggregate, Storybook-rendered, package-consumer, traceability, and SDD checks pass; user must approve next version before archive/release/consumer-upgrade work. | pending version decision |
+| 2026-07-24 | User tested the UIF workbench reference and approved release/application adoption as `0.3.0`. | manual acceptance / release authorization | Corrected the name-only edit, Markdown/autosave command set, transparent mode switch, and header-level mode/overflow composition; authorized exact tag, GitHub Release, archive upload, and Anthracite upgrade. | user confirmed |
 
 ## Planning Updates
 
@@ -123,7 +123,7 @@ status: in_progress
 | Date | Feedback / Discovery | Classification | Reference / Target | Preserve / Change / Non-Goals | Artifact Updates | Next Apply Starting Point |
 |---|---|---|---|---|---|---|
 | 2026-07-23 | Anthracite is visually aligned but behaviorally richer than generic examples. | experience refinement | Foundation Library Overrides/Workbench and Anthracite Storybook | Preserve neutral defaults and app identity; codify selective adoption/divergence; no Foundation redesign. | design.md and S4 behavior | Use final consumer evidence, not source copying, to refine guide. |
-| 2026-07-24 | User confirmed multiple consumers need title-initiated rename and trailing/top-right Source/Rendered placement. | shared interaction revision | `DocumentHeader.rename` and `EditorToolbar` | Replace the duplicate idle Rename action with a keyboard-accessible title trigger; make trailing mode placement canonical with explicit center opt-in; preserve visible edit actions and all app-owned state/policy. | proposal.md, design.md, tasks.md; UIF-001 deferred to Apply | Implement and verify the UIF-only correction before consumer upgrades. |
+| 2026-07-24 | User tested the workbench reference: edit only the basename, remove Markdown formatting and document Save now controls, remove opaque mode-switch background, and place mode/overflow controls on the filename row. | accepted experience refinement | `DocumentHeader`, exported `EditorModeSwitch`, Markdown reference | Preserve controlled callbacks, immutable final extension, autosave status, keyboard/focus behavior, and app authority; compose header controls without changing generic consumer ownership. | design.md, UIF-001, README, changelog, source/test/story | Commit exact correction, rebuild candidate, release `0.3.0`, then deliberately upgrade Anthracite. |
 
 ## Implementation Risk And Confirmation Matrix
 
@@ -133,7 +133,7 @@ status: in_progress
 | UIF-002/S4 R1 classification | Guide preserves stronger application behavior and names deliberate divergence. | Mechanical replace-all recipe or Anthracite overfitting. | Classification review against actual consumer mappings and product ownership. | Pending consumer implementation. | known |
 | UIF-002/S4 R3 wrapper/public contract | Consumers need only documented exports/tokens/slots/portal hooks/composition and local wrappers. | Direct imports spread, generated selectors, deep DOM dependence, or product props enter package. | Import/selector inventory, wrapper replacement proof, public API review, rendered portal/identity evidence. | Pending. | known |
 | UIF-002/S4 R4 evidence | Reusable claim links exact reviewed consumer behavior and rendered evidence. | Trusting broad commands, stale screenshots, private planning, or mutable branch links. | Inspect exact tests/assertions, commits, screenshots/runtime, docs, and public links. | Pending Anthracite handoff. | known |
-| UIF-001/S4 editor correction | Visible title starts controlled rename; Source/Rendered appears in the trailing/top-right group without displacing status/actions or absorbing product policy. | Mouse-only title trigger, focus loss, hidden save/cancel/error state, action-order collision, narrow overflow, or application state entering UIF. | Focused behavioral tests, desktop/narrow rendered inspection, public type/API review, and post-release consumer upgrade proof. | Tests prove title button, focus/selection, Escape, static title, default trailing/explicit center placement; direct Storybook desktop/narrow and interactive inspection show no overlap/errors. Consumer upgrade remains release-blocked. | partial: implementation proved, external upgrade pending |
+| UIF-001/S4 editor correction | Visible title starts controlled name-only rename; the final extension stays fixed; the Markdown reference puts transparent mode, autosave, and overflow controls on the header row without absorbing product policy. | Mouse-only title trigger, focus loss, extension mutation, hidden save/cancel/error state, action-order collision, narrow overflow, or application state entering UIF. | Focused behavioral tests, desktop/narrow rendered inspection, public type/API review, and post-release consumer upgrade proof. | Tests prove title button, basename selection, preserved `.md` callback, Escape, static title, default trailing/explicit center placement; direct Storybook desktop/narrow and interactive inspection show header controls, no opaque switch background, no overlap/errors. | partial: implementation proved, external upgrade pending |
 | Release authority | Ordinary Apply never creates remote tag/release/asset or disables npm guard. | Unauthorized remote mutation/publication. | Manifest guard, command ledger, explicit authorization before remote step. | No remote state created during planning. | proved for planning |
 
 ## Pattern Parity Matrix
@@ -190,8 +190,8 @@ Not applicable to this repository's new behavior: the Change documents and verif
 
 ## Manual UI Confirmation
 
-- Status: pending user
-- App URL / route: run `npm run storybook`, then open `Patterns/Workbench/Document Editing`; final Anthracite routes wait for its deliberate correction-release upgrade.
+- Status: user confirmed
+- App URL / route: Foundation `Patterns/Workbench/Document Editing` confirmed; final Anthracite routes wait for its deliberate correction-release upgrade.
 - Required setup or test data: current Foundation checkout; no archive or service credential is needed for this UIF interaction check.
 - Steps for the user: at desktop and narrow widths, activate the document title by pointer and keyboard, confirm the filename is focused/selected with visible Save name/Cancel, press Escape to return, and confirm Source/Rendered is in the right-side desktop control group without colliding with status/actions.
 - Expected result: Foundation remains neutral; controlled rename and mode mechanics are shared while app authority remains external; narrow controls wrap without clipping or horizontal overflow.
@@ -203,12 +203,12 @@ Not applicable to this repository's new behavior: the Change documents and verif
 |---|---|---|---|---|---|---|---|
 | Foundation Library Overrides | 1440x900 and 390x844 | default/custom identity, action, field, notice, portal dialog | Existing public override contract remains clear, accessible, scoped, and overflow-free. | Foundation Storybook/browser | pending | pending | pending |
 | Generic release-asset consumer | desktop and constrained | default, wrapper, shell, portaled overlay | Remote archive renders the same public contract as local candidate without source access. | clean consumer/browser | pending | pending | pending |
-| Foundation DocumentHeader/EditorToolbar | 1440x900 and 390x844 | idle title trigger, keyboard entry, edit form, Source/Rendered, status/action ordering | Title is interactive only with controlled rename; focus/edit recovery is clear; mode is right-aligned and stays usable without overlap. | Foundation Storybook/browser | Directly inspected initial desktop/narrow plus desktop title-click edit screenshot. | No console/page errors; no relevant network failures. | passing |
+| Foundation DocumentHeader/EditorToolbar | 1440x900 and 390x844 | idle title trigger, keyboard entry, name-only edit with fixed suffix, transparent Source/Rendered, autosave/overflow header ordering | Title is interactive only with controlled rename; focus/edit recovery is clear; mode, status, and overflow share the identity row and stay usable without overlap. | Foundation Storybook/browser | Directly inspected desktop and narrow header-control plus interactive title-click screenshots. | No console/page errors; no relevant network failures. | passing |
 | Anthracite consumer | 1440x900, intermediate, and 390x844 | setup/auth, workbench/tree/editor, recovery, search, Settings/plugins/Assistant, overlays | App identity and behavior remain local while adopted mechanics work across representative states. | Anthracite Storybook/production browser | pending correction release and upgrade | pending | pending |
 
 ## Blockers / Open Questions
 
-- Stop condition: the correction changes public behavior but `package.json` still declares immutable released version `0.2.0`. User approval of a next version increment is required before retaining a new archive, tag, release asset, or consumer upgrade work; remote creation/upload also requires separate explicit authorization.
+- Release authorization: user approved `0.3.0`, exact tag/GitHub Release/archive upload, and the deliberate Anthracite upgrade. The archive verifier must still prove the uploaded URL is byte-identical before consumer installation.
 - Evidence dependency: final S4 R1/R3/R4 claims wait for the coordinated Anthracite implementation and independent review candidate after its deliberate correction-release upgrade.
 - Replan completed: required independent opinions satisfied (2/2); the UIF correction is implemented and verified locally, while version/release/consumer-upgrade work remains explicitly blocked.
 - Bounded-phase next action: request and record next-version intent; after authorization, update version/release communication, create and verify one immutable local candidate, and request separate remote release authorization. No remote action is currently authorized.
