@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Bold, FilePlus2, FileText, FolderSearch, Italic, Settings } from 'lucide-react'
+import { Ellipsis, FilePlus2, FileText, FolderSearch, Settings } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '../components/Button/Button'
+import { IconButton } from '../components/IconButton/IconButton'
 import { InlineNotice } from '../components/InlineNotice/InlineNotice'
 import { OperationStatus, type OperationPhase } from '../components/OperationStatus/OperationStatus'
 import { ConfirmationDialog } from './ConfirmationDialog/ConfirmationDialog'
 import { DocumentHeader } from './DocumentHeader/DocumentHeader'
 import { EditorSurface } from './EditorSurface/EditorSurface'
-import { EditorToolbar, type EditorMode } from './EditorToolbar/EditorToolbar'
+import { EditorModeSwitch, EditorToolbar, type EditorMode } from './EditorToolbar/EditorToolbar'
 import { EmptyState } from './EmptyState/EmptyState'
 import { FileBrowser, FileTree, type FileBrowserItem } from './FileBrowser/FileBrowser'
 import { NavigationRail, NavigationRailButton, NavigationRailLink } from './NavigationRail/NavigationRail'
@@ -99,7 +100,7 @@ function DocumentEditingReference() {
   return (
     <main className={styles.patternPage}>
       <h1>Document editing</h1>
-      <p className={styles.patternIntroduction}>A stable editor frame keeps document identity, commands, save state, notices, and the app-owned editor engine aligned.</p>
+      <p className={styles.patternIntroduction}>A stable editor frame keeps document identity, view mode, autosave state, notices, and the app-owned editor engine aligned.</p>
       <div className={styles.editorFrame}>
         <EditorSurface
           ariaLabel="Document editor"
@@ -122,23 +123,11 @@ function DocumentEditingReference() {
                 value: draftName,
               }}
               title={title}
-            />
-          )}
-          toolbar={(
-            <EditorToolbar
-              leadingActions={(
-                <>
-                  <Button onClick={markDirty} size="toolbar" variant="ghost"><Bold aria-hidden size={15} />Bold</Button>
-                  <Button onClick={markDirty} size="toolbar" variant="ghost"><Italic aria-hidden size={15} />Italic</Button>
-                </>
-              )}
-              mode={mode}
-              onModeChange={setMode}
-              status={<OperationStatus label={saveLabels[savePhase]} phase={savePhase} />}
               trailingActions={(
                 <>
-                  <Button onClick={() => setSavePhase('success')} size="toolbar">Save now</Button>
-                  <Button size="toolbar" variant="ghost">More actions</Button>
+                  <EditorModeSwitch mode={mode} onModeChange={setMode} />
+                  <OperationStatus label={saveLabels[savePhase]} phase={savePhase} />
+                  <IconButton label="More actions"><Ellipsis aria-hidden size={18} /></IconButton>
                 </>
               )}
             />
@@ -194,7 +183,6 @@ function EditorRecoveryReference() {
             <EditorToolbar
               center={<span className={styles.readOnlyLabel}>Read-only revision</span>}
               status={<OperationStatus label="Saved" phase="success" />}
-              trailingActions={<Button disabled size="toolbar">Save now</Button>}
             />
           )}
         >

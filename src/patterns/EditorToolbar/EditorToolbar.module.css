@@ -29,6 +29,11 @@
   justify-content: center;
 }
 
+.modeSwitch {
+  padding: 0;
+  background: transparent;
+}
+
 .status {
   overflow: hidden;
   color: var(--text-muted);

@@ -132,12 +132,14 @@ describe('workbench pattern references', () => {
     const { rerender } = render(<HeaderHarness />)
     const renameTitle = screen.getByRole('button', { name: 'Session 12.md' })
     fireEvent.click(renameTitle)
-    const filename = screen.getByRole('textbox', { name: 'Filename' }) as HTMLInputElement
+    const filename = screen.getByRole('textbox', { name: 'Name' }) as HTMLInputElement
     await waitFor(() => expect(filename).toHaveFocus())
+    expect(filename).toHaveValue('Session 12')
+    expect(screen.getByText('.md')).toHaveAttribute('data-slot', 'document-header-extension')
     expect(filename.selectionStart).toBe(0)
     expect(filename.selectionEnd).toBe(filename.value.length)
     expect(screen.queryByRole('button', { name: 'Rename' })).not.toBeInTheDocument()
-    fireEvent.change(filename, { target: { value: 'Session 13.md' } })
+    fireEvent.change(filename, { target: { value: 'Session 13' } })
     fireEvent.submit(filename.closest('form')!)
     expect(onRename).toHaveBeenCalledWith('Session 13.md')
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()

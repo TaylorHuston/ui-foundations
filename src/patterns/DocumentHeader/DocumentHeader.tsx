@@ -15,6 +15,18 @@ export interface DocumentRenameControl {
   value: string
 }
 
+function splitFilename(filename: string) {
+  const extensionStart = filename.lastIndexOf('.')
+  if (extensionStart <= 0 || extensionStart === filename.length - 1) {
+    return { extension: '', name: filename }
+  }
+
+  return {
+    extension: filename.slice(extensionStart),
+    name: filename.slice(0, extensionStart),
+  }
+}
+
 export interface DocumentHeaderProps {
   className?: string
   leadingActions?: ReactNode
@@ -41,6 +53,8 @@ export function DocumentHeader({
   const generatedId = useId()
   const input = useRef<HTMLInputElement>(null)
   const inputId = `${generatedId}-filename`
+  const { extension, name } = splitFilename(rename?.value ?? title)
+  const extensionId = extension ? `${generatedId}-extension` : undefined
 
   useEffect(() => {
     if (rename?.editing) {
@@ -49,6 +63,7 @@ export function DocumentHeader({
     }
   }, [rename?.editing])
   const errorId = rename?.error ? `${generatedId}-error` : undefined
+  const inputDescription = [extensionId, errorId].filter(Boolean).join(' ') || undefined
 
   function submitRename(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -66,26 +81,29 @@ export function DocumentHeader({
         {path ? <p className={styles.path} data-slot="document-header-path">{path}</p> : null}
         {rename?.editing ? (
           <form className={styles.rename} data-slot="document-header-rename" onSubmit={submitRename}>
-            <label className={styles.label} htmlFor={inputId}>{rename.label ?? 'Filename'}</label>
+            <label className={styles.label} htmlFor={inputId}>{rename.label ?? 'Name'}</label>
             <div className={styles.renameRow}>
-              <input
-                aria-describedby={errorId}
-                aria-invalid={rename.error ? true : undefined}
-                autoComplete="off"
-                autoFocus
-                className={styles.input}
-                disabled={rename.pending}
-                id={inputId}
-                onChange={(event) => rename.onChange(event.target.value)}
-                ref={input}
-                onKeyDown={(event) => {
-                  if (event.key === 'Escape') {
-                    event.preventDefault()
-                    rename.onCancel()
-                  }
-                }}
-                value={rename.value}
-              />
+              <div className={styles.nameField}>
+                <input
+                  aria-describedby={inputDescription}
+                  aria-invalid={rename.error ? true : undefined}
+                  autoComplete="off"
+                  autoFocus
+                  className={styles.input}
+                  disabled={rename.pending}
+                  id={inputId}
+                  onChange={(event) => rename.onChange(`${event.target.value}${extension}`)}
+                  ref={input}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Escape') {
+                      event.preventDefault()
+                      rename.onCancel()
+                    }
+                  }}
+                  value={name}
+                />
+                {extension ? <span className={styles.extension} data-slot="document-header-extension" id={extensionId}>{extension}</span> : null}
+              </div>
               <Button pending={rename.pending} pendingLabel="Saving name…" size="toolbar" type="submit">Save name</Button>
               <Button disabled={rename.pending} onClick={rename.onCancel} size="toolbar" variant="ghost">Cancel</Button>
             </div>

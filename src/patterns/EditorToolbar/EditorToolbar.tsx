@@ -31,6 +31,7 @@ export interface EditorModeSwitchProps {
 export function EditorModeSwitch({ mode, onModeChange }: EditorModeSwitchProps) {
   return (
     <SegmentedControl
+      className={styles.modeSwitch}
       label="Editor view"
       onValueChange={onModeChange}
       options={editorModes}

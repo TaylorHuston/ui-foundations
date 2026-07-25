@@ -16,8 +16,9 @@ This is an in-scope refinement of UIF-002/S4's evidence-driven public correction
 
 ### UIF-001/S4/R2 Planned Behavior Delta
 
-- **Mode control:** when `EditorToolbar` receives its supported `mode` and `onModeChange` pair without an explicit replacement `center`, its Source/Rendered switch SHALL render first in the right-aligned trailing group, followed by routine status and caller-supplied trailing actions. A typed opt-in center placement preserves deliberate legacy composition during the pre-1.0 transition. On constrained widths the group SHALL wrap or stack without overlap, while retaining labeled, keyboard-operable Source/Rendered controls.
-- **Rename trigger:** when `DocumentHeader` receives `rename`, its visible title SHALL be an accessible button that calls `rename.onStart`; no duplicate idle Rename action is rendered. When `rename` is absent, the title remains a heading without interactive affordance. On entering controlled editing, focus SHALL move to the labeled filename input; Enter submits only the rename form, Escape cancels, and visible Save name/Cancel, pending, validation error, and read-only presentation remain semantically intact.
+- **Mode control:** when `EditorToolbar` receives its supported `mode` and `onModeChange` pair without an explicit replacement `center`, its Source/Rendered switch SHALL render first in the right-aligned trailing group, followed by routine status and caller-supplied trailing actions. A typed opt-in center placement preserves deliberate legacy composition during the pre-1.0 transition. On constrained widths the group SHALL wrap or stack without overlap, while retaining labeled, keyboard-operable Source/Rendered controls. The Markdown editing reference instead composes the exported switch, autosave status, and accessible overflow action in `DocumentHeader.trailingActions`, on the same row as document identity; that switch has no opaque container background.
+
+- **Rename trigger:** when `DocumentHeader` receives `rename`, its visible title SHALL be an accessible button that calls `rename.onStart`; no duplicate idle Rename action is rendered. When `rename` is absent, the title remains a heading without interactive affordance. On entering controlled editing, focus SHALL move to the labeled name input; the final filename extension is shown outside that input and is preserved in every `onChange` value. Enter submits only the rename form, Escape cancels, and visible Save name/Cancel, pending, validation error, and read-only presentation remain semantically intact.
 - **Consumer boundary:** UIF does not infer whether renaming is permitted, mutate the draft, validate, persist, navigate, retry, or choose a source/rendered mode. Consumers retain every callback and decide whether to use the canonical placement or explicit supported override.
 
 ### Options Considered
@@ -174,7 +175,7 @@ Not verified yet.
 #### Planned Requirements And Scenarios
 
 - `S4/R2-S1` gains default trailing mode placement, explicit center opt-in, status/action ordering, and constrained-width behavior. Its focused proof must cover callback delegation, DOM/visual ordering, keyboard selection, explicit-center compatibility, and no narrow overlap.
-- `S4/R2-S2` gains title-button rename initiation, focus movement to the filename input, form-scoped Enter, Escape cancel, and static/read-only noninteractive identity when rename is absent. Focused proof must cover pointer and keyboard activation, pending/error/read-only states, and application-owned callbacks.
+- `S4/R2-S2` gains title-button rename initiation, focus movement to the editable basename input with an immutable visible final extension, form-scoped Enter, Escape cancel, and static/read-only noninteractive identity when rename is absent. The Markdown reference removes Markdown-formatting commands and a dedicated document Save now action; it shows the mode switch, autosave state, and labeled three-dot overflow action with the document header. Focused proof must cover pointer and keyboard activation, pending/error/read-only states, immutable extension callback values, and application-owned callbacks.
 
 #### Supersedes / Reconciles
 

@@ -14,7 +14,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- `DocumentHeader` now uses its visible title as the accessible controlled-rename trigger when `rename` is supplied; the application still owns rename state, validation, and persistence.
+- `DocumentHeader` now uses its visible title as the accessible controlled-rename trigger when `rename` is supplied, exposes only the basename for editing, and preserves its final filename extension in consumer callbacks; the application still owns rename state, validation, and persistence.
+- The Markdown editing reference composes transparent Source/Rendered controls, autosave status, and an accessible three-dot overflow action with document identity instead of Markdown-formatting commands or a dedicated document Save now action.
 - Adoption guidance now requires an immutable GitHub Release asset URL and lockfile integrity after release authorization; local paths, workspace links, branch URLs, and source-build fallbacks are not consumer distribution paths.
 
 ## [0.2.0] - 2026-07-23
