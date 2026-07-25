@@ -5,8 +5,8 @@ status: in_progress
 
 ## Resume Here
 
-- Last completed action: completed the UIF-001/S4/R2 editor-work-surface correction. `DocumentHeader` title activation enters controlled rename with focus, selection, Escape cancel, and visible form actions; `EditorToolbar` now defaults its mode switch into the trailing group and offers typed `modePlacement="center"` compatibility. Foundation Storybook rendered desktop/narrow and interactive rename evidence is directly inspected without console errors.
-- Next action: commit this verified UIF-only correction, then run the required exact package/archive candidate gate and complete remaining consumer/release evidence only within separately authorized boundaries.
+- Last completed action: committed UIF-001/S4/R2 correction `d3f5e9ca1f1ef63ed58a4e5d2e9a46a8be8608c9`; fresh `npm run check:all` passes (34 tests, package consumer, Storybook build), as do scoped validation and prospective integration-tree creation. The resulting local pack has different bytes but still declares immutable released version `0.2.0`, so it is evidence only, not a releasable archive.
+- Next action: user must approve the next version increment before a new exact archive can be retained/released and consumers can upgrade; no tag, release, asset upload, or publication is authorized.
 - Active branch/ref: `change/consumer-adoption-pattern` from `develop@e4bcbff`.
 - Expected dirty files: active Change artifacts plus the current UIF-001/S4/R2 implementation/test/story/README/changelog surfaces; preserve unrelated files.
 - Known blockers: no v0.2.0 tag/GitHub Release/asset exists; remote creation/upload requires separate explicit authorization. Consumer upgrade proof waits for a later verified correction release, but it does not block UIF source/test/story implementation.
@@ -91,7 +91,7 @@ status: in_progress
 |---|---|---|---|---|---|
 | 2026-07-23 | Planning and distribution decision | `sdd-change`, `sdd-adr`, building-components guidance | private Change; Proposed ADR | Planned; implementation not started | `develop@e4bcbff` baseline |
 | 2026-07-24 | Bounded local archive contract | `sdd-apply`, TDD guidance | package verifier, release-asset verifier, package contract tests, UIF-002/S3-S4, README/adoption/changelog, Proposed ADR | Added retained candidate identity plus release-scoped byte/URL/lockfile proof; no component API, publication guard, export, or peer ownership change. | `23b01e8930f18080c1cf66351feeb46f21e96b13` |
-| 2026-07-24 | UIF-001/S4/R2 shared editor-work-surface correction | TDD, user screenshot, direct Storybook browser inspection | `DocumentHeader`, `EditorToolbar`, workbench tests/story, UIF-001, README, changelog | Replaced the duplicate Rename action with accessible controlled-title activation, focus/selection and Escape cancel; defaulted mode control to the trailing group with explicit `center` placement. Consumer state, policy, validation, and persistence remain external. | commit pending |
+| 2026-07-24 | UIF-001/S4/R2 shared editor-work-surface correction | TDD, user screenshot, direct Storybook browser inspection | `DocumentHeader`, `EditorToolbar`, workbench tests/story, UIF-001, README, changelog | Replaced the duplicate Rename action with accessible controlled-title activation, focus/selection and Escape cancel; defaulted mode control to the trailing group with explicit `center` placement. Consumer state, policy, validation, and persistence remain external. | `d3f5e9ca1f1ef63ed58a4e5d2e9a46a8be8608c9` |
 
 ## Verification Ledger
 
@@ -100,14 +100,17 @@ status: in_progress
 | 2026-07-23 | Current package/release/consumer inspection | planning evidence | Package has an 80-file verified tarball path, ignored `dist`, no tag/release asset, explicit exports, and a compatible first consumer; direct Git install is not the verified artifact path. | Planning evidence only |
 | 2026-07-24 | `node --test test/package-contract.node.mjs` | focused automated | Four package-contract tests: existing exact archive/consumer proof and missing-export rejection, plus retained candidate identity and explicit remote-proof input guard. | passed (4/4) |
 | 2026-07-24 | `npm run check:package` then `UI_FOUNDATIONS_PACKAGE_OUTPUT_DIRECTORY=<candidate-directory> node scripts/verify-package.mjs` | exact committed package candidate | Commit `23b01e8930f18080c1cf66351feeb46f21e96b13` built, packed, inspected, installed in a clean consumer, typechecked, and production-built. Archive: `taylorhuston-ui-foundations-0.2.0.tgz`; SHA-256: `5b6bd77d0c47a4f4f3a15a79aededcf7108e95c3413c1e2bde5e1d95dcbc5d9b`. | passed; retained candidate is local-only |
-| 2026-07-24 | `npm test -- --run src/patterns/workbench-patterns.test.tsx`; `npm run check`; `npm run typecheck`; `npm test`; `npm run build:storybook`; direct Storybook Chromium inspection | UIF-001/S4/R2 focused, supporting, and rendered evidence | Title button focuses/selects the filename, form submit/Escape preserve caller callbacks, static/read-only titles remain noninteractive, default trailing/explicit center mode placement delegates Source/Rendered, and 34 tests plus Storybook build pass. Desktop/narrow and interactive title-click edit screenshots show no overlap or console/page errors. | passed; exact updated package candidate pending |
+| 2026-07-24 | `npm test -- --run src/patterns/workbench-patterns.test.tsx`; `npm run check`; `npm run typecheck`; `npm test`; `npm run build:storybook`; direct Storybook Chromium inspection | UIF-001/S4/R2 focused, supporting, and rendered evidence | Title button focuses/selects the filename, form submit/Escape preserve caller callbacks, static/read-only titles remain noninteractive, default trailing/explicit center mode placement delegates Source/Rendered, and 34 tests plus Storybook build pass. Desktop/narrow and interactive title-click edit screenshots show no overlap or console/page errors. | passed |
+| 2026-07-24 | `npm run check:all` on `d3f5e9c`; scoped `sdd validate`; prospective merge tree | aggregate candidate / structural / integration | CSS/type/full test/package-consumer/Storybook aggregate passed. The local `@taylorhuston/ui-foundations@0.2.0` pack hash is `f88651e1a6cc57823e979fa9fee16ea57659cc04cc4b0c6edad43eea376f99bb`, deliberately not retained or released because v0.2.0 is immutable. Validation has no errors and one existing UIF-001 large-Story warning; prospective tree `f8e20a042e599ece77073d5ab9fd2b67cdeb92a4` was created. | passing; next-version decision blocked |
+| 2026-07-24 | `sdd_orphan_audit.py . --format json --changed-from develop --epic UIF-001` | reverse traceability | Current diff candidates have no missing Epic references, traceability gaps, navigation gaps, likely orphans, stale tests, or stale code. | passing |
 ## Manual Feedback
 
 | Date | Feedback | Classification | Action / Artifact Updates | Status |
 |---|---|---|---|---|
 | 2026-07-23 | Codify the reusable pattern as part of moving Anthracite to UI Foundations. | product/architecture direction | Promoted migration-guide candidate in planned UIF-002/S4 and coordinated Changes. | resolved in planning |
 | 2026-07-23 | Use a pinned GitHub/archive dependency instead of npm for now. | distribution decision | Selected exact GitHub Release asset plus lock integrity and separate release authority. | resolved in planning |
-| 2026-07-24 | Multiple consumers need title-initiated inline rename and a trailing/top-right Source/Rendered control. | reusable interaction/contract change | Reopened the active Change for a UIF-001/S4/R2 correction. Preserve application rename/mode state, persistence, validation, policy, and responsive ownership; do not mutate `v0.2.0`. | planned |
+| 2026-07-24 | Multiple consumers need title-initiated inline rename and a trailing/top-right Source/Rendered control. | reusable interaction/contract change | Reopened the active Change for a UIF-001/S4/R2 correction. Preserve application rename/mode state, persistence, validation, policy, and responsive ownership; do not mutate `v0.2.0`. | UIF implementation complete; next-version release/consumer upgrade pending |
+| 2026-07-24 | UIF source correction completed. | implementation outcome | Focused, aggregate, Storybook-rendered, package-consumer, traceability, and SDD checks pass; user must approve next version before archive/release/consumer-upgrade work. | pending version decision |
 
 ## Planning Updates
 
@@ -176,9 +179,9 @@ Not applicable to this repository's new behavior: the Change documents and verif
 - Project-defined aggregate command or authoritative constituent source: `npm run check:all`.
 - Aggregate gate required before `in_review`: yes.
 - Trigger or project-policy reason: package/release contract, public docs/Epic behavior, possible public-surface correction, and cross-repository consumer evidence.
-- Exact committed source candidate: resolve during Apply before handoff.
-- Freshness and cache treatment: rebuild `dist`, create a fresh exact archive, install into fresh temporary consumers, avoid links/source imports, and keep remote-network checks release-scoped.
-- Aggregate result and meaningful execution/count evidence: pending implementation.
+- Exact committed source candidate: `d3f5e9ca1f1ef63ed58a4e5d2e9a46a8be8608c9` contains the UIF correction; the ledger-only reconciliation commit follows.
+- Freshness and cache treatment: `npm run check:all` rebuilt `dist`, packed and installed a fresh temporary consumer without links/source imports; remote-network checks remain release-scoped.
+- Aggregate result and meaningful execution/count evidence: passed on `d3f5e9c` (34 Vitest tests, 4 package-contract tests, clean consumer typecheck/build, static Storybook build).
 - Post-gate evidence-record-only changes and affected checks rerun: classify during Apply; rerun scoped validation and package/diff checks after final evidence links.
 - Prospective integration gate required: yes when `develop` advances or the source-to-target tree differs.
 - Current target and prospective integration tree/ref: `develop@e4bcbff`; resolve exact tree before review/merge.
@@ -205,10 +208,10 @@ Not applicable to this repository's new behavior: the Change documents and verif
 
 ## Blockers / Open Questions
 
-- Execution blocker: exact tag/GitHub Release/asset creation and upload require separate explicit authorization; only then can the release-asset verifier run.
+- Stop condition: the correction changes public behavior but `package.json` still declares immutable released version `0.2.0`. User approval of a next version increment is required before retaining a new archive, tag, release asset, or consumer upgrade work; remote creation/upload also requires separate explicit authorization.
 - Evidence dependency: final S4 R1/R3/R4 claims wait for the coordinated Anthracite implementation and independent review candidate after its deliberate correction-release upgrade.
 - Replan completed: required independent opinions satisfied (2/2); no unresolved product, authority, or visual-direction question remains. The correction is planned, not implemented.
-- Bounded-phase next action: create and verify the immutable local candidate from the committed source; no remote action is authorized.
+- Bounded-phase next action: request and record next-version intent; after authorization, update version/release communication, create and verify one immutable local candidate, and request separate remote release authorization. No remote action is currently authorized.
 
 ## Review Handoff Candidate
 

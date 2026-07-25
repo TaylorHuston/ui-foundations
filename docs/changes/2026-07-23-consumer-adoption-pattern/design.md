@@ -174,7 +174,7 @@ Not verified yet.
 #### Planned Requirements And Scenarios
 
 - `S4/R2-S1` gains default trailing mode placement, explicit center opt-in, status/action ordering, and constrained-width behavior. Its focused proof must cover callback delegation, DOM/visual ordering, keyboard selection, explicit-center compatibility, and no narrow overlap.
-- `S4/R2-S2` gains title-button rename initiation, focus movement to the filename input, form-scoped Enter, and Escape cancel. New `S4/R2-S5` covers static/read-only noninteractive identity when rename is absent. Focused proof must cover pointer and keyboard activation, pending/error/read-only states, and application-owned callbacks.
+- `S4/R2-S2` gains title-button rename initiation, focus movement to the filename input, form-scoped Enter, Escape cancel, and static/read-only noninteractive identity when rename is absent. Focused proof must cover pointer and keyboard activation, pending/error/read-only states, and application-owned callbacks.
 
 #### Supersedes / Reconciles
 
