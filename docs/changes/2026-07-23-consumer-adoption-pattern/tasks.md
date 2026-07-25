@@ -191,11 +191,11 @@ Not applicable to this repository's new behavior: the Change documents and verif
 ## Manual UI Confirmation
 
 - Status: pending user
-- App URL / route: Foundation Library Overrides plus final Anthracite Storybook/production routes supplied during Apply.
-- Required setup or test data: exact release archive, generic fixture, and Anthracite deterministic fixtures.
-- Steps for the user: compare Foundation default/custom identity and Anthracite setup/workbench/editor/recovery/Settings/Assistant at desktop and narrow widths.
-- Expected result: Foundation remains neutral; Anthracite remains recognizably Anthracite; shared mechanics behave consistently; no package limitation forces product regression or private override.
-- Feedback that would change artifacts: guide overfits Anthracite, missing public seam, unwanted visual convergence, wrapper leakage, archive acquisition friction, or insufficient evidence for future-app recommendation.
+- App URL / route: run `npm run storybook`, then open `Patterns/Workbench/Document Editing`; final Anthracite routes wait for its deliberate correction-release upgrade.
+- Required setup or test data: current Foundation checkout; no archive or service credential is needed for this UIF interaction check.
+- Steps for the user: at desktop and narrow widths, activate the document title by pointer and keyboard, confirm the filename is focused/selected with visible Save name/Cancel, press Escape to return, and confirm Source/Rendered is in the right-side desktop control group without colliding with status/actions.
+- Expected result: Foundation remains neutral; controlled rename and mode mechanics are shared while app authority remains external; narrow controls wrap without clipping or horizontal overflow.
+- Feedback that would change artifacts: inaccessible title trigger, focus/cancel defect, unwanted title affordance, mode/status/action collision, narrow overflow, wrapper leakage, archive acquisition friction, or insufficient evidence for future-app recommendation.
 
 ## Visual Verification Matrix
 
@@ -210,13 +210,13 @@ Not applicable to this repository's new behavior: the Change documents and verif
 
 - Stop condition: the correction changes public behavior but `package.json` still declares immutable released version `0.2.0`. User approval of a next version increment is required before retaining a new archive, tag, release asset, or consumer upgrade work; remote creation/upload also requires separate explicit authorization.
 - Evidence dependency: final S4 R1/R3/R4 claims wait for the coordinated Anthracite implementation and independent review candidate after its deliberate correction-release upgrade.
-- Replan completed: required independent opinions satisfied (2/2); no unresolved product, authority, or visual-direction question remains. The correction is planned, not implemented.
+- Replan completed: required independent opinions satisfied (2/2); the UIF correction is implemented and verified locally, while version/release/consumer-upgrade work remains explicitly blocked.
 - Bounded-phase next action: request and record next-version intent; after authorization, update version/release communication, create and verify one immutable local candidate, and request separate remote release authorization. No remote action is currently authorized.
 
 ## Review Handoff Candidate
 
 - Integration target / merge base: `develop@e4bcbff`.
-- Candidate source commit: `23b01e8930f18080c1cf66351feeb46f21e96b13`.
+- Candidate source commit: `c9a0186`; behavior source is `d3f5e9ca1f1ef63ed58a4e5d2e9a46a8be8608c9` and the successor ledger commit records its evidence.
 - Source differs from target when implementation changed: expected yes.
 - Intended implementation fully committed: required before handoff.
 - Unrelated dirty state preserved: repository was clean at planning baseline; recheck before promotion and each commit.
@@ -232,32 +232,32 @@ Not applicable to this repository's new behavior: the Change documents and verif
 
 ## Closeout
 
-- Change status: in_progress in the active repository Change; bounded first phase stopped at the verified local candidate.
-- Epic files updated: UIF-002 now contains reconciled S3 and partial S4; UIF-001 remains unchanged because no package defect was found.
-- Story labels/references and Requirement/Scenario IDs current: planned S4/R1-R4 and scenarios are coherent.
-- Implemented By maps current: S4 implementation pending.
-- One canonical implementation and verification map per Story: required during Epic update.
-- Primary anchors inspected as behavior-owning definitions/registrations rather than incidental occurrences: pending final implementation.
-- Scenario-mapped Verified By maps current: pending.
-- Superseded earlier Epic truth reconciled: pending S3/candidate updates.
-- README/current-state docs and active/closed Change claims reconciled: pending.
+- Change status: in_progress in the active repository Change; UIF source work is complete, but next-version/release/consumer evidence is blocked on authorization.
+- Epic files updated: UIF-001/S4/R2 reconciles the shared interaction correction; UIF-002 remains partial until release and consumer evidence exists.
+- Story labels/references and Requirement/Scenario IDs current: UIF-001/S4/R2 IDs and S4/R1-R4 adoption Stories are coherent.
+- Implemented By maps current: UIF-001/S4/R2 anchors were inspected as behavior-owning definitions; UIF-002/S4 remains partial by design.
+- One canonical implementation and verification map per Story: current.
+- Primary anchors inspected as behavior-owning definitions/registrations rather than incidental occurrences: completed for UIF-001/S4/R2.
+- Scenario-mapped Verified By maps current: UIF-001/S4/R2 current; UIF-002 consumer/release evidence remains pending.
+- Superseded earlier Epic truth reconciled: title trigger and mode placement replace the old separate Rename/center-default contract.
+- README/current-state docs and active/closed Change claims reconciled: README, changelog, UIF-001, and active Change updated; no closed artifact changed.
 - ADR status: Proposed.
-- Release communication current: pending implementation/release handoff.
+- Release communication current: `CHANGELOG.md` Unreleased records the new public behavior; version/release handoff remains blocked.
 - `sdd-review` verdict: not run.
 - Review record: pending.
 - `review.md` findings resolved: not applicable yet.
 - Planning updates resolved: yes; remote authority and consumer evidence remain explicit execution gates.
-- Implementation risk and confirmation rows resolved: pending.
-- Pattern parity, boundary contract, and stateful transition rows resolved: pending / pending / not applicable locally.
+- Implementation risk and confirmation rows resolved: UIF correction locally proved; release/consumer-upgrade row remains blocked.
+- Pattern parity, boundary contract, and stateful transition rows resolved: partial / partial / not applicable locally.
 - Capability authority, content-budget/provenance conservation, and filesystem mutation-order proof resolved: release authority/provenance pending; others not applicable.
-- Evidence-claim integrity checked: pending.
-- Decision fan-out reconciled: pending implementation.
-- Verification environment obligations resolved: local ready; remote/consumer pending.
-- Verification Scope Decision current and required candidate gates passed: decision current; gates pending.
-- Immutable review handoff candidate: local package candidate `23b01e8930f18080c1cf66351feeb46f21e96b13`; broader Change review remains blocked on remote asset and Anthracite evidence.
-- Tested integration candidate matches actual integrated tree, or rerun recorded: pending.
+- Evidence-claim integrity checked: UIF-001 exact tests, browser interaction, aggregate, and orphan audit inspected; external release/consumer claims remain gaps.
+- Decision fan-out reconciled: UIF source/docs/Epic/test/story/release-note surfaces complete; release/consumer fan-out pending authorization.
+- Verification environment obligations resolved: local Foundation and clean consumer ran; remote/consumer upgrade pending.
+- Verification Scope Decision current and required local aggregate gate passed; next-version package candidate and remote proof are blocked.
+- Immutable review handoff candidate: `c9a0186`; broader Change review remains blocked on version decision, remote asset, and Anthracite upgrade evidence.
+- Tested integration candidate matches actual integrated tree, or rerun recorded: prospective `d3f5e9c` tree `f8e20a042e599ece77073d5ab9fd2b67cdeb92a4`; rerun against final ledger candidate is required after version decision.
 - Manual UI confirmation status: pending user.
-- Rendered UI verification status: pending.
+- Rendered UI verification status: UIF correction passed; release-asset/consumer rendered evidence pending.
 - PR / merge state: none; no authorization implied.
 - Deferred scope accepted: yes.
 - Change moved to `docs/changes/closed/`: no.
