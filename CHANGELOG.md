@@ -6,6 +6,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-07-24
+
 ### Added
 
 - `EditorToolbar.modePlacement`, with a trailing Source/Rendered control as the default and an explicit centered legacy-composition option.
